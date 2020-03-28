@@ -1,0 +1,24 @@
+Running: C:\Xilinx\14.7\ISE_DS\ISE\bin\nt\unwrapped\fuse.exe -intstyle ise -incremental -lib secureip -o C:/Users/Yousef/Documents/VHDL/ALU_bgd/ALU_tb_isim_beh.exe -prj C:/Users/Yousef/Documents/VHDL/ALU_bgd/ALU_tb_beh.prj work.ALU_tb 
+ISim P.20131013 (signature 0x8ef4fb42)
+Number of CPUs detected in this system: 8
+Turning on mult-threading, number of parallel sub-compilation jobs: 16 
+Determining compilation order of HDL files
+Parsing VHDL file "C:/Users/Yousef/Documents/VHDL/ALU_bgd/ALU.vhd" into library work
+Parsing VHDL file "C:/Users/Yousef/Documents/VHDL/ALU_bgd/ALU_tb.vhd" into library work
+Starting static elaboration
+Completed static elaboration
+Fuse Memory Usage: 161384 KB
+Fuse CPU Usage: 218 ms
+Compiling package standard
+Compiling package std_logic_1164
+Compiling package std_logic_arith
+Compiling package std_logic_unsigned
+Compiling package numeric_std
+Compiling architecture behavioral of entity ALU [alu_default]
+Compiling architecture behavior of entity alu_tb
+Time Resolution for simulation is 1ps.
+Waiting for 1 sub-compilation(s) to finish...
+Compiled 8 VHDL Units
+Built simulation executable C:/Users/Yousef/Documents/VHDL/ALU_bgd/ALU_tb_isim_beh.exe
+Fuse Memory Usage: 183180 KB
+Fuse CPU Usage: 374 ms
