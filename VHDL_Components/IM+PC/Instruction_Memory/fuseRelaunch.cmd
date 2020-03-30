@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "secureip" -o "C:/Users/Aya Ahmed/measurment's project/instructionmemory/instructionmemory_tb_isim_beh.exe" -prj "C:/Users/Aya Ahmed/measurment's project/instructionmemory/instructionmemory_tb_beh.prj" "work.instructionmemory_tb" 
