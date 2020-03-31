@@ -23,19 +23,18 @@ end Instruction_Memory;
 architecture Behavioral of Instruction_Memory is
 
 
-		type Instruction_Memory is array (0 to 65535) of std_logic_vector(15 downto 0);   --An Array of 2^16 Locations 
+		type Instruction_Memory is array (0 to 65536) of std_logic_vector(15 downto 0);   --An Array of 2^12 Locations 
 		
 		constant IM_Data: Instruction_Memory:=(
-																		"0000000000000001",
-																		"0000000000000010",
+																		 "0000000000000001",
+																		 "0000000000000010",
 															others => "1110000000000000"
 															);
 begin
 
 process(Read_Address) 
 begin
-
-			Instruction <= IM_Data(to_integer(unsigned(Read_Address)));
 			
+			Instruction <= IM_Data(to_integer(unsigned(Read_Address)));
 end process;
 end Behavioral;

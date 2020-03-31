@@ -27,13 +27,15 @@ end MUX2to1_S8;
 architecture Behavioral of MUX2to1_S8 is
 begin
 
-process (Sel_8) is
+process (Sel_8,MUX_0,MUX_1) is
 begin
 		if (Sel_8 = '0') then
 			MUX_R <= MUX_0;
 			
 		elsif (Sel_8 = '1') then
 			MUX_R <= MUX_1;
+		else
+			MUX_R <= MUX_0;
 		end if;
 end process;
 end Behavioral;

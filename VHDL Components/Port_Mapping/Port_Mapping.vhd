@@ -83,9 +83,8 @@ component Data_Memory is
 end component;
 
 component Instruction_Memory is
-	PORT(
-			clk: 				in std_logic; 
-	      Read_Address:  in  std_logic_vector (15 downto 0);
+	PORT( 
+			Read_Address:  in  std_logic_vector (15 downto 0);
          Instruction:   out  STD_LOGIC_VECTOR (15 downto 0)
 			);
 end component;
@@ -351,8 +350,7 @@ X4: Data_Memory
 X5: Instruction_Memory
 		port map(
 					Instruction 	=> IM_Instruction,
-					Read_Address 	=> PC_Program_Counter_OUT,
-					clk				=> CPU_clk
+					Read_Address 	=> PC_Program_Counter_OUT
 					);
 
 ---       Port Mapping Program Counter   ---

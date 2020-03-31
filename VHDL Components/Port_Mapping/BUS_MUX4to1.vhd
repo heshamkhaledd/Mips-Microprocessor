@@ -29,7 +29,7 @@ architecture Behavioral of BUS_MUX4to1 is
 
 begin
 
-process (Sel_6,Sel_7) is
+process (Sel_6,Sel_7,MUX_0,MUX_1,MUX_2,MUX_3) is
 begin
 
 		if 	(Sel_6 = '0' AND Sel_7 = '0') then
@@ -43,6 +43,8 @@ begin
 					
 		elsif (Sel_6 = '1' AND Sel_7 = '1') then
 					MUX_R <= MUX_3;
+		else
+					MUX_R <= MUX_0;
 		end if;
 					
 end process;

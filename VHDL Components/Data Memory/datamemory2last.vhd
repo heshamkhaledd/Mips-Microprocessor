@@ -33,7 +33,7 @@ architecture Behavioral of Data_Memory is
 	
 --To Write the Data given in MDR at the Memory Address on MAR bus, Only at clk Rising Edge and WE=1
 
-process (clk)
+process (clk,MWE)
 begin 
 	if (rising_edge(clk)and MWE='1') then                      --If clk is at Rising Edge and the WE signal is active, data is written in memory
 	DM(to_integer(unsigned(MAR)))<=MDR;

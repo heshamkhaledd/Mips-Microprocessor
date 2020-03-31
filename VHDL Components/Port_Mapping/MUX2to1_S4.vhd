@@ -25,13 +25,15 @@ end MUX2to1_S4;
 architecture Behavioral of MUX2to1_S4 is
 begin
 
-process (Sel_4) is
+process (Sel_4,MUX_0,MUX_1) is
 begin
 		if (Sel_4 = '0') then
 			MUX_R <= MUX_0;
 			
 		elsif (Sel_4 = '1') then
 			MUX_R <= MUX_1;
+		else
+			MUX_R <= MUX_0;
 		end if;
 end process;
 

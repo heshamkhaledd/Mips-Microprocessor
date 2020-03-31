@@ -1,1 +1,0 @@
--intstyle "ise" -incremental -lib "secureip" -o "D:/Micro-Pj/Project/VHDL Components/Port Mapping/Port_Mapping/MUX2to1_S4_isim_beh.exe" -prj "D:/Micro-Pj/Project/VHDL Components/Port Mapping/Port_Mapping/MUX2to1_S4_beh.prj" "work.MUX2to1_S4" 
