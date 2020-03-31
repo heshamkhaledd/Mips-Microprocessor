@@ -272,14 +272,14 @@ signal PC_MUX01:				 std_logic_vector (15 downto 0);
 signal PC_MUX10:				 std_logic_vector (15 downto 0);
 -------
 signal Data_In:				 std_logic_vector (15 downto 0);
-signal Data_Out:				 std_logic_vector (15 downto 0);
+
 begin
 
-process (CPU_clk,CPU_Reset)
+process (CPU_clk,CPU_Reset,CU_OUTLD)
 begin
 
 			if (rising_edge (CPU_clk) AND CU_OUTLD = '1') then
-				Output_Register <= Data_Out;
+				Output_Register <= RF_RRead1;
 			elsif (rising_edge (CPU_clk)) then
 				Data_In <= Input_Register;
 			end if;

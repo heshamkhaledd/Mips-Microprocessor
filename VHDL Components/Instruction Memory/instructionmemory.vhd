@@ -14,8 +14,8 @@ use IEEE.NUMERIC_STD.ALL;
 
 
 entity Instruction_Memory is
-    Port (   clk: in std_logic; 
-	          Read_Address : in  std_logic_vector (15 downto 0);  --Instruction Address Location
+    Port (    
+				 Read_Address : in  std_logic_vector (15 downto 0);  --Instruction Address Location
              Instruction : out  STD_LOGIC_VECTOR (15 downto 0)   --The Current Instruction
 				 );
 end Instruction_Memory;
@@ -24,19 +24,18 @@ architecture Behavioral of Instruction_Memory is
 
 
 		type Instruction_Memory is array (0 to 65535) of std_logic_vector(15 downto 0);   --An Array of 2^16 Locations 
-		signal IM: Instruction_Memory:=((others=> (others=>'0')));    --Initializing Instruction memory with zeroes
+		
+		constant IM_Data: Instruction_Memory:=(
+																		"0000000000000001",
+																		"0000000000000010",
+															others => "1110000000000000"
+															);
 begin
 
-process(clk) 
+process(Read_Address) 
 begin
+
+			Instruction <= IM_Data(to_integer(unsigned(Read_Address)));
 			
-			----- Outputs the Instruction on bus at clock Rising Edge -----
-	     ----- Else, Outputs Unknown values for the same Instruction -----
-			if(rising_edge(clk)) then
-			
-			instruction <= IM(to_integer(unsigned(Read_Address)));   
-			else Instruction <= "UUUUUUUUUUUUUUUU";
-end if;
 end process;
 end Behavioral;
-

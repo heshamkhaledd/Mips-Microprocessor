@@ -15,24 +15,12 @@
   <version xil_pn:ise_version="14.7" xil_pn:schema_version="2"/>
 
   <files>
-    <file xil_pn:name="../../ALU/ALSU/ALU.vhd" xil_pn:type="FILE_VHDL">
-      <association xil_pn:name="Implementation" xil_pn:seqID="18"/>
-    </file>
-    <file xil_pn:name="../../Control Unit/Control_Unit/Control_Unit.vhd" xil_pn:type="FILE_VHDL">
-      <association xil_pn:name="Implementation" xil_pn:seqID="17"/>
-    </file>
-    <file xil_pn:name="../../Data Memory/Data Memory/datamemory2last.vhd" xil_pn:type="FILE_VHDL">
-      <association xil_pn:name="Implementation" xil_pn:seqID="16"/>
-    </file>
-    <file xil_pn:name="../../Register File/RF/RFVHDL.vhd" xil_pn:type="FILE_VHDL">
-      <association xil_pn:name="Implementation" xil_pn:seqID="1"/>
-    </file>
-    <file xil_pn:name="../../IM+PC/Program_Counter/programcounter.vhd" xil_pn:type="FILE_VHDL">
-      <association xil_pn:name="Implementation" xil_pn:seqID="14"/>
-    </file>
-    <file xil_pn:name="../../IM+PC/Instruction_Memory/instructionmemory.vhd" xil_pn:type="FILE_VHDL">
-      <association xil_pn:name="Implementation" xil_pn:seqID="15"/>
-    </file>
+    <file xil_pn:name="../../ALU/ALSU/ALU.vhd" xil_pn:type="FILE_VHDL"/>
+    <file xil_pn:name="../../Control Unit/Control_Unit/Control_Unit.vhd" xil_pn:type="FILE_VHDL"/>
+    <file xil_pn:name="../../Data Memory/Data Memory/datamemory2last.vhd" xil_pn:type="FILE_VHDL"/>
+    <file xil_pn:name="../../Register File/RF/RFVHDL.vhd" xil_pn:type="FILE_VHDL"/>
+    <file xil_pn:name="../../IM+PC/Program_Counter/programcounter.vhd" xil_pn:type="FILE_VHDL"/>
+    <file xil_pn:name="../../IM+PC/Instruction_Memory/instructionmemory.vhd" xil_pn:type="FILE_VHDL"/>
     <file xil_pn:name="BUS_MUX4to1.vhd" xil_pn:type="FILE_VHDL">
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="0"/>
       <association xil_pn:name="Implementation" xil_pn:seqID="13"/>
