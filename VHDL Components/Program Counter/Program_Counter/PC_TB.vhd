@@ -2,15 +2,15 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   21:17:31 02/17/2020
+-- Create Date:   21:29:44 03/31/2020
 -- Design Name:   
--- Module Name:   C:/Users/Aya Ahmed/programcounter/programcounter_tb.vhd
+-- Module Name:   E:/MP/Mips-Microprocessor/VHDL Components/Program Counter/Program_Counter/PC_TB.vhd
 -- Project Name:  programcounter
 -- Target Device:  
 -- Tool versions:  
 -- Description:   
 -- 
--- VHDL Test Bench Created by ISE for module: programcounter
+-- VHDL Test Bench Created by ISE for module: Program_Counter
 -- 
 -- Dependencies:
 -- 
@@ -32,76 +32,65 @@ USE ieee.std_logic_1164.ALL;
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
  
-ENTITY programcounter_tb IS
-END programcounter_tb;
+ENTITY PC_TB IS
+END PC_TB;
  
-ARCHITECTURE behavior OF programcounter_tb IS 
+ARCHITECTURE behavior OF PC_TB IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
-    COMPONENT programcounter
+    COMPONENT Program_Counter
     PORT(
-         programcounterin : IN  std_logic_vector(15 downto 0);
-         programcounterout : OUT  std_logic_vector(15 downto 0);
+         Program_Counter_IN : IN  std_logic_vector(15 downto 0);
+         Program_Counter_OUT : OUT  std_logic_vector(15 downto 0);
          clk : IN  std_logic;
-         rst : IN  std_logic
+         Reset : IN  std_logic
         );
     END COMPONENT;
     
 
    --Inputs
-   signal programcounterin : std_logic_vector(15 downto 0) := (others => '0');
+   signal Program_Counter_IN : std_logic_vector(15 downto 0) := (others => '0');
    signal clk : std_logic := '0';
-   signal rst : std_logic := '0';
+   signal Reset : std_logic := '0';
 
  	--Outputs
-   signal programcounterout : std_logic_vector(15 downto 0);
+   signal Program_Counter_OUT : std_logic_vector(15 downto 0);
 
-   -- Clock period definitions 
-   
+   -- Clock period definitions
+   constant clk_period : time := 10 ns;
  
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
-   uut: programcounter PORT MAP (
-          programcounterin => programcounterin,
-          programcounterout => programcounterout,
+   uut: Program_Counter PORT MAP (
+          Program_Counter_IN => Program_Counter_IN,
+          Program_Counter_OUT => Program_Counter_OUT,
           clk => clk,
-          rst => rst
+          Reset => Reset
         );
 
    -- Clock process definitions
-  
+   clk_process :process
+   begin
+		clk <= '0';
+		wait for clk_period/2;
+		clk <= '1';
+		wait for clk_period/2;
+   end process;
  
 
    -- Stimulus process
    stim_proc: process
    begin		
       -- hold reset state for 100 ns.
-   	
+      wait for 100 ns;	
 
+      wait for clk_period*10;
 
       -- insert stimulus here 
-      clk<='0';
-		rst<='0';
-  PROGRAMCOUNTERIN<= "1000000000000000";
-	WAIT FOR 100 ns;
-	clk<='1';
-		rst<='0';
-	 PROGRAMCOUNTERIN<= x"0004";
-	WAIT FOR 100 ns;
-	clk<='0';
-		rst<='0';
- PROGRAMCOUNTERIN<= x"0008";
-	WAIT FOR 100 ns;
-	clk<='1';
-		rst<='0';
- PROGRAMCOUNTERIN <=x"000c";
-	WAIT FOR 100 ns;
-	clk<='0';
-		rst<='1';
- PROGRAMCOUNTERIN <= x"FFF0";
-WAIT FOR 100 ns;
+		Program_Counter_IN <= x"0003";
+      wait;
    end process;
 
 END;

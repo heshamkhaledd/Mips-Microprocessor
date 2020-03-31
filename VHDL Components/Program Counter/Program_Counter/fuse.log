@@ -1,18 +1,23 @@
-Running: C:\Xilinx\14.7\ISE_DS\ISE\bin\nt64\unwrapped\fuse.exe -intstyle ise -incremental -lib secureip -o C:/Users/Aya Ahmed/measurment's project/programcounter/programcounter_tb_isim_beh.exe -prj C:/Users/Aya Ahmed/measurment's project/programcounter/programcounter_tb_beh.prj work.programcounter_tb 
-ISim P.20131013 (signature 0x7708f090)
-Number of CPUs detected in this system: 12
-Turning on mult-threading, number of parallel sub-compilation jobs: 24 
+Running: C:\Xilinx\14.7\ISE_DS\ISE\bin\nt\unwrapped\fuse.exe -intstyle ise -incremental -lib secureip -o E:/MP/Mips-Microprocessor/VHDL Components/Program Counter/Program_Counter/PC_TB_isim_beh.exe -prj E:/MP/Mips-Microprocessor/VHDL Components/Program Counter/Program_Counter/PC_TB_beh.prj work.PC_TB 
+ISim P.20131013 (signature 0x8ef4fb42)
+Number of CPUs detected in this system: 8
+Turning on mult-threading, number of parallel sub-compilation jobs: 16 
 Determining compilation order of HDL files
-Parsing VHDL file "C:/Users/Aya Ahmed/measurment's project/programcounter/programcounter.vhd" into library work
-Parsing VHDL file "C:/Users/Aya Ahmed/measurment's project/programcounter/programcounter_tb.vhd" into library work
+Parsing VHDL file "E:/MP/Mips-Microprocessor/VHDL Components/Program Counter/Program_Counter/programcounter.vhd" into library work
+Parsing VHDL file "E:/MP/Mips-Microprocessor/VHDL Components/Program Counter/Program_Counter/PC_TB.vhd" into library work
 Starting static elaboration
 Completed static elaboration
+Fuse Memory Usage: 161384 KB
+Fuse CPU Usage: 202 ms
 Compiling package standard
 Compiling package std_logic_1164
-Compiling architecture behavioral of entity programcounter [programcounter_default]
-Compiling architecture behavior of entity programcounter_tb
+Compiling package std_logic_arith
+Compiling package std_logic_unsigned
+Compiling architecture behavioral of entity Program_Counter [program_counter_default]
+Compiling architecture behavior of entity pc_tb
 Time Resolution for simulation is 1ps.
-Compiled 5 VHDL Units
-Built simulation executable C:/Users/Aya Ahmed/measurment's project/programcounter/programcounter_tb_isim_beh.exe
-Fuse Memory Usage: 29496 KB
-Fuse CPU Usage: 499 ms
+Waiting for 1 sub-compilation(s) to finish...
+Compiled 7 VHDL Units
+Built simulation executable E:/MP/Mips-Microprocessor/VHDL Components/Program Counter/Program_Counter/PC_TB_isim_beh.exe
+Fuse Memory Usage: 178316 KB
+Fuse CPU Usage: 265 ms

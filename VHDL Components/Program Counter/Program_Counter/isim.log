@@ -1,6 +1,6 @@
 ISim log file
-Running: C:\Users\Aya Ahmed\measurment's project\programcounter\programcounter_tb_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb C:/Users/Aya Ahmed/measurment's project/programcounter/programcounter_tb_isim_beh.wdb 
-ISim P.20131013 (signature 0x7708f090)
+Running: E:\MP\Mips-Microprocessor\VHDL Components\Program Counter\Program_Counter\PC_TB_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb E:/MP/Mips-Microprocessor/VHDL Components/Program Counter/Program_Counter/PC_TB_isim_beh.wdb 
+ISim P.20131013 (signature 0x8ef4fb42)
 This is a Full version of ISim.
 Time resolution is 1 ps
 # onerror resume

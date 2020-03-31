@@ -1,1 +1,1 @@
--intstyle "ise" -incremental -lib "secureip" -o "C:/Users/Aya Ahmed/measurment's project/programcounter/programcounter_tb_isim_beh.exe" -prj "C:/Users/Aya Ahmed/measurment's project/programcounter/programcounter_tb_beh.prj" "work.programcounter_tb" 
+-intstyle "ise" -incremental -lib "secureip" -o "E:/MP/Mips-Microprocessor/VHDL Components/Program Counter/Program_Counter/PC_TB_isim_beh.exe" -prj "E:/MP/Mips-Microprocessor/VHDL Components/Program Counter/Program_Counter/PC_TB_beh.prj" "work.PC_TB" 

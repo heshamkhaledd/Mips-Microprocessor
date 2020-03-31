@@ -10,7 +10,7 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.std_logic_unsigned.all;
+
 
 entity Program_Counter is
     Port ( 
@@ -31,10 +31,10 @@ begin
 		Program_Counter_OUT<= "0000000000000000";
 		
 		elsif rising_edge(clk) then	
-		Program_Counter_OUT <= Program_Counter_IN ;
+		Program_Counter_OUT <= Program_Counter_IN;
 		
 		else 
-	
+		Program_Counter_OUT<="UUUUUUUUUUUUUUUU";
 end if;
 end process;
 end Behavioral;
