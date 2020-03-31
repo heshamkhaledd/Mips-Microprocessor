@@ -22,16 +22,19 @@ entity Program_Counter is
 end Program_Counter;
 
 architecture Behavioral of Program_Counter is
+signal PC_OUT : std_logic_vector(15 downto 0) := "0000000000000000";
+		
 
 begin
-		process(clk , Reset)
+	Program_Counter_OUT<=PC_OUT;
+		process(clk , Reset, PC_OUT)
 		begin
 		
 		if (Reset = '1') then
-		Program_Counter_OUT<= "0000000000000000";
+		PC_OUT<= "0000000000000000";
 		
 		elsif rising_edge(clk) then	
-		Program_Counter_OUT <= Program_Counter_IN ;
+		PC_OUT <= Program_Counter_IN;
 		
 		else 
 	

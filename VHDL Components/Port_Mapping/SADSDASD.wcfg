@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/Test_Bench_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="numeric_std" />
+            <top_module name="std_logic_1164" />
+            <top_module name="std_logic_arith" />
+            <top_module name="std_logic_unsigned" />
+            <top_module name="test_bench" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="18" />
+   <wvobject fp_name="/test_bench/cpu_clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">cpu_clk</obj_property>
+      <obj_property name="ObjectShortName">cpu_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_bench/cpu_reset" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">cpu_reset</obj_property>
+      <obj_property name="ObjectShortName">cpu_reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_bench/input_register" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">input_register[15:0]</obj_property>
+      <obj_property name="ObjectShortName">input_register[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_bench/output_register" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">output_register[15:0]</obj_property>
+      <obj_property name="ObjectShortName">output_register[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_bench/cpu_clk_period" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">cpu_clk_period</obj_property>
+      <obj_property name="ObjectShortName">cpu_clk_period</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_bench/uut/X1/alua" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">alua[15:0]</obj_property>
+      <obj_property name="ObjectShortName">alua[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_bench/uut/X1/alub" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">alub[15:0]</obj_property>
+      <obj_property name="ObjectShortName">alub[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_bench/uut/X1/alur" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">alur[15:0]</obj_property>
+      <obj_property name="ObjectShortName">alur[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_bench/uut/X1/zf" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">zf</obj_property>
+      <obj_property name="ObjectShortName">zf</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_bench/uut/X1/operation" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">operation[2:0]</obj_property>
+      <obj_property name="ObjectShortName">operation[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_bench/uut/X1/alur_signal" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">alur_signal[15:0]</obj_property>
+      <obj_property name="ObjectShortName">alur_signal[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_bench/uut/X1/zf_signal" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">zf_signal</obj_property>
+      <obj_property name="ObjectShortName">zf_signal</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_bench/uut/X3/rf" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rf[0:7]</obj_property>
+      <obj_property name="ObjectShortName">rf[0:7]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_bench/uut/X4/mar" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">mar[15:0]</obj_property>
+      <obj_property name="ObjectShortName">mar[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_bench/uut/X4/mdr" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">mdr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">mdr[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_bench/uut/X4/mwe" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">mwe</obj_property>
+      <obj_property name="ObjectShortName">mwe</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_bench/uut/X2/s8" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">s8</obj_property>
+      <obj_property name="ObjectShortName">s8</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_bench/uut/X2/mwe" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">mwe</obj_property>
+      <obj_property name="ObjectShortName">mwe</obj_property>
+   </wvobject>
+</wave_config>

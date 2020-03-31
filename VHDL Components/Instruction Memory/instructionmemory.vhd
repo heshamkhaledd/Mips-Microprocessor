@@ -23,11 +23,25 @@ end Instruction_Memory;
 architecture Behavioral of Instruction_Memory is
 
 
-		type Instruction_Memory is array (0 to 65536) of std_logic_vector(15 downto 0);   --An Array of 2^12 Locations 
+		type Instruction_Memory is array (0 to 65535) of std_logic_vector(15 downto 0);   --An Array of 2^12 Locations 
 		
-		constant IM_Data: Instruction_Memory:=(
-																		 "0000000000000001",
-																		 "0000000000000010",
+		constant IM_Data: Instruction_Memory:=(			 			"1110000000000000",
+																					"0101010001000000",
+																					"0110001010011110",
+																					"0110001001011110",
+																					"0000001010011000",
+																					"0100011011001001",
+																					"1000001011000000",
+																					"0111001101000000",
+																					"0010101000000000",
+																					"0101010001000000",
+																					"0101010010000000",
+																					"0101010011000000",
+																					"0101010100000000",
+																					"0101010101000000",
+																					"0011001000000000",
+																					"1111000000000000",
+
 															others => "1110000000000000"
 															);
 begin

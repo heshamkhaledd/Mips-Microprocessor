@@ -1,0 +1,60 @@
+Running: fuse.exe -relaunch -intstyle "ise" -incremental -lib "secureip" -o "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/Test_Bench_isim_beh.exe" -prj "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/Test_Bench_beh.prj" "work.Test_Bench" 
+ISim P.20131013 (signature 0x8ef4fb42)
+Number of CPUs detected in this system: 8
+Turning on mult-threading, number of parallel sub-compilation jobs: 16 
+Determining compilation order of HDL files
+Parsing VHDL file "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/../Register File/RFVHDL.vhd" into library work
+Parsing VHDL file "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/../Program Counter/Program_Counter/programcounter.vhd" into library work
+Parsing VHDL file "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/XOR_S9.vhd" into library work
+Parsing VHDL file "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/Sign_Extension2.vhd" into library work
+Parsing VHDL file "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/Sign_Extension.vhd" into library work
+Parsing VHDL file "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/PC_MUX4to1.vhd" into library work
+Parsing VHDL file "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/PC_ADDER2.vhd" into library work
+Parsing VHDL file "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/PC_ADDER1.vhd" into library work
+Parsing VHDL file "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/MUX2to1_S9.vhd" into library work
+Parsing VHDL file "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/MUX2to1_S8.vhd" into library work
+Parsing VHDL file "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/MUX2to1_S5.vhd" into library work
+Parsing VHDL file "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/MUX2to1_S4.vhd" into library work
+Parsing VHDL file "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/MUX2to1_S3.vhd" into library work
+Parsing VHDL file "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/BUS_MUX4to1.vhd" into library work
+Parsing VHDL file "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/../Instruction Memory/instructionmemory.vhd" into library work
+Parsing VHDL file "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/../Data Memory/datamemory2last.vhd" into library work
+Parsing VHDL file "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/../Control Unit/Control_Unit.vhd" into library work
+Parsing VHDL file "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/../ALSU/ALU.vhd" into library work
+Parsing VHDL file "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/Port_Mapping.vhd" into library work
+Parsing VHDL file "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/Test_Bench.vhd" into library work
+Starting static elaboration
+Completed static elaboration
+Fuse Memory Usage: 163688 KB
+Fuse CPU Usage: 233 ms
+Compiling package standard
+Compiling package std_logic_1164
+Compiling package std_logic_arith
+Compiling package std_logic_unsigned
+Compiling package numeric_std
+Compiling architecture behavioral of entity ALU [alu_default]
+Compiling architecture behavioral of entity Control_Unit [control_unit_default]
+Compiling architecture behavioral of entity Register_File [register_file_default]
+Compiling architecture behavioral of entity Data_Memory [data_memory_default]
+Compiling architecture behavioral of entity Instruction_Memory [instruction_memory_default]
+Compiling architecture behavioral of entity Program_Counter [program_counter_default]
+Compiling architecture behavioral of entity BUS_MUX4to1 [bus_mux4to1_default]
+Compiling architecture behavioral of entity MUX2to1_S8 [mux2to1_s8_default]
+Compiling architecture behavioral of entity Sign_Extension [sign_extension_default]
+Compiling architecture behavioral of entity MUX2to1_S4 [mux2to1_s4_default]
+Compiling architecture behavioral of entity MUX2to1_S5 [mux2to1_s5_default]
+Compiling architecture behavioral of entity PC_ADDER1 [pc_adder1_default]
+Compiling architecture behavioral of entity PC_ADDER2 [pc_adder2_default]
+Compiling architecture behavioral of entity XOR_S9 [xor_s9_default]
+Compiling architecture behavioral of entity MUX2to1_S9 [mux2to1_s9_default]
+Compiling architecture behavioral of entity PC_MUX4to1 [pc_mux4to1_default]
+Compiling architecture behavioral of entity Sign_Extension_2 [sign_extension_2_default]
+Compiling architecture behavioral of entity MUX2to1_S3 [mux2to1_s3_default]
+Compiling architecture behavioral of entity Port_Mapping [port_mapping_default]
+Compiling architecture behavior of entity test_bench
+Time Resolution for simulation is 1ps.
+Waiting for 1 sub-compilation(s) to finish...
+Compiled 44 VHDL Units
+Built simulation executable E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/Test_Bench_isim_beh.exe
+Fuse Memory Usage: 185320 KB
+Fuse CPU Usage: 1015 ms
