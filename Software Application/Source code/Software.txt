@@ -41,9 +41,10 @@ xLCD_goToRowColumn:
     ADDI R1,R1,16
  // After the above code, R1 = The Address of the required position //
 
- // Command = Address OR 0b0000000010000000 //
-    ORI  R1,R1,128
 xEND:
+    // Command = Address OR 0b0000000010000000 //
+    ORI  R1,R1,128
+    // Clearing the index Register R2 //
     SUB  R2,R2,R2
  // RS=RW=0 --->  R2 AND 0b1110011111111111 //
     ANDI R2,R2,59391‬
