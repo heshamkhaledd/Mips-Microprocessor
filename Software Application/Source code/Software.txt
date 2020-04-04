@@ -38,6 +38,7 @@ xLCD_goToRowColumn:
  // Position Address @ Row(1) = Column+0x40 //
     ADDI R1,R1,64
     J    END
+ // Position Address @ Row(2) = Column+0x10 //
     ADDI R1,R1,16
  // After the above code, R1 = The Address of the required position //
 
