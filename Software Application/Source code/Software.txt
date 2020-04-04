@@ -1,0 +1,74 @@
+-------------------------------------------------------------------------------------------
+//Name: Youssef Galal
+//Function Discription: takes the 8-bit value in a FIXED address
+//and displays it on the LCD 
+//Note: This file format is "*code* then a comment"
+xLCD_displayCharacter:        
+    SUB R1,R1,R1
+    //putting R1=0
+    SUB R2,R2,R2 
+    //putting R2=0
+    NOR R1,R1,00
+    // 0 NOR 0 = 1 so R1= 1111 1111 1111 1111
+    NOR R2,R2,00
+    // 0 NOR 0 = 1 so R2= 1111 1111 1111 1111
+    SRL R2,R2
+    // R2 =  0111 1111 1111 1111 
+    XOR R1,R1,R2
+    // R1 = 1000 0000 0000 0000
+    SRL R1,R1
+    // R1 = 0100 0000 0000 0000
+    SRL R1,R1
+    // R1 = 0010 0000 0000 0000
+    SRL R1,R1
+    // R1 = 0001 0000 0000 0000
+    SRL R1,R1
+    // R1 = 0000 1000 0000 0000
+    SRL R1,R1
+    // R1 = 0000 0100 0000 0000
+
+    OUT R1         
+    //R1 = 0000 0100 0000 0000 
+    // makes RS bit = 1 "Data mode" 
+    // and RW bit =0 "Write data"
+    NOP
+    // we must wait for the LCD to get it
+    SRL R2,R1     
+    //R2 = 0000 0010 0000 0000
+    SRL R2,R1       
+    //R2 = 0000 0001 0000 0000
+    OR R1,R1,R2    
+    // R1 = 0000 0101 0000 0000
+    OUT R1          
+    // R1 = 0000 0101 0000 0000
+    // makes E bit = 1 
+    NOP
+    SUB R3,R3,R3
+    // cleaning R3 = 0
+    ORI R3,R3,XX  
+    //remove XX,add the address of the data 
+    // R3 now has the address for my data
+    LW R3,R3
+    // R3 now = my data 
+    OR R3,R1,R3
+    // bit manipulation
+    // R1 = 0000 0101 0000 0000
+    // R3 = 0000 0000 data data
+    // OR op. -> R3 = 0000 0101 data data
+    OUT R3
+    // showing the output value 
+    NOP
+    SLL R2,R2
+    // Check line 42 - R2 =  0000 0010 0000 0000
+    SLL R2,R2
+    // R2 = 0000 0100 0000 0000
+    OUT R2        
+    // R2 value clears E 
+    NOP
+JR R7
+// assumption of how the LCD is connected to the o/p port
+// if there is any changing contact me
+//  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
+//  0  0  0  0  0  RS  RW E  0  1  2  3  4  5  6  7  
+// end of Galal's part
+-------------------------------------------------------------------------------------------
