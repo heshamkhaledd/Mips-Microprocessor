@@ -1,74 +1,149 @@
--------------------------------------------------------------------------------------------
-//Name: Youssef Galal
-//Function Discription: takes the 8-bit value in a FIXED address
-//and displays it on the LCD 
-//Note: This file format is "*code* then a comment"
+//******************************************************************************
+ * Engineer:      Hesham Khaled
+ * Create date:   23:08:22 04/04/2020
+ * Function Name: LCD_goToRowColumn
+ * Description:   A function that's responsible for moving LCD's cursor
+ *                to a specific position.
+ * Inputs:        Decimal Values for Row and Column
+ * Outputs:       void
+ *
+ *******************************************************************************//
+
+xLCD_goToRowColumn:
+ // Putting R0=0, Storing in R1 the Memory address of the Row to go //
+    SUB  R0,R0,R0
+    ADDI R0,R0,11
+ // Putting R1=0, Storing in R1 the Memory address of the Column to go //
+    SUB  R1,R1,R1
+    ADDI R1,R1,12
+ // Storing the value of the Row in R0, Value of Column in R1 //
+ // Making R2=0 as initial value and the index //
+    LW   R0,R0
+    LW   R1,R1
+    SUB  R2,R2,R2
+ // Checking if it is Row (0), If yes, Jump, if no, add the index+1 //
+    BEQ  R0,R2,6
+    ADDI R2,R2,1
+ // Checking if it is Row (1), If yes, Jump, if no, add the index+1 //
+    BEQ  R0,R2,6
+    ADD  R2,R2,R2
+ // Checking if it is Row (2), If yes, Jump, if no, it must be Row (3) //
+    BEQ  R0,R2,6
+ // Position Address @ Row(3) = Column + 0x50 //
+    ADDI R1,R1,80
+    J    END
+ // Position Address @ Row(0) = Column //
+    ADDI R1,R1,0
+    J    END
+ // Position Address @ Row(1) = Column+0x40 //
+    ADDI R1,R1,64
+    J    END
+    ADDI R1,R1,16
+ // After the above code, R1 = The Address of the required position //
+
+ // Command = Address OR 0b0000000010000000 //
+    ORI  R1,R1,128
+xEND:
+    SUB  R2,R2,R2
+ // RS=RW=0 --->  R2 AND 0b1110011111111111 //
+    ANDI R2,R2,59391‬
+    OUT R2
+    NOP
+ // E=1    --->   R2 OR  0b0000010000000000 //
+    ORI R2,R2,1024
+    OUT R2
+    NOP
+ // Command<<2 = D0~D7 //
+    SHL R1,R1
+    SHL R1,R1
+ // Sending command without changing any other bits in R1 ---> R1 OR 0b0000001111111100 //
+    ORI R1,R1,1020
+    OUT R1
+ // E=0   ---> R2 AND ob1111101111111111 //
+    ANDI R2,R2,64511‬
+    OUT R2
+    NOP
+    ANDI R0,R0,0
+    ANDI R1,R1,0
+    ANDI R2,R2,0
+    JR R7
+
+
+//******************************************************************************
+ * Engineer:      Youssef Galal
+ * Create date:   22:01:17 04/04/2020
+ * Function Name: LCD_displayCharacter
+ * Description:   takes the 8-bit value stored in a FIXED Memory Location
+ *                to a specific position.
+ * Inputs:        Data to be printed
+ * Outputs:       void
+ *
+ *******************************************************************************//
+
 xLCD_displayCharacter:        
     SUB R1,R1,R1
-    //putting R1=0
+    //putting R1=0//
     SUB R2,R2,R2 
-    //putting R2=0
-    NOR R1,R1,00
-    // 0 NOR 0 = 1 so R1= 1111 1111 1111 1111
-    NOR R2,R2,00
-    // 0 NOR 0 = 1 so R2= 1111 1111 1111 1111
+    //putting R2=0//
+    NOR R1,R1,R1
+    // 0 NOR 0 = 1 so R1= 1111 1111 1111 1111//
+    NOR R2,R2,R2
+    // 0 NOR 0 = 1 so R2= 1111 1111 1111 1111//
     SRL R2,R2
-    // R2 =  0111 1111 1111 1111 
+    // R2 =  0111 1111 1111 1111 //
     XOR R1,R1,R2
-    // R1 = 1000 0000 0000 0000
+    // R1 = 1000 0000 0000 0000//
     SRL R1,R1
-    // R1 = 0100 0000 0000 0000
+    // R1 = 0100 0000 0000 0000//
     SRL R1,R1
-    // R1 = 0010 0000 0000 0000
+    // R1 = 0010 0000 0000 0000//
     SRL R1,R1
-    // R1 = 0001 0000 0000 0000
+    // R1 = 0001 0000 0000 0000//
     SRL R1,R1
-    // R1 = 0000 1000 0000 0000
+    // R1 = 0000 1000 0000 0000//
     SRL R1,R1
-    // R1 = 0000 0100 0000 0000
+    // R1 = 0000 0100 0000 0000//
 
     OUT R1         
-    //R1 = 0000 0100 0000 0000 
-    // makes RS bit = 1 "Data mode" 
-    // and RW bit =0 "Write data"
+    //R1 = 0000 0100 0000 0000 //
+    // makes RS bit = 1 "Data mode" //
+    // and RW bit =0 "Write data"//
     NOP
-    // we must wait for the LCD to get it
+    // we must wait for the LCD to get it//
     SRL R2,R1     
-    //R2 = 0000 0010 0000 0000
+    //R2 = 0000 0010 0000 0000//
     SRL R2,R1       
-    //R2 = 0000 0001 0000 0000
+    //R2 = 0000 0001 0000 0000//
     OR R1,R1,R2    
-    // R1 = 0000 0101 0000 0000
+    // R1 = 0000 0101 0000 0000//
     OUT R1          
-    // R1 = 0000 0101 0000 0000
-    // makes E bit = 1 
+    // R1 = 0000 0101 0000 0000//
+    // makes E bit = 1 //
     NOP
     SUB R3,R3,R3
-    // cleaning R3 = 0
+    // cleaning R3 = 0//
     ORI R3,R3,XX  
-    //remove XX,add the address of the data 
-    // R3 now has the address for my data
+    //remove XX,add the address of the data //
+    // R3 now has the address for my data//
     LW R3,R3
-    // R3 now = my data 
+    // R3 now = my data //
     OR R3,R1,R3
-    // bit manipulation
-    // R1 = 0000 0101 0000 0000
-    // R3 = 0000 0000 data data
-    // OR op. -> R3 = 0000 0101 data data
+    // bit manipulation//
+    // R1 = 0000 0101 0000 0000//
+    // R3 = 0000 0000 data data//
+    // OR op. -> R3 = 0000 0101 data data//
     OUT R3
-    // showing the output value 
+    // showing the output value //
     NOP
     SLL R2,R2
-    // Check line 42 - R2 =  0000 0010 0000 0000
+    // Check line 42 - R2 =  0000 0010 0000 0000//
     SLL R2,R2
-    // R2 = 0000 0100 0000 0000
+    // R2 = 0000 0100 0000 0000//
     OUT R2        
-    // R2 value clears E 
+    // R2 value clears E //
     NOP
 JR R7
-// assumption of how the LCD is connected to the o/p port
-// if there is any changing contact me
-//  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-//  0  0  0  0  0  RS  RW E  0  1  2  3  4  5  6  7  
-// end of Galal's part
--------------------------------------------------------------------------------------------
+// assumption of how the LCD is connected to the o/p port//
+// if there is any changing contact me//
+//  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  //
+//  0  0  0  0  0  RS  RW E  0  1  2  3  4  5  6  7  //
