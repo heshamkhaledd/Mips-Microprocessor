@@ -17,26 +17,36 @@ xLCD_goToRowColumn:
     SUB  R1,R1,R1
     ADDI R1,R1,12
  // Storing the value of the Row in R0, Value of Column in R1 //
- // Making R2=0 as initial value and the index //
+ // Making R2=0 as initial value and the index, Making R3 the Bitmask Register //
     LW   R0,R0
     LW   R1,R1
     SUB  R2,R2,R2
+    SUB  R3,R3,R3
  // Checking if it is Row (0), If yes, Jump, if no, add the index+1 //
-    BEQ  R0,R2,6
-    ADDI R2,R2,1
+    BEQ  R0,R2,10
+    ADDI R2,R2,01
  // Checking if it is Row (1), If yes, Jump, if no, add the index+1 //
-    BEQ  R0,R2,6
+    BEQ  R0,R2,10
     ADD  R2,R2,R2
  // Checking if it is Row (2), If yes, Jump, if no, it must be Row (3) //
-    BEQ  R0,R2,6
- // Position Address @ Row(3) = Column + 0x50 //
-    ADDI R1,R1,80
+    BEQ  R0,R2,15
+ // Position Address @ Row(3) = Column + 0x50 (80 Decimal) //
+    ADDI R3,R3,20
+    ADD  R3,R3,R3
+    ADD  R3,R3,R3
+    ADD  R3,R3,R3
+    ADD  R1,R1,R3
     J    END
  // Position Address @ Row(0) = Column //
-    ADDI R1,R1,0
+    ADDI R1,R1,00
     J    END
- // Position Address @ Row(1) = Column+0x40 //
-    ADDI R1,R1,64
+ // Position Address @ Row(1) = Column+0x40 (64 Decimal) //
+    SUB  R3,R3,R3
+    ADDI R3,R3,20
+    ADD  R3,R3,R3
+    ADD  R3,R3,R3
+    ADDI R3,R3,04
+    ADD  R1,R1,R3
     J    END
  // Position Address @ Row(2) = Column+0x10 //
     ADDI R1,R1,16
@@ -44,30 +54,134 @@ xLCD_goToRowColumn:
 
 xEND:
     // Command = Address OR 0b0000000010000000 //
-    ORI  R1,R1,128
+    SUB  R3,R3,R3
+    // Creating the bitmask 0b0000000010000000 for the Register //
+    ADDI R3,R3,01
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    OR   R1,R1,R3
     // Clearing the index Register R2 //
     SUB  R2,R2,R2
  // RS=RW=0 --->  R2 AND 0b1110011111111111 //
-    ANDI R2,R2,59391‬
+    SUB  R3,R3,R3
+ // Creating the bitmask 0b1110011111111111 for the Register //
+    ADDI R3,R3,07
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    ADDI R3,R3,15
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    ADDI R3,R3,15
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    ADDI R3,R3,07
+    AND R2,R2,R3‬
     OUT R2
     NOP
  // E=1    --->   R2 OR  0b0000010000000000 //
-    ORI R2,R2,1024
+    SUB  R3,R3,R3
+ // Creating the bitmask 0b0000010000000000 for the Register //
+    ADDI R3,R3,01
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    OR   R2,R2,R3
     OUT R2
     NOP
  // Command<<2 = D0~D7 //
     SHL R1,R1
     SHL R1,R1
  // Sending command without changing any other bits in R1 ---> R1 OR 0b0000001111111100 //
-    ORI R1,R1,1020
+    SUB R3,R3,R3
+ // Creating the bitmask 0b0000001111111100 for the Register //
+    ADDI R3,R3,15
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    ADDI R3,R3,15
+    SHL  R3,R3
+    SHL  R3,R3
+    OR R1,R1,R3
     OUT R1
- // E=0   ---> R2 AND ob1111101111111111 //
-    ANDI R2,R2,64511‬
+ // E=0   ---> R2 AND 0b1111101111111111 //
+    SUB  R3,R3,R3
+ // Creating the bitmask 0b1111101111111111 for the Register //
+    ADDI R3,R3,15
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    ADDI R3,R3,01
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    ADDI R3,R3,15
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    ADDI R3,R3,15
+    SHL  R3,R3
+    SHL  R3,R3
+    ADDI R3,R3,03
+    AND R2,R2,R3
     OUT R2
     NOP
-    ANDI R0,R0,0
-    ANDI R1,R1,0
-    ANDI R2,R2,0
+    // Clearing The Registers used in the function (R0,R1,R2,R3) //
+    ANDI R0,R0,00
+    ANDI R1,R1,00
+    ANDI R2,R2,00
+    ANDI R3,R3,00
     JR R7
 
 

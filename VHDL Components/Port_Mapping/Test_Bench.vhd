@@ -1,36 +1,15 @@
---------------------------------------------------------------------------------
--- Company: 
--- Engineer:
---
--- Create Date:   23:46:01 03/31/2020
--- Design Name:   
--- Module Name:   E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/Test_Bench.vhd
--- Project Name:  Port_Mapping
--- Target Device:  
--- Tool versions:  
--- Description:   
+----------------------------------------------------------------------------------
+--	EECE'22 - Team (12)
+-- Engineer: Youssef Galal
 -- 
--- VHDL Test Bench Created by ISE for module: Port_Mapping
--- 
--- Dependencies:
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
---
--- Notes: 
--- This testbench has been automatically generated using types std_logic and
--- std_logic_vector for the ports of the unit under test.  Xilinx recommends
--- that these types always be used for the top-level I/O of a design in order
--- to guarantee that the testbench will bind correctly to the post-implementation 
--- simulation model.
---------------------------------------------------------------------------------
+-- Create Date:    20:13:22 02/27/2020  
+-- Module Name:    Port_Mapping
+-- Project Name:   16-Bit Harvard Architecture CPU
+-- Target Devices: Spartan 6 - TQG144
+-- Description:    A VHDL Test Bench file for CPU's wire mapping source code
+----------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
- 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---USE ieee.numeric_std.ALL;
  
 ENTITY Test_Bench IS
 END Test_Bench;
@@ -87,7 +66,7 @@ BEGIN
       wait for 100 ns;	
 
       wait for CPU_clk_period*10;
-      -- insert stimulus here 
+      
 		
       wait;
    end process;
