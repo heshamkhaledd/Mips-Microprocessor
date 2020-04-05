@@ -1,6 +1,210 @@
+﻿<<<<<<< HEAD
 -------------------------------------------------------------------------------------------
 //START OF GALAL'S PART//
 //Function Description: takes the 8-bit value in a FIXED address//
+//and displays it on the LCD// 
+//Name: Youssef Galal//
+//Note: This file format is "*code* then a comment"//
+xLCD_displayCharacter:
+=======
+//******************************************************************************
+ * Engineer:      Hesham Khaled
+ * Create date:   23:08:22 04/04/2020
+ * Function Name: LCD_goToRowColumn
+ * Description:   A function that's responsible for moving LCD's cursor
+ *                to a specific position.
+ * Inputs:        Decimal Values for Row and Column
+ * Outputs:       void
+ *
+ *******************************************************************************//
+
+xLCD_goToRowColumn:
+ // Putting R0=0, Storing in R1 the Memory address of the Row to go //
+    SUB  R0,R0,R0
+    ADDI R0,R0,11
+ // Putting R1=0, Storing in R1 the Memory address of the Column to go //
+    SUB  R1,R1,R1
+    ADDI R1,R1,12
+ // Storing the value of the Row in R0, Value of Column in R1 //
+ // Making R2=0 as initial value and the index, Making R3 the Bitmask Register //
+    LW   R0,R0
+    LW   R1,R1
+    SUB  R2,R2,R2
+    SUB  R3,R3,R3
+ // Checking if it is Row (0), If yes, Jump, if no, add the index+1 //
+    BEQ  R0,R2,10
+    ADDI R2,R2,01
+ // Checking if it is Row (1), If yes, Jump, if no, add the index+1 //
+    BEQ  R0,R2,10
+    ADD  R2,R2,R2
+ // Checking if it is Row (2), If yes, Jump, if no, it must be Row (3) //
+    BEQ  R0,R2,15
+ // Position Address @ Row(3) = Column + 0x50 (80 Decimal) //
+    ADDI R3,R3,20
+    ADD  R3,R3,R3
+    ADD  R3,R3,R3
+    ADD  R3,R3,R3
+    ADD  R1,R1,R3
+    J    END
+ // Position Address @ Row(0) = Column //
+    ADDI R1,R1,00
+    J    END
+ // Position Address @ Row(1) = Column+0x40 (64 Decimal) //
+    SUB  R3,R3,R3
+    ADDI R3,R3,20
+    ADD  R3,R3,R3
+    ADD  R3,R3,R3
+    ADDI R3,R3,04
+    ADD  R1,R1,R3
+    J    END
+ // Position Address @ Row(2) = Column+0x10 //
+    ADDI R1,R1,16
+ // After the above code, R1 = The Address of the required position //
+
+xEND:
+    // Command = Address OR 0b0000000010000000 //
+    SUB  R3,R3,R3
+    // Creating the bitmask 0b0000000010000000 for the Register //
+    ADDI R3,R3,01
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    OR   R1,R1,R3
+    // Clearing the index Register R2 //
+    SUB  R2,R2,R2
+ // RS=RW=0 --->  R2 AND 0b1110011111111111 //
+    SUB  R3,R3,R3
+ // Creating the bitmask 0b1110011111111111 for the Register //
+    ADDI R3,R3,07
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    ADDI R3,R3,15
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    ADDI R3,R3,15
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    ADDI R3,R3,07
+    AND R2,R2,R3‬
+    OUT R2
+    NOP
+ // E=1    --->   R2 OR  0b0000010000000000 //
+    SUB  R3,R3,R3
+ // Creating the bitmask 0b0000010000000000 for the Register //
+    ADDI R3,R3,01
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    OR   R2,R2,R3
+    OUT R2
+    NOP
+ // Command<<2 = D0~D7 //
+    SHL R1,R1
+    SHL R1,R1
+ // Sending command without changing any other bits in R1 ---> R1 OR 0b0000001111111100 //
+    SUB R3,R3,R3
+ // Creating the bitmask 0b0000001111111100 for the Register //
+    ADDI R3,R3,15
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    ADDI R3,R3,15
+    SHL  R3,R3
+    SHL  R3,R3
+    OR R1,R1,R3
+    OUT R1
+ // E=0   ---> R2 AND 0b1111101111111111 //
+    SUB  R3,R3,R3
+ // Creating the bitmask 0b1111101111111111 for the Register //
+    ADDI R3,R3,15
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    ADDI R3,R3,01
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    ADDI R3,R3,15
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    SHL  R3,R3
+    ADDI R3,R3,15
+    SHL  R3,R3
+    SHL  R3,R3
+    ADDI R3,R3,03
+    AND R2,R2,R3
+    OUT R2
+    NOP
+    // Clearing The Registers used in the function (R0,R1,R2,R3) //
+    ANDI R0,R0,00
+    ANDI R1,R1,00
+    ANDI R2,R2,00
+    ANDI R3,R3,00
+    JR R7
+
+
+//******************************************************************************
+ * Engineer:      Youssef Galal
+ * Create date:   22:01:17 04/04/2020
+ * Function Name: LCD_displayCharacter
+ * Description:   takes the 8-bit value stored in a FIXED Memory Location
+ *                to a specific position.
+ * Inputs:        Data to be printed
+ * Outputs:       void
+ *
+ *******************************************************************************//
+//Function Discription: takes the 8-bit value in a FIXED address//
 //and displays it on the LCD// 
 //Name: Youssef Galal//
 //Note: This file format is "*code* then a comment"//
@@ -91,7 +295,7 @@ JR R7
 //  0  0  0  0  0  RS RW E  0  1  2  3  4  5  6  7  //
 
 
-//Description: this code creates 250000 and stores it in address 25//
+//Discription: this code creates 250000 and stores it in address 25//
 //excute it in the main code//
 //this block uses only R5 and R6 from regfile//
 //Name: Youssef Galal//
@@ -134,12 +338,7 @@ SUB R5,R5,R5
 //END OF THE BLOCK//
 
 
-
-
-
-
-
-//Function Description: Delays for 1ms//
+//Function Discription: Delays for 1ms//
 //assuming that the clock used is 25MHz,1 cycle takes 40ns//
 //counter = 1ms/40ns = 25000 counts //
 //25000 is stored by default in address 25d //
