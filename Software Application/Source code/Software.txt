@@ -366,3 +366,90 @@ xDelay:
 
 // end of Galal's part//
 -------------------------------------------------------------------------------------------
+******************************************************************************
+ * Engineer:      Yahya Hamdy
+ * Create date:   1:16:17 06/04/2020
+ * Function Name: xCounter_Of_Pressed_Keys
+ * Description:  Converting the input to a value poinnting at the 
+                 number of the wanted alphapetic letter as the used assembler 
+				 is not supporting an immediate value more than 031
+ * Inputs:        Data to be printed
+ * Outputs:       void
+ *
+ *******************************************************************************//
+xCounter_Of_Pressed_Keys:NOP
+//Clear Registers R1,R2,R3,R4//
+SUB R1,R1,R1
+SUB R2,R2,R2
+SUB R3,R3,R3
+SUB R4,R4,R4
+
+//Setting R3,R4 with the values of the input and counter initial value memory locations//
+ADDI R3,R3,020
+ADDI R4,R4,021
+
+//Storing the entered value in R1 and the initial value of the counter in R2//
+LW R1,R3
+LW R2,R4 
+
+//Shift Right R1 by 4 bits and storing the shifted value in R3//
+SUB R3,R3,R3
+SRL R3,R1
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+
+//Jump to the display procedure after reading the input successfully and keeping the value of the counter unchanged//
+ANDI R3,R3,015
+SUB R4,R4,R4
+BEQ R3,R4,#OFFSET
+
+//The key is pressed again so the value of the counter will be incremented//
+ADDI R2,R2,01
+
+//Store the new value of the counter in memory//
+SUB R3,R3,R3
+ADDI R4,R4,021
+SW R2,R4
+
+//Read the next nibble and check if the key is pressed again//
+SRL R3,R1
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+ANDI R3,R3,015
+SUB R4,R4,R4
+BEQ R3,R4,#OFFSET
+ADDI R2,R2,01
+SUB R3,R3,R3
+ADDI R4,R4,021
+SW R2,R4
+
+//Read the next nibble and check if the key is pressed again//
+SRL R3,R1
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+ANDI R3,R3,015
+SUB R4,R4,R4
+BEQ R3,R4,#OFFSET
+ADDI R2,R2,01
+SUB R3,R3,R3
+ADDI R4,R4,021
+SW R2,R4
+
+//The input is read successfully , Jump to the display procedure//
+J xSend_"YOU ENTERD"_Message
+--------------------------------------------------------------------------------------------------------------------------------------
