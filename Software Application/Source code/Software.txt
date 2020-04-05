@@ -239,7 +239,7 @@ xLCD_displayCharacter:
     // makes RS bit = 1 "Data mode"//
     // and RW bit =0 "Write data" // 
     SUB R0,R0,R0
-    ORI R0,R0,R7
+    OR R0,R0,R7
     JAL xDelay
     // we must wait for the LCD to get it//
     SRL R2,R1     
