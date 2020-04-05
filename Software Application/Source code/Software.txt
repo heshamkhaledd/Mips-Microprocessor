@@ -1,74 +1,169 @@
 -------------------------------------------------------------------------------------------
-//Name: Youssef Galal
-//Function Discription: takes the 8-bit value in a FIXED address
-//and displays it on the LCD 
-//Note: This file format is "*code* then a comment"
-xLCD_displayCharacter:        
+//START OF GALAL'S PART//
+//Function Description: takes the 8-bit value in a FIXED address//
+//and displays it on the LCD// 
+//Name: Youssef Galal//
+//Note: This file format is "*code* then a comment"//
+xLCD_displayCharacter:
     SUB R1,R1,R1
-    //putting R1=0
+    //putting R1=0//
     SUB R2,R2,R2 
-    //putting R2=0
-    NOR R1,R1,00
-    // 0 NOR 0 = 1 so R1= 1111 1111 1111 1111
-    NOR R2,R2,00
-    // 0 NOR 0 = 1 so R2= 1111 1111 1111 1111
+    //putting R2=0//
+    NOR R1,R1,R1
+    // 0 NOR 0 = 1 so R1= 1111 1111 1111 1111//
+    NOR R2,R2,R2
+    // 0 NOR 0 = 1 so R2= 1111 1111 1111 1111//
     SRL R2,R2
-    // R2 =  0111 1111 1111 1111 
+    // R2 =  0111 1111 1111 1111//
     XOR R1,R1,R2
-    // R1 = 1000 0000 0000 0000
+    // R1 = 1000 0000 0000 0000//
     SRL R1,R1
-    // R1 = 0100 0000 0000 0000
+    // R1 = 0100 0000 0000 0000//
     SRL R1,R1
-    // R1 = 0010 0000 0000 0000
+    // R1 = 0010 0000 0000 0000//
     SRL R1,R1
-    // R1 = 0001 0000 0000 0000
+    // R1 = 0001 0000 0000 0000//
     SRL R1,R1
-    // R1 = 0000 1000 0000 0000
+    // R1 = 0000 1000 0000 0000//
     SRL R1,R1
-    // R1 = 0000 0100 0000 0000
-
+    // R1 = 0000 0100 0000 0000//
+    IN R4
+    //R4 = Getting the first 5 bits for masking//
+    OR R1,R1,R4 
+    // R1 = 5-bits concatenated with 100 0000 0000//
     OUT R1         
-    //R1 = 0000 0100 0000 0000 
-    // makes RS bit = 1 "Data mode" 
-    // and RW bit =0 "Write data"
-    NOP
-    // we must wait for the LCD to get it
+    // makes RS bit = 1 "Data mode"//
+    // and RW bit =0 "Write data" // 
+    SUB R0,R0,R0
+    ORI R0,R0,R7
+    JAL xDelay
+    // we must wait for the LCD to get it//
     SRL R2,R1     
-    //R2 = 0000 0010 0000 0000
+    //R2 = 0000 0010 0000 0000//
     SRL R2,R1       
-    //R2 = 0000 0001 0000 0000
+    //R2 = 0000 0001 0000 0000//
     OR R1,R1,R2    
-    // R1 = 0000 0101 0000 0000
+    // R1 = 0000 0101 0000 0000//
+    IN R4
+    //R4 = Getting the first 5 bits for masking/
+    OR R1,R1,R4 
+    // R1 = 5-bits concatenated with 101 0000 0000//
     OUT R1          
-    // R1 = 0000 0101 0000 0000
-    // makes E bit = 1 
-    NOP
+    // makes E bit = 1//
+    JAL xDelay
     SUB R3,R3,R3
-    // cleaning R3 = 0
-    ORI R3,R3,XX  
-    //remove XX,add the address of the data 
-    // R3 now has the address for my data
+    // cleaning R3 = 0//
+    ORI R3,R3,10  
+    // The data is stored in a fixed address = 10// 
+    // R3 now has the address for my data//
     LW R3,R3
-    // R3 now = my data 
+    // R3 now = my data //
     OR R3,R1,R3
-    // bit manipulation
-    // R1 = 0000 0101 0000 0000
-    // R3 = 0000 0000 data data
-    // OR op. -> R3 = 0000 0101 data data
+    // bit manipulation//
+    // R1 = 0000 0101 0000 0000//
+    // R3 = 0000 0000 data data//
+    // OR op. -> R3 = 0000 0101 data data//
+    IN R4
+    //R4 = Getting the first 5 bits for masking//
+    OR R3,R3,R4 
+    // R3 = 5-bits concatenated with 101 data data//
     OUT R3
-    // showing the output value 
-    NOP
+    // showing the data on LCD //
+    JAL xDelay
     SLL R2,R2
-    // Check line 42 - R2 =  0000 0010 0000 0000
+    // Check line 42 - R2 =  0000 0010 0000 0000//
     SLL R2,R2
-    // R2 = 0000 0100 0000 0000
+    // R2 = 0000 0100 0000 0000//
+    IN R4
+    //R4 = Getting the first 5 bits for masking//
+    OR R2,R2,R4 
+    // R1 = 5-bits concatenated with 100 0000 0000//
     OUT R2        
-    // R2 value clears E 
-    NOP
+    // R2 value clears E //
+    JAL xDelay
+    SUB R7,R7,R7
+    ORI R7,R7,R0
 JR R7
-// assumption of how the LCD is connected to the o/p port
-// if there is any changing contact me
-//  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  
-//  0  0  0  0  0  RS  RW E  0  1  2  3  4  5  6  7  
-// end of Galal's part
+
+// assumption of how the LCD is connected to the o/p port//
+// if there is any change contact me//
+//  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 //  
+//  0  0  0  0  0  RS RW E  0  1  2  3  4  5  6  7  //
+
+
+//Description: this code creates 250000 and stores it in address 25//
+//excute it in the main code//
+//this block uses only R5 and R6 from regfile//
+//Name: Youssef Galal//
+SUB R6,R6,R6
+SUB R5,R5,R5
+//R6=0 R5=0//
+ADDI R5,R5,25   
+// Address 25//
+ADDI R6,R6,24   
+//     0000 0000 0001 1000//
+SRL R6,R6       
+//     0000 0000 0011 0000//
+SRL R6,R6      
+//     0000 0000 0110 0000//
+SRL R6,R6       
+//     0000 0000 1100 0000//
+SRL R6,R6       
+//     0000 0001 1000 0000//
+SRL R6,R6       
+//     0000 0011 0000 0000//
+ADDI R6,R6,13   
+//     0000 0011 0000 1101//
+SRL R6,R6       
+//     0000 0110 0001 1010//
+SRL R6,R6       
+//     0000 1100 0011 0100//
+ADDI R6,R6,01   
+//     0000 1100 0011 0101//
+SRL R6,R6       
+//     0001 1000 0110 1010//
+SRL R6,R6       
+//     0011 0000 1101 0100//
+SRL R6,R6       
+//     0110 0001 1010 1000//
+SW R6,R5        
+//     25000 IS STORED IN ADDRESS 25//
+SUB R6,R6,R6
+SUB R5,R5,R5
+// R6=0 R5=0//
+//END OF THE BLOCK//
+
+
+
+
+
+
+
+//Function Description: Delays for 1ms//
+//assuming that the clock used is 25MHz,1 cycle takes 40ns//
+//counter = 1ms/40ns = 25000 counts //
+//25000 is stored by default in address 25d //
+//Name: Youssef Galal//
+xDelay:
+    SUB R5,R5,R5
+    SUB R6,R6,R6
+    //R6=0,R5=0//
+    ADDI R6,R6,25
+    //having the address 25 in R6//
+    LW R6,R6
+    //loading data from address 25 in R6//
+    xLoop:
+        ADDI R5,R5,01
+        //R5 accumulates untill it reaches 250000//
+        NOP
+        BEQ R5,R6,01
+        //if R5 reaches R6 "25000" we will skip the jump line//
+        J xLoop
+        //if R5 doesn't reach R6 "25000" we will go to xLoop again//
+    SUB R5,R5,R5
+    SUB R6,R6,R6
+    //getting out of the function and cleaning R5,R6//
+    JR R7
+
+// end of Galal's part//
 -------------------------------------------------------------------------------------------
