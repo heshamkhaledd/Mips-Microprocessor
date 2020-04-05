@@ -286,7 +286,7 @@ xLCD_displayCharacter:
     // R2 value clears E //
     JAL xDelay
     SUB R7,R7,R7
-    ORI R7,R7,R0
+    OR R7,R7,R0
 JR R7
 
 // assumption of how the LCD is connected to the o/p port//
@@ -295,14 +295,14 @@ JR R7
 //  0  0  0  0  0  RS RW E  0  1  2  3  4  5  6  7  //
 
 
-//Discription: this code creates 250000 and stores it in address 25//
+//Discription: this code creates 250000 and stores it in address 30//
 //excute it in the main code//
 //this block uses only R5 and R6 from regfile//
 //Name: Youssef Galal//
 SUB R6,R6,R6
 SUB R5,R5,R5
 //R6=0 R5=0//
-ADDI R5,R5,25   
+ADDI R5,R5,30   
 // Address 25//
 ADDI R6,R6,24   
 //     0000 0000 0001 1000//
@@ -331,7 +331,7 @@ SRL R6,R6
 SRL R6,R6       
 //     0110 0001 1010 1000//
 SW R6,R5        
-//     25000 IS STORED IN ADDRESS 25//
+//     25000 IS STORED IN ADDRESS 30//
 SUB R6,R6,R6
 SUB R5,R5,R5
 // R6=0 R5=0//
@@ -347,7 +347,7 @@ xDelay:
     SUB R5,R5,R5
     SUB R6,R6,R6
     //R6=0,R5=0//
-    ADDI R6,R6,25
+    ADDI R6,R6,30
     //having the address 25 in R6//
     LW R6,R6
     //loading data from address 25 in R6//
