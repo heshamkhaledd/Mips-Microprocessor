@@ -8,7 +8,133 @@
  * Outputs:       void
  *
  *******************************************************************************//
-
+//******************************************************************************
+ * Engineer:      Youssef Taha
+ * Create date:   20:24:22 05/04/2020
+ * Function Name: Set_Initial_Value
+ * Description:   A function that's responsible for setting initial value
+                  for the counter of the pressed key
+  *******************************************************************************//
+  xSet_initial_value:Nop
+  SUB	R1,R1,R1
+  SUB	R2,R2,R2
+  SUB	R3,R3,R3
+  SUB	R4,R4,R4
+  //CLEARING R1,R2,R3,R4=0//
+  ADDI	R4,R4,021
+  //STORING THE VALUE OF MEMORRY ADDRESS IN R4//
+  ADDI	R2,R2,020
+  //STORING THE VALUE OF MEMORRY ADDRESS IN R2//
+  LW	R1,R2
+  //LOAD THE VALUE OF M[20] IN R1??
+  ANDI	R1,R1,015
+  //PUTTING R1="0000 0000 0000 1111"//
+  SUB	R2,R2,R2
+  //CLEARING R2=0//
+  ADDI	R2,R2,02
+  //PUTTING R2=2//
+  BEQ	R1,R2,022
+  //IF THE VALUE STORED IN R1 = 2 THEN JUMP 22 LINES
+  TO CONDITION OF 2//
+  SUB	R2,R2,R2
+  //CLEARING R2//
+  ADDI	R2,R2,03
+  //PUTTING R2=3//
+  BEQ	R1,R2,022
+  //IF THE VALUE STORED IN R1 = 3 THEN JUMP 22 LINES
+  TO CONDITION OF 3//
+  SUB	R2,R2,R2
+  //CLEARING R2//
+  ADDI	R2,R2,04
+  //PUTTING R2=4//
+  BEQ	R1,R2,022
+  //IF THE VALUE STORED IN R1 = 3 THEN JUMP 22 LINES
+  TO CONDITION OF 4//
+  SUB	R2,R2,R2
+  //CLEARING R2//
+  ADDI	R2,R2,05
+  //PUTTING R2=5//
+  BEQ	R1,R2,022
+  //IF THE VALUE STORED IN R1 = 5 THEN JUMP 22 LINES
+  TO CONDITION OF 5//
+  SUB	R2,R2,R2
+  //CLEARING R2//
+  ADDI	R2,R2,06
+  //PUTTING R2=6//
+  BEQ	R1,R2,022
+  //IF THE VALUE STORED IN R1 = 6 THEN JUMP 22 LINES
+  TO CONDITION OF 6//
+  SUB	R2,R2,R2
+  //CLEARING R2//
+  ADDI	R2,R2,07
+  //PUTTING R2=7//
+  BEQ	R1,R2,022
+  //IF THE VALUE STORED IN R1 = 7 THEN JUMP 22 LINES
+  TO CONDITION OF 7//
+  SUB	R2,R2,R2
+  //CLEARING R2//
+  ADDI	R2,R2,08
+  //PUTTING R2=8//
+  BEQ	R1,R2,022
+  //IF THE VALUE STORED IN R1 = 8 THEN JUMP 22 LINES
+  TO CONDITION OF 8//
+  SUB	R2,R2,R2
+  //CLEARING R2//
+  ADDI	R2,R2,09
+  //PUTTING R2=9//
+  BEQ	R1,R2,022
+  //IF THE VALUE STORED IN R1 = 9 THEN JUMP 22 LINES
+  TO CONDITION OF 9//
+  //*****LEST OF NUMBERS CONDITIONS*****//
+  ADDI	R3,R3,01
+  //PUTTING R3=1 AS THIS IS THE INITIAL VALUE FOR THE 2 BUTTON//
+  SW		R3,R4
+  //STORING THE VALUE OF R4 IN THE MEMORY ADDRESS LOCATED IN R3//
+  J		xCounter_Of_Pressed_Keys
+  //JUMP TO Counter_Of_pressed_keys FUNCTION//
+  ADDI	R3,R3,04
+  //PUTTING R3=4 AS THIS IS THE INITIAL VALUE OF '3' BUTTON//
+  SW	R3,R4	
+  //STORING THE VALUW OF R4 IN THE MEMORY ADDRESS LOCATED IN R3//
+  J		xcounter_of_pressed_kesys
+  //JUMP TO Counter_Of_Pressed_Keys FUNCTION//
+  ADDI	R3,R3,07
+  //PUTTING R3=7 AS THIS IS THE INITIAL VALUW OF '4' BUTTON//
+  SW	R3,R3	
+  //STORING THE VALUE OF R4 IN THE MEMORY ADDRESS LOCATED IN R3//
+  J		xCounter_Of_Pressed_Keys
+  //JUMP TO Counter_Of_Pressed_Keys FUNCTION//
+  ADDI	R3,R3,010
+  //PUTTING R3=10 AS THIS IS THE INITIAL VALUE OF '5' BUTTON//
+  SW	R3,R4
+  //STORE THE VALUE OF R4 IN THE MEMORY ADDRESS LOCATED IN R3//
+  J		xCounter_Of_Pressed_Keys
+  //JUMP TO Counter_Of_Pressed_Keys FUNCTION//
+  ADDI	R3,R3,013
+  //PUTTING R3=13 AS THIS IS THE INITIAL VALUE OF '6' BUTTON//
+  SW	R3,R4
+  //STORING THE VALUE OF R3 IN MEMORY ADDRESS LOCATED IN R4//
+  J		xCounter_Of_Pressed_Keys
+  //JUMP TO Counter_Of_Pressed_Keys FUNCTION//
+  ADDI R3,R3,016
+  //PUTTING R3=16 AS THIS IS THE INITIAL VALUE OF '7' BUTTON//
+  SW	R3,R4 
+  //STORING THE VALUE OF R4 IN MEMORY ADDRESS LOCATED IN R3//
+  J		xCounter_Of_Pressed_Keys
+  //JUMP TO Counter_Of_Pressed_Keys FUNCTION//
+  ADDI	R3,R3,020
+  //PUTTING R3=20 AS THIS IS THE INITIAL VALUE OF '8' BUTTON//
+  SW	R3,R4
+  //STORING THE VALUE OF R4 IN MEMORY ADDRESS LOCATED IN R3//
+  J		xCounter_Of_Pressed_Keys
+  //JUMP TO Counter_Of_Pressed_Keys FUNCTION//
+  ADDI	R3,R3,023
+  //PUTTING R3=23 AS THIS IS THE INITIAL VALUE OF '9' BUTTON//
+  SW	R3,R4
+  //STORING THE VALUE OF R3 IN MEMORY ADDRESS LOCATED IN R4//
+  J		xCounter_Of_Pressed_Keys
+  //JUMP TO Counter_Of_Pressed_Keys FUNCTION//
+ // ************************************************************************************************//
 xLCD_goToRowColumn: NOP
  // Putting R0=0, Storing in R1 the Memory address of the Row to go //
     SUB  R0,R0,R0
