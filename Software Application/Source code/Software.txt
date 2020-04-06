@@ -572,3 +572,168 @@ SW R2,R4
 //The input is read successfully , Jump to the display procedure//
 J xSend_"YOU ENTERD"_Message
 //-------------------------------------------------------------------------------------------------------------------------------------//
+//***********************************************
+*Engineer        : Mohamed Ammar
+*Creat data      : 6/4/2020 
+*Function name   : Send_"YOU ENTERD"_Message
+*Description     : A function to print string 
+
+***********************************************//
+
+ xSend_"YOU ENTERD"_Message
+
+ // ASCII CODE OF A //
+ SUB  R6,R6,R6
+ SUB  R1,R1,R1
+ SUB  R2,R2,R2
+ ADDI R6,R6,30
+ ADDI R6,R6,30
+ ADDI R6,R6,5
+ 
+ // PRINTING Y //
+ ADD  R1,R1,R6
+ ADDI R1,R1,24
+ ADDI R2,R2,10
+ SW   R1,R2
+
+ // GOTO ROW 1 // 
+ SUB  R1,R1,R1
+ SUB  R2,R2,R2
+ ADDI R1,R1,1
+ ADDI R2,R2,11
+ SW   R1,R2
+ 
+ //GOTO COL1 //
+ SUB  R1,R1,R1
+ SUB  R2,R2,R2
+ ADDI R1,R1,1
+ ADDI R2,R2,12
+ SW   R1,R2
+ 
+ JAL xLCD_goToRowColumn
+ JAL xLCD_displayCharacter 
+ 
+ // PRINTING O //
+ SUB  R1,R1,R1
+ SUB  R2,R2,R2
+ ADD  R1,R1,R6
+ ADDI R1,R1,14
+ ADDI R2,R2,10
+ SW   R1,R2
+ JAL xLCD_displayCharacter 
+
+ // PRINTING U //
+ SUB  R1,R1,R1
+ SUB  R2,R2,R2
+ ADD  R1,R1,R6
+ ADDI R1,R1,20
+ ADDI R2,R2,10
+ SW   R1,R2
+ JAL xLCD_displayCharacter 
+ 
+ // PRINTING SPACE //
+ SUB  R1,R1,R1  
+ SUB  R2,R2,R2
+ ADDI R1,R1,30
+ ADDI R1,R1,2
+ ADDI R2,R2,10
+ SW   R1,R2
+ JAL xLCD_displayCharacter 
+ 
+ // PRINTING E //
+ SUB  R1,R1,R1
+ SUB  R2,R2,R2
+ ADD  R1,R1,R6
+ ADDI R1,R1,4
+ ADDI R2,R2,10
+ SW   R1,R2
+ JAL xLCD_displayCharacter 
+
+ // PRINTING N //
+ SUB  R1,R1,R1
+ SUB  R2,R2,R2
+ ADD  R1,R1,R6
+ ADDI R1,R1,13
+ ADDI R2,R2,10
+ SW   R1,R2
+ JAL xLCD_displayCharacter 
+
+ // PRINTING T //
+ SUB  R1,R1,R1
+ SUB  R2,R2,R2
+ ADD  R1,R1,R6
+ ADDI R1,R1,19
+ ADDI R2,R2,10
+ SW   R1,R2
+ JAL xLCD_displayCharacter 
+
+ // PRINTING E //
+ SUB  R1,R1,R1
+ SUB  R2,R2,R2
+ ADD  R1,R1,R6
+ ADDI R1,R1,4
+ ADDI R2,R2,10
+ SW   R1,R2
+ JAL xLCD_displayCharacter 
+
+ // PRINTING R //
+ SUB  R1,R1,R1
+ SUB  R2,R2,R2
+ ADD  R1,R1,R6
+ ADDI R1,R1,17
+ ADDI R2,R2,10
+ SW   R1,R2
+ JAL xLCD_displayCharacter 
+
+ // PRINTING E //
+ SUB  R1,R1,R1
+ SUB  R2,R2,R2
+ ADD  R1,R1,R6
+ ADDI R1,R1,4
+ ADDI R2,R2,10
+ SW   R1,R2
+ JAL xLCD_displayCharacter 
+
+ // PRINTING D //
+ SUB  R1,R1,R1
+ SUB  R2,R2,R2
+ ADD  R1,R1,R6
+ ADDI R1,R1,3
+ ADDI R2,R2,10
+ SW   R1,R2
+ JAL xLCD_displayCharacter 
+
+ // PRINTING : //
+ SUB  R1,R1,R1  
+ SUB  R2,R2,R2
+ ADDI R1,R1,30
+ ADDI R1,R1,28
+ ADDI R2,R2,10
+ SW   R1,R2
+ JAL xLCD_displayCharacter 
+ 
+ // PRINTING SPACE //
+ SUB  R1,R1,R1  
+ SUB  R2,R2,R2
+ ADDI R1,R1,30
+ ADDI R1,R1,2
+ ADDI R2,R2,10
+ SW   R1,R2
+ JAL xLCD_displayCharacter 
+ 
+ // ASCII CODE OF REQUIRED LETTER //
+ SUB  R1,R1,R1
+ SUB  R2,R2,R2
+ SUB  R3,R3,R3
+ ADDI R3,R3,1
+ ADDI R2,R2,21
+ LW   R1,R2
+ ADD  R1,R1,R6 
+ SUB  R1,R1,R3
+ 
+ //  PRINTING THE LETTER  //
+ SUB  R2,R2,R2
+ ADDI R2,R2,10
+ SW   R1,R2 
+ JAL xLCD_displayCharacter
+//-------------------------------------------------------------------------------------------------------------------------------------// 
