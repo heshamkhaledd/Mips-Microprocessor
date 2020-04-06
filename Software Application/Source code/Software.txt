@@ -230,7 +230,7 @@ xLCD_displayCharacter:
     // makes RS bit = 1 "Data mode"//
     // and RW bit =0 "Write data" // 
     SUB R0,R0,R0
-    ORI R0,R0,R7
+    OR R0,R0,R7
     JAL xDelay
     // we must wait for the LCD to get it//
     SRL R2,R1     
@@ -277,7 +277,7 @@ xLCD_displayCharacter:
     // R2 value clears E //
     JAL xDelay
     SUB R7,R7,R7
-    ORI R7,R7,R0
+    OR R7,R7,R0
 JR R7
 
 // assumption of how the LCD is connected to the o/p port//
@@ -286,14 +286,14 @@ JR R7
 //  0  0  0  0  0  RS RW E  0  1  2  3  4  5  6  7  //
 
 
-//Discription: this code creates 250000 and stores it in address 25//
+//Discription: this code creates 250000 and stores it in address 30//
 //excute it in the main code//
 //this block uses only R5 and R6 from regfile//
 //Name: Youssef Galal//
 SUB R6,R6,R6
 SUB R5,R5,R5
 //R6=0 R5=0//
-ADDI R5,R5,25   
+ADDI R5,R5,30   
 // Address 25//
 ADDI R6,R6,24   
 //     0000 0000 0001 1000//
@@ -322,7 +322,7 @@ SRL R6,R6
 SRL R6,R6       
 //     0110 0001 1010 1000//
 SW R6,R5        
-//     25000 IS STORED IN ADDRESS 25//
+//     25000 IS STORED IN ADDRESS 30//
 SUB R6,R6,R6
 SUB R5,R5,R5
 // R6=0 R5=0//
@@ -338,7 +338,7 @@ xDelay:
     SUB R5,R5,R5
     SUB R6,R6,R6
     //R6=0,R5=0//
-    ADDI R6,R6,25
+    ADDI R6,R6,30
     //having the address 25 in R6//
     LW R6,R6
     //loading data from address 25 in R6//
@@ -357,3 +357,90 @@ xDelay:
 
 // end of Galal's part//
 -------------------------------------------------------------------------------------------
+******************************************************************************
+ * Engineer:      Yahya Hamdy
+ * Create date:   1:16:17 06/04/2020
+ * Function Name: xCounter_Of_Pressed_Keys
+ * Description:  Converting the input to a value poinnting at the 
+                 number of the wanted alphapetic letter as the used assembler 
+				 is not supporting an immediate value more than 031
+ * Inputs:        Data to be printed
+ * Outputs:       void
+ *
+ *******************************************************************************//
+xCounter_Of_Pressed_Keys:NOP
+//Clear Registers R1,R2,R3,R4//
+SUB R1,R1,R1
+SUB R2,R2,R2
+SUB R3,R3,R3
+SUB R4,R4,R4
+
+//Setting R3,R4 with the values of the input and counter initial value memory locations//
+ADDI R3,R3,020
+ADDI R4,R4,021
+
+//Storing the entered value in R1 and the initial value of the counter in R2//
+LW R1,R3
+LW R2,R4 
+
+//Shift Right R1 by 4 bits and storing the shifted value in R3//
+SUB R3,R3,R3
+SRL R3,R1
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+
+//Jump to the display procedure after reading the input successfully and keeping the value of the counter unchanged//
+ANDI R3,R3,015
+SUB R4,R4,R4
+BEQ R3,R4,#OFFSET
+
+//The key is pressed again so the value of the counter will be incremented//
+ADDI R2,R2,01
+
+//Store the new value of the counter in memory//
+SUB R3,R3,R3
+ADDI R4,R4,021
+SW R2,R4
+
+//Read the next nibble and check if the key is pressed again//
+SRL R3,R1
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+ANDI R3,R3,015
+SUB R4,R4,R4
+BEQ R3,R4,#OFFSET
+ADDI R2,R2,01
+SUB R3,R3,R3
+ADDI R4,R4,021
+SW R2,R4
+
+//Read the next nibble and check if the key is pressed again//
+SRL R3,R1
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+SRL R3,R3
+ANDI R3,R3,015
+SUB R4,R4,R4
+BEQ R3,R4,#OFFSET
+ADDI R2,R2,01
+SUB R3,R3,R3
+ADDI R4,R4,021
+SW R2,R4
+
+//The input is read successfully , Jump to the display procedure//
+J xSend_"YOU ENTERD"_Message
+--------------------------------------------------------------------------------------------------------------------------------------
