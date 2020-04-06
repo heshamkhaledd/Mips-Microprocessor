@@ -1,13 +1,4 @@
-﻿<<<<<<< HEAD
--------------------------------------------------------------------------------------------
-//START OF GALAL'S PART//
-//Function Description: takes the 8-bit value in a FIXED address//
-//and displays it on the LCD// 
-//Name: Youssef Galal//
-//Note: This file format is "*code* then a comment"//
-xLCD_displayCharacter:
-=======
-//******************************************************************************
+﻿//******************************************************************************
  * Engineer:      Hesham Khaled
  * Create date:   23:08:22 04/04/2020
  * Function Name: LCD_goToRowColumn
@@ -18,7 +9,7 @@ xLCD_displayCharacter:
  *
  *******************************************************************************//
 
-xLCD_goToRowColumn:
+xLCD_goToRowColumn: NOP
  // Putting R0=0, Storing in R1 the Memory address of the Row to go //
     SUB  R0,R0,R0
     ADDI R0,R0,11
@@ -45,10 +36,10 @@ xLCD_goToRowColumn:
     ADD  R3,R3,R3
     ADD  R3,R3,R3
     ADD  R1,R1,R3
-    J    END
+    J    xEND
  // Position Address @ Row(0) = Column //
     ADDI R1,R1,00
-    J    END
+    J    xEND
  // Position Address @ Row(1) = Column+0x40 (64 Decimal) //
     SUB  R3,R3,R3
     ADDI R3,R3,20
@@ -56,23 +47,23 @@ xLCD_goToRowColumn:
     ADD  R3,R3,R3
     ADDI R3,R3,04
     ADD  R1,R1,R3
-    J    END
+    J    xEND
  // Position Address @ Row(2) = Column+0x10 //
     ADDI R1,R1,16
  // After the above code, R1 = The Address of the required position //
 
-xEND:
+xEND: NOP
     // Command = Address OR 0b0000000010000000 //
     SUB  R3,R3,R3
     // Creating the bitmask 0b0000000010000000 for the Register //
     ADDI R3,R3,01
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
     OR   R1,R1,R3
     // Clearing the index Register R2 //
     SUB  R2,R2,R2
@@ -80,31 +71,31 @@ xEND:
     SUB  R3,R3,R3
  // Creating the bitmask 0b1110011111111111 for the Register //
     ADDI R3,R3,07
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
     ADDI R3,R3,15
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
     ADDI R3,R3,15
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
     ADDI R3,R3,07
     AND R2,R2,R3‬
     OUT R2
@@ -113,75 +104,75 @@ xEND:
     SUB  R3,R3,R3
  // Creating the bitmask 0b0000010000000000 for the Register //
     ADDI R3,R3,01
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
     OR   R2,R2,R3
     OUT R2
     NOP
  // Command<<2 = D0~D7 //
-    SHL R1,R1
-    SHL R1,R1
+    SLL R1,R1
+    SLL R1,R1
  // Sending command without changing any other bits in R1 ---> R1 OR 0b0000001111111100 //
     SUB R3,R3,R3
  // Creating the bitmask 0b0000001111111100 for the Register //
     ADDI R3,R3,15
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
     ADDI R3,R3,15
-    SHL  R3,R3
-    SHL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
     OR R1,R1,R3
     OUT R1
  // E=0   ---> R2 AND 0b1111101111111111 //
     SUB  R3,R3,R3
  // Creating the bitmask 0b1111101111111111 for the Register //
     ADDI R3,R3,15
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
     ADDI R3,R3,01
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
     ADDI R3,R3,15
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
-    SHL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
     ADDI R3,R3,15
-    SHL  R3,R3
-    SHL  R3,R3
+    SLL  R3,R3
+    SLL  R3,R3
     ADDI R3,R3,03
     AND R2,R2,R3
     OUT R2
