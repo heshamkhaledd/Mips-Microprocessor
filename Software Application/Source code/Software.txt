@@ -574,7 +574,8 @@ J xSend_"YOU ENTERD"_Message
 //-------------------------------------------------------------------------------------------------------------------------------------//
 //***********************************************
 *Engineer        : Mohamed Ammar
-*Creat data      : 6/4/2020 
+*Creat date      : 6/4/2020 
+*Edited          : 7/4/2020
 *Function name   : Send_"YOU ENTERD"_Message
 *Description     : A function to print string 
 
@@ -582,17 +583,12 @@ J xSend_"YOU ENTERD"_Message
 
  xSend_"YOU ENTERD"_Message
 
- // ASCII CODE OF A //
- SUB  R6,R6,R6
+ // PRINTING Y //
  SUB  R1,R1,R1
  SUB  R2,R2,R2
- ADDI R6,R6,30
- ADDI R6,R6,30
- ADDI R6,R6,5
- 
- // PRINTING Y //
- ADD  R1,R1,R6
- ADDI R1,R1,24
+ ADD  R1,R1,30
+ ADDI R1,R1,30
+ ADDI R1,R1,29
  ADDI R2,R2,10
  SW   R1,R2
 
@@ -616,8 +612,9 @@ J xSend_"YOU ENTERD"_Message
  // PRINTING O //
  SUB  R1,R1,R1
  SUB  R2,R2,R2
- ADD  R1,R1,R6
- ADDI R1,R1,14
+ ADD  R1,R1,30
+ ADDI R1,R1,30
+ ADDI R1,R1,19
  ADDI R2,R2,10
  SW   R1,R2
  JAL xLCD_displayCharacter 
@@ -625,8 +622,9 @@ J xSend_"YOU ENTERD"_Message
  // PRINTING U //
  SUB  R1,R1,R1
  SUB  R2,R2,R2
- ADD  R1,R1,R6
- ADDI R1,R1,20
+ ADD  R1,R1,30
+ ADDI R1,R1,30
+ ADDI R1,R1,25
  ADDI R2,R2,10
  SW   R1,R2
  JAL xLCD_displayCharacter 
@@ -643,35 +641,39 @@ J xSend_"YOU ENTERD"_Message
  // PRINTING E //
  SUB  R1,R1,R1
  SUB  R2,R2,R2
- ADD  R1,R1,R6
- ADDI R1,R1,4
+ ADD  R1,R1,30
+ ADDI R1,R1,30
+ ADDI R1,R1,9
  ADDI R2,R2,10
  SW   R1,R2
- JAL xLCD_displayCharacter 
+ JAL xLCD_displayCharacter
 
  // PRINTING N //
  SUB  R1,R1,R1
  SUB  R2,R2,R2
- ADD  R1,R1,R6
- ADDI R1,R1,13
+ ADD  R1,R1,30
+ ADDI R1,R1,30
+ ADDI R1,R1,18
  ADDI R2,R2,10
  SW   R1,R2
- JAL xLCD_displayCharacter 
+ JAL xLCD_displayCharacter
 
  // PRINTING T //
  SUB  R1,R1,R1
  SUB  R2,R2,R2
- ADD  R1,R1,R6
- ADDI R1,R1,19
+ ADD  R1,R1,30
+ ADDI R1,R1,30
+ ADDI R1,R1,24
  ADDI R2,R2,10
  SW   R1,R2
- JAL xLCD_displayCharacter 
+ JAL xLCD_displayCharacter
 
  // PRINTING E //
  SUB  R1,R1,R1
  SUB  R2,R2,R2
- ADD  R1,R1,R6
- ADDI R1,R1,4
+ ADD  R1,R1,30
+ ADDI R1,R1,30
+ ADDI R1,R1,9
  ADDI R2,R2,10
  SW   R1,R2
  JAL xLCD_displayCharacter 
@@ -679,17 +681,19 @@ J xSend_"YOU ENTERD"_Message
  // PRINTING R //
  SUB  R1,R1,R1
  SUB  R2,R2,R2
- ADD  R1,R1,R6
- ADDI R1,R1,17
+ ADD  R1,R1,30
+ ADDI R1,R1,30
+ ADDI R1,R1,22
  ADDI R2,R2,10
  SW   R1,R2
- JAL xLCD_displayCharacter 
+ JAL xLCD_displayCharacter
 
  // PRINTING E //
  SUB  R1,R1,R1
  SUB  R2,R2,R2
- ADD  R1,R1,R6
- ADDI R1,R1,4
+ ADD  R1,R1,30
+ ADDI R1,R1,30
+ ADDI R1,R1,9
  ADDI R2,R2,10
  SW   R1,R2
  JAL xLCD_displayCharacter 
@@ -697,11 +701,12 @@ J xSend_"YOU ENTERD"_Message
  // PRINTING D //
  SUB  R1,R1,R1
  SUB  R2,R2,R2
- ADD  R1,R1,R6
- ADDI R1,R1,3
+ ADD  R1,R1,30
+ ADDI R1,R1,30
+ ADDI R1,R1,8
  ADDI R2,R2,10
  SW   R1,R2
- JAL xLCD_displayCharacter 
+ JAL xLCD_displayCharacter
 
  // PRINTING : //
  SUB  R1,R1,R1  
@@ -721,19 +726,19 @@ J xSend_"YOU ENTERD"_Message
  SW   R1,R2
  JAL xLCD_displayCharacter 
  
+
  // ASCII CODE OF REQUIRED LETTER //
  SUB  R1,R1,R1
  SUB  R2,R2,R2
- SUB  R3,R3,R3
- ADDI R3,R3,1
  ADDI R2,R2,21
  LW   R1,R2
- ADD  R1,R1,R6 
- SUB  R1,R1,R3
- 
+ ADDI R1,R1,30 
+ ADDI R1,R1,30
+ ADDI R1,R1,4
+
  //  PRINTING THE LETTER  //
  SUB  R2,R2,R2
  ADDI R2,R2,10
  SW   R1,R2 
- JAL xLCD_displayCharacter
+ JAL xLCD_displayCharacter 
 //-------------------------------------------------------------------------------------------------------------------------------------// 
