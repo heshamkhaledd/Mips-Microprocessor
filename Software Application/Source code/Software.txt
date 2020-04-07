@@ -357,9 +357,11 @@ xDelay:
     JR R7
 
 // end of Galal's part//
+
 //-------------------------------------------------------------------------------------------//
+
 //******************************************************************************
- * Engineer:      Youssef Taha
+
  * Create date:   20:24:22 05/04/2020
  * Function Name: Set_Initial_Value
  * Description:   A function that's responsible for setting initial value
@@ -484,7 +486,59 @@ xDelay:
   //STORING THE VALUE OF R3 IN MEMORY ADDRESS LOCATED IN R4//
   J		xCounter_Of_Pressed_Keys
   //JUMP TO Counter_Of_Pressed_Keys FUNCTION//
+  
+  //******************************************************************************//
+ * Create date:   23:08:22 04/07/2020
+ * MACROS Name:   ADJUST_CURSOR & PRINT_DOT & LOAD_R1
+ * Description:   ADJUST_CURSOR : MOVING THE CURSOR TO THE R1,R2 coordinates
+                  PRINT_DOT     : PRINTING DOTS
+				  LOAD_R1       : LOADING R1 WITH THE DATA IN M[21]
+			
+                  
+// *******************************************************************************//
+ 
+ //MACRO THAT IS RESPONSIBLE FOR MOVING THE CURSOR TO ANY PLACE
+ IN LCD JUST PUT THE ROW IN R1,COLUMN IN R2 //
+ 
+ xADJUST_CURSOR:NOP
+ SUB	R3,R3,R3
+ SUB	R4,R4,R4
+ ADDI	R3,R3,011
+ ADDI	R4,R4,012
+ SW		R1,R3
+ SW		R2,R4
+ J 	    xLCD_goToRowColumn
+ 
+ //**************************************************************************//
+ 
+ //MACRO THAT IS RESPONSIBLE FOR GETTING THE ASCII CODE OF DOT IN M[21]
+ AND PRINT IT //
+ 
+ xPRINT_DOT:NOP
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R2,022
+ LW		R1,R2
+ SUB	R2,R2,R2
+ ADDI	R2,R2,010
+ SW		R1,R2
+ J	    xLCD_displayCharacter 
+ 
+ //***************************************************************************//
+ 
+ //MACRO THAT IS RESPONSIBLE FOR LOADING R1 WITH DATA IN M[21]//
+ 
+ xLOAD_R1:NOP
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,021
+ LW		R1,R2
+ JR		R7
+ 
+ //****************************************************************************//
+ 
 //-------------------------------------------------------------------------------------------------------//
+
 //******************************************************************************
  * Engineer:      Yahya Hamdy
  * Create date:   1:16:17 06/04/2020
@@ -742,3 +796,318 @@ J xSend_"YOU ENTERD"_Message
  SW   R1,R2 
  JAL xLCD_displayCharacter 
 //-------------------------------------------------------------------------------------------------------------------------------------// 
+ //******************************************************************************
+ * Engineer:      Mohamed AMMAR & YAHYA HAMDY & YOUSSEF TAHA
+ * Create date:   23:08:22 04/07/2020
+ * Function Name: PRINT_BRAILLE_CHARACTER
+ * Description:   A function that's responsible for converting the character 
+                  to braille language
+ *     
+ * Inputs:        The Character Number
+ * Outputs:       void
+ *******************************************************************************//
+ 
+ //PUTTING DOT ASCII IN M[22]//
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,030
+ ADDI	R1,R1,016
+ ADDI	R2,R2,022
+ SW		R1,R2
+
+ //****************************************************************************//
+ //THE VALUE OF THE CHARACTER STORED IN M[21] SO WE LOAD R1 WITH M[21]
+   ,COMPARE THE CHARACTER NUMBER WITH ALL CHARACTERS NUMBERS IF THERE IS A MATCH 
+   WE PRINT THE CHARACTER IN BRAILLE LANGUAGE //
+ //****************************************************************************//
+ 
+ xCHECK_A:NOP
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,01
+ 
+ //IF THE CHARACTER IS 'A' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+   TO THE A DRAWING LINES OF CODE IF IT ISN'T 'A' WE JUMP TO NEXT LINE OF BEQ 
+   WHICH IS CHECK_B//
+   
+ BEQ	R1,R2,02
+ J		xCHECK_B
+ 
+ // 'A' DRAWING LINE OF CODE THAT PRINT A IN BRAILLE
+     ". "//
+ 
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ 
+ xCHECK_B:NOP
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,02
+ 
+  //IF THE CHARACTER IS 'B' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+   TO THE 'B' DRAWING LINES OF CODE IF IT ISN'T 'B' WE JUMP TO NEXT LINE OF BEQ 
+   WHICH IS CHECK_C//
+   
+ BEQ 	R1,R2,02
+ J		xCHECK_C
+ 
+  // 'B' DRAWING LINES OF CODE THAT PRINT 'B' IN BRAILLE
+     ". "
+     ". "//
+ 
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ 
+ xCHECK_C:NOP
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,03
+ 
+   //IF THE CHARACTER IS 'C' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+   TO THE 'C' DRAWING LINES OF CODE IF IT ISN'T 'C' WE JUMP TO NEXT LINE OF BEQ 
+   WHICH IS CHECK_D//
+   
+ BEQ	R1,R2,02
+ J		xCHECK_D
+ 
+   // 'C' DRAWING LINES OF CODE THAT PRINT 'C' IN BRAILLE
+      ". ."
+      "   "//
+ 
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,02
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ 
+ xCHECK_D:NOP
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,04
+ 
+    //IF THE CHARACTER IS 'D' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+   TO THE 'D' DRAWING LINES OF CODE IF IT ISN'T 'D' WE JUMP TO NEXT LINE OF BEQ 
+   WHICH IS CHECK_E//
+   
+ BEQ	R1,R2,x02
+ J		xCHECK_E
+ 
+    // 'D' DRAWING LINES OF CODE THAT PRINT 'D' IN BRAILLE
+        ". ."
+        "  ."//
+ 
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,02
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,02
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ 
+ xCHECK_E:NOP
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,05
+ 
+    //IF THE CHARACTER IS 'E' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+   TO THE 'E' DRAWING LINES OF CODE IF IT ISN'T 'E' WE JUMP TO NEXT LINE OF BEQ 
+   WHICH IS CHECK_F//
+   
+ BEQ	R1,R2,02
+ J		xCHECK_F
+ 
+     // 'D' DRAWING LINES OF CODE THAT PRINT 'D' IN BRAILLE
+        ".  "
+        "  ."//
+ 
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,02
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ 
+ xCHECK_F:NOP
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,06
+ 
+   //IF THE CHARACTER IS 'F' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+   TO THE 'F' DRAWING LINES OF CODE IF IT ISN'T 'F' WE JUMP TO NEXT LINE OF BEQ 
+   WHICH IS CHECK_G//
+   
+ BEQ	R1,R2,xCHARACTER F CONDITION//2
+ J		xCHECK_G
+ 
+      // 'F' DRAWING LINES OF CODE THAT PRINT 'F' IN BRAILLE
+          ". ."
+          "  ."//
+ 
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,02
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ 
+ xCHECK_G:NOP
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,07
+ 
+    //IF THE CHARACTER IS 'G' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+      TO THE 'F' DRAWING LINES OF CODE IF IT ISN'T 'G' WE JUMP TO NEXT LINE OF BEQ 
+      WHICH IS CHECK_H//
+   
+ BEQ	R1,R2,02
+ J		xCHECK_H
+ 
+       // 'G' DRAWING LINES OF CODE THAT PRINT 'G' IN BRAILLE
+          ". ."
+          ". ."//
+		  
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,02
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,02
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+
+xCHECK_H:NOP
+ JAL	xLOAD_R1
+ SUB	R2,R,R2
+ ADDI	R2,R2,08
+ 
+     //IF THE CHARACTER IS 'H' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+      TO THE 'H' DRAWING LINES OF CODE IF IT ISN'T 'H' WE JUMP TO NEXT LINE OF BEQ 
+      WHICH IS CHECK_I//
+	  
+ BEQ	R1,R2,xCHARACTER H CONDITION//2
+ J		xCHECK_I
+ 
+       // 'H' DRAWING LINES OF CODE THAT PRINT 'H' IN BRAILLE
+          ".  "
+          ". ."//
+		  
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,02
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ xCHECK_I:NOP
+  JAL	xLOAD_R1
+ SUB	R2,R,R2
+ ADDI	R2,R2,09
+      //IF THE CHARACTER IS 'I' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+      TO THE 'I' DRAWING LINES OF CODE IF IT ISN'T 'I' WE JUMP TO NEXT LINE OF BEQ 
+      WHICH IS CHECK_J//
+	  
+ BEQ	R1,R2,02
+ J		xCHECK_J
+ 
+        // 'H' DRAWING LINES OF CODE THAT PRINT 'H' IN BRAILLE
+          "  ."
+          ".  "//
+ 
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,02
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ 
+ xCHECK_J:NOP
+  
+ 
+ 
+ 
+ 
+ 
+ 
