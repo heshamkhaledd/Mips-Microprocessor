@@ -375,10 +375,12 @@ SUB  R4,R4,R4
 //Load the Value of the pressed key from the memory location M[00]//
 ADDI R4,R4,000
 LW   R1,R4
-//Sending the stored value from R1 to the memory location M[20]//
+//R4=0, Sending the stored value from R1 to the memory location M[20]//
+SUB  R4,R4,R4
 ADDI R4,R4,020
 SW   R1,R4
 //Getting the pressed key which is '*' or '#'//
+xCheckInput:
 JAL  xKeypad_GetPressedKey
 //Clear the registers//
 SUB  R1,R1,R1
@@ -390,7 +392,8 @@ ADDI R3,R3,00
 //Load the previous value of the pressed key from M[20] to R1//
 ADDI R4,R4,020
 LW   R1,R4
-//Check if the user pressed '*'//
+//R4=0, Check if the user pressed '*'//
+SUB  R4,R4,R4
 ADDI R4,R4,000
 LW   R2,R4
 BEQ  R2,R3,02
@@ -400,7 +403,8 @@ SRL  R1,R1
 SRL  R1,R1
 SRL  R1,R1
 SRL  R1,R1
-//Sending the stored value from R1 to the memory location M[20]//
+//R4=0, Sending the stored value from R1 to the memory location M[20]//
+SUB  R4,R4,R4
 ADDI R4,R4,020
 SW   R1,R4
 //Getting the pressed key after the '*'//
@@ -413,14 +417,23 @@ SUB  R4,R4,R4
 //Load the previous value of the pressed key from M[20] to R1//
 ADDI R4,R4,020
 LW   R1,R4
-//Load the next pressed key in R2//
+//R4=0, Load the next pressed key in R2//
+SUB  R4,R4,R4
 ADDI R4,R4,000
 LW   R2,R4
 OR   R1,R1,R2
-//if the user pressed '#', sending the stored value to the memory location M[20]//
-xHashtag_Pressed:
+//R4=0, Sending the stored value from R1 to the memory location M[20]//
+SUB  R4,R4,R4
 ADDI R4,R4,020
 SW   R1,R4
+//Jump to the check of the '*' and '#'//
+J    xCheckInput
+//R4=0, if the user pressed '#', sending the stored value to the memory location M[20]//
+xHashtag_Pressed:
+SUB  R4,R4,R4
+ADDI R4,R4,020
+SW   R1,R4
+J    xSet_initial_value
 //-------------------------------------------------------------------------------------------------//
 //******************************************************************************
 
