@@ -359,7 +359,69 @@ xDelay:
 // end of Galal's part//
 
 //-------------------------------------------------------------------------------------------//
-
+//***********************************************
+*Engineer        : Mena Emiel
+*Create date     : 7/4/2020 
+*Function name   : Store_PressedKey
+*Description     : Store value of the pressed key from the keypad
+***********************************************//
+xStore_PressedKey:
+JAL  xKeypad_GetPressedKey
+//Clear the registers//
+SUB  R1,R1,R1
+SUB  R2,R2,R2
+SUB  R3,R3,R3
+SUB  R4,R4,R4
+//Load the Value of the pressed key from the memory location M[00]//
+ADDI R4,R4,000
+LW   R1,R4
+//Sending the stored value from R1 to the memory location M[20]//
+ADDI R4,R4,020
+SW   R1,R4
+//Getting the pressed key which is '*' or '#'//
+JAL  xKeypad_GetPressedKey
+//Clear the registers//
+SUB  R1,R1,R1
+SUB  R2,R2,R2
+SUB  R3,R3,R3
+SUB  R4,R4,R4
+//Store the value of '*' in R3//
+ADDI R3,R3,00
+//Load the previous value of the pressed key from M[20] to R1//
+ADDI R4,R4,020
+LW   R1,R4
+//Check if the user pressed '*'//
+ADDI R4,R4,000
+LW   R2,R4
+BEQ  R2,R3,02
+J    xHashtag_Pressed
+//if the user pressed '*', shifting the register value to store next pressed key//
+SRL  R1,R1
+SRL  R1,R1
+SRL  R1,R1
+SRL  R1,R1
+//Sending the stored value from R1 to the memory location M[20]//
+ADDI R4,R4,020
+SW   R1,R4
+//Getting the pressed key after the '*'//
+JAL  xKeypad_GetPressedKey
+//Clear the registers//
+SUB  R1,R1,R1
+SUB  R2,R2,R2
+SUB  R3,R3,R3
+SUB  R4,R4,R4
+//Load the previous value of the pressed key from M[20] to R1//
+ADDI R4,R4,020
+LW   R1,R4
+//Load the next pressed key in R2//
+ADDI R4,R4,000
+LW   R2,R4
+OR   R1,R1,R2
+//if the user pressed '#', sending the stored value to the memory location M[20]//
+xHashtag_Pressed:
+ADDI R4,R4,020
+SW   R1,R4
+//-------------------------------------------------------------------------------------------------//
 //******************************************************************************
 
  * Create date:   20:24:22 05/04/2020
