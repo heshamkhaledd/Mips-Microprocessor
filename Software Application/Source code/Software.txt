@@ -1349,632 +1349,588 @@ xCHECK_H:NOP
 
 //******************************************************************************
 *Engineer        : Reem Saleh
-*Creat date      : 10:10:26 8/4/2020 
-*Function name   : LCD_init
+*Create date      : 10:10:26 8/4/2020 
+*Function name   : xLCD_init
 *Description     : Initialize the LCD internal registers and configure LCD Data/Control pins
-
-
 xLCD_init:
 // putting R0=R1=R2=0 //
-SUB  R0,R0,R0
-SUB  R1,R1,R1
-SUB  R2,R2,R2
-
+ SUB  R0,R0,R0 
+ SUB  R1,R1,R1
+ SUB  R2,R2,R2
 // Sending Command 38H, 8 bit mode //
-// RS=RW=0 --->  R0 AND 0b1110011111111111 //
-// Creating the bitmask 0b1110011111111111 //
-ADDI R1,R1,7
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R2,R2,R1
-SUB  R1,R1,R1
-ADDI R1,R1,7
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R2,R2,R1
-SUB  R1,R1,R1
-ADDI R1,R1,15
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-ADDI R1,R1,15
-OR   R2,R2,R1
-AND  R0,R0,R2
-OUT  R0
-
-// Delay for 1ms //
-SUB  R1,R1,R1
-ADDI R1,R1,18
-SW   R7,R1
-JAL  XDelay 
-SUB  R1,R1,R1
-ADDI R1,R1,18
-LW   R7,R1
-
-// E=1 --->  R0 OR 0b0000010000000000 //
-SUB  R1,R1,R1
-ADDI R1,R1,1
-SLL R1,R1
-SLL R1,R1
-SLL R1,R1
-SLL R1,R1
-SLL R1,R1
-SLL R1,R1
-SLL R1,R1
-SLL R1,R1
-SLL R1,R1
-SLL R1,R1
-OR  R0,R1
-OUT R0
-
-// Delay for 1ms //
-SUB  R1,R1,R1
-ADDI R1,R1,18
-SW   R7,R1
-JAL  XDelay 
-SUB  R1,R1,R1
-ADDI R1,R1,18
-LW   R7,R1
-
-// Command = 38H ---> R0 OR 0b0000000011100000 //
-// Creating the bitmask 0b0000000011100000 //  
-SUB  R1,R1,R1
-ADDI R1,R1,7
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R0,R1
-OUT  R0
-
-// Delay for 1ms //
-SUB  R1,R1,R1
-ADDI R1,R1,18
-SW   R7,R1
-JAL  XDelay 
-SUB  R1,R1,R1
-ADDI R1,R1,18
-LW   R7,R1
-
-// E=0 --->  R0 AND 0b1111101111111111 //
-SUB  R1,R1,R1
-SUB  R2,R2,R2
-ADDI R1,R1,15
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R2,R1
-SUB  R1,R1
-ADDI R1,R1,010
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R2,R1
-SUB  R1,R1
-ADDI R1,R1,15
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R2,R1
-SUB  R1,R1
-ADDI R1,R1,15
-SLL  R1,R1
-SLL  R1,R1
-ADDI R1,03
-OR   R2,R1
-AND  R0,R2
-OUT  R0
-
-// Delay for 1ms //
-SUB  R1,R1,R1
-ADDI R1,R1,18
-SW   R7,R1
-JAL  XDelay 
-SUB  R1,R1,R1
-ADDI R1,R1,18
-LW   R7,R1
-
-
+ // RS=RW=0 --->  R0 AND 0b1110011111111111 //
+  // Creating the bitmask 0b1110011111111111 //
+   ADDI R1,R1,7
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   OR   R2,R2,R1
+   SUB  R1,R1,R1
+   ADDI R1,R1,7
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   OR   R2,R2,R1
+   SUB  R1,R1,R1
+   ADDI R1,R1,15
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   ADDI R1,R1,15
+   OR   R2,R2,R1
+   AND  R0,R0,R2
+   OUT  R0
+ // Delay for 1ms //
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  SW   R7,R1
+  JAL  XDelay 
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  LW   R7,R1
+ // E=1 --->  R0 OR 0b0000010000000000 //
+  SUB  R1,R1,R1
+  ADDI R1,R1,1
+  SLL R1,R1
+  SLL R1,R1
+  SLL R1,R1
+  SLL R1,R1
+  SLL R1,R1
+  SLL R1,R1
+  SLL R1,R1
+  SLL R1,R1
+  SLL R1,R1
+  SLL R1,R1
+  OR  R0,R1
+  OUT R0
+  // Delay for 1ms //
+   SUB  R1,R1,R1
+   ADDI R1,R1,18
+   SW   R7,R1
+   JAL  XDelay 
+   SUB  R1,R1,R1
+   ADDI R1,R1,18
+   LW   R7,R1
+ // Command = 38H ---> R0 OR 0b0000000011100000 //
+  // Creating the bitmask 0b0000000011100000 //  
+   SUB  R1,R1,R1
+   ADDI R1,R1,7
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   OR   R0,R1
+   OUT  R0
+ // Delay for 1ms //
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  SW   R7,R1
+  JAL  XDelay 
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  LW   R7,R1
+ // E=0 --->  R0 AND 0b1111101111111111 //
+  SUB  R1,R1,R1
+  SUB  R2,R2,R2
+  ADDI R1,R1,15
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  OR   R2,R1
+  SUB  R1,R1
+  ADDI R1,R1,01
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  OR   R2,R1
+  SUB  R1,R1
+  ADDI R1,R1,15
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  OR   R2,R1
+  SUB  R1,R1
+  ADDI R1,R1,15
+  SLL  R1,R1
+  SLL  R1,R1
+  ADDI R1,03
+  OR   R2,R1
+  AND  R0,R2
+  OUT  R0
+ // Delay for 1ms //
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  SW   R7,R1
+  JAL  XDelay 
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  LW   R7,R1
 // Sending Command 0FH, Display on cursor blinking // 
-// RS=RW=0 --->  R0 AND 0b1110011111111111 //
-// Creating the bitmask 0b1110011111111111 //
-SUB  R1,R1,R1 
-ADDI R1,R1,7
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R2,R2,R1
-SUB  R1,R1,R1
-ADDI R1,R1,7
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R2,R2,R1
-SUB  R1,R1,R1
-ADDI R1,R1,15
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-ADDI R1,R1,15
-OR   R2,R2,R1
-AND  R0,R0,R2
-OUT  R0
-
-// Delay for 1ms //
-SUB  R1,R1,R1
-ADDI R1,R1,18
-SW   R7,R1
-JAL  XDelay 
-SUB  R1,R1,R1
-ADDI R1,R1,18
-LW   R7,R1
-
-// E=1 --->  R0 OR 0b0000010000000000 //
-SUB  R1,R1,R1
-ADDI R1,R1,1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R0,R1
-OUT  R0
-
-// Delay for 1ms //
-SUB  R1,R1,R1
-ADDI R1,R1,18
-SW   R7,R1
-JAL  XDelay 
-SUB  R1,R1,R1
-ADDI R1,R1,18
-LW   R7,R1
-
-// Command = 0FH ---> R0 OR 0b0000000000111100 //
-SUB  R1,R1,R1
-ADDI R1,R1,15
-SLL  R1,R1
-SLL  R1,R1
-OR   R0,R1
-OUT  R0
-
-// Delay for 1ms //
-SUB  R1,R1,R1
-ADDI R1,R1,18
-SW   R7,R1
-JAL  XDelay 
-SUB  R1,R1,R1
-ADDI R1,R1,18
-LW   R7,R1
-
-// E=0 --->  R0 AND 0b1111101111111111 //
-SUB  R1,R1,R1
-SUB  R2,R2,R2
-ADDI R1,R1,15
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R2,R1
-SUB  R1,R1
-ADDI R1,R1,010
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R2,R1
-SUB  R1,R1
-ADDI R1,R1,15
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R2,R1
-SUB  R1,R1
-ADDI R1,R1,15
-SLL  R1,R1
-SLL  R1,R1
-ADDI R1,03
-OR   R2,R1
-AND  R0,R2
-OUT  R0
-
-// Delay for 1ms //
-SUB  R1,R1,R1
-ADDI R1,R1,18
-SW   R7,R1
-JAL  XDelay 
-SUB  R1,R1,R1
-ADDI R1,R1,18
-LW   R7,R1
-
-
+ // RS=RW=0 --->  R0 AND 0b1110011111111111 //
+  // Creating the bitmask 0b1110011111111111 //
+   SUB  R1,R1,R1 
+   ADDI R1,R1,7
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   OR   R2,R2,R1
+   SUB  R1,R1,R1
+   ADDI R1,R1,7
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   OR   R2,R2,R1
+   SUB  R1,R1,R1
+   ADDI R1,R1,15
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   ADDI R1,R1,15
+   OR   R2,R2,R1
+   AND  R0,R0,R2
+   OUT  R0
+ // Delay for 1ms //
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  SW   R7,R1
+  JAL  XDelay 
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  LW   R7,R1
+ // E=1 --->  R0 OR 0b0000010000000000 //
+  SUB  R1,R1,R1
+  ADDI R1,R1,1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  OR   R0,R1
+  OUT  R0
+ // Delay for 1ms //
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  SW   R7,R1
+  JAL  XDelay 
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  LW   R7,R1
+ // Command = 0FH ---> R0 OR 0b0000000000111100 //
+  SUB  R1,R1,R1
+  ADDI R1,R1,15
+  SLL  R1,R1
+  SLL  R1,R1
+  OR   R0,R1
+  OUT  R0
+ // Delay for 1ms //
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  SW   R7,R1
+  JAL  XDelay 
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  LW   R7,R1
+ // E=0 --->  R0 AND 0b1111101111111111 //
+  SUB  R1,R1,R1
+  SUB  R2,R2,R2
+  ADDI R1,R1,15
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  OR   R2,R1
+  SUB  R1,R1
+  ADDI R1,R1,01
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  OR   R2,R1
+  SUB  R1,R1
+  ADDI R1,R1,15
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  OR   R2,R1
+  SUB  R1,R1
+  ADDI R1,R1,15
+  SLL  R1,R1
+  SLL  R1,R1
+  ADDI R1,03
+  OR   R2,R1
+  AND  R0,R2
+  OUT  R0
+ // Delay for 1ms //
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  SW   R7,R1
+  JAL  XDelay 
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  LW   R7,R1
 // Sending Command 01H, Clear Screen // 
-// RS=RW=0 --->  R0 AND 0b1110011111111111 //
-// Creating the bitmask 0b1110011111111111 //
-SUB  R1,R1,R1 
-ADDI R1,R1,7
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R2,R2,R1
-SUB  R1,R1,R1
-ADDI R1,R1,7
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R2,R2,R1
-SUB  R1,R1,R1
-ADDI R1,R1,15
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-ADDI R1,R1,15
-OR   R2,R2,R1
-AND  R0,R0,R2
-OUT  R0
-
-// Delay for 1ms //
-SUB  R1,R1,R1
-ADDI R1,R1,18
-SW   R7,R1
-JAL  XDelay 
-SUB  R1,R1,R1
-ADDI R1,R1,18
-LW   R7,R1
-
-// E=1 --->  R0 OR 0b0000010000000000 //
-SUB  R1,R1,R1
-ADDI R1,R1,1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R0,R1
-OUT  R0
-
-// Delay for 1ms //
-SUB  R1,R1,R1
-ADDI R1,R1,18
-SW   R7,R1
-JAL  XDelay 
-SUB  R1,R1,R1
-ADDI R1,R1,18
-LW   R7,R1
-
-// Command = 01H ---> R0 OR 0b0000000000000100 //
-SUB  R1,R1,R1
-ADDI R1,R1,01
-SLL  R1,R1
-SLL  R1,R1
-OR   R0,R1
-OUT  R0
-
-// Delay for 1ms //
-SUB  R1,R1,R1
-ADDI R1,R1,18
-SW   R7,R1
-JAL  XDelay 
-SUB  R1,R1,R1
-ADDI R1,R1,18
-LW   R7,R1
-
-// E=0 --->  R0 AND 0b1111101111111111 //
-SUB  R1,R1,R1
-SUB  R2,R2,R2
-ADDI R1,R1,15
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R2,R1
-SUB  R1,R1
-ADDI R1,R1,010
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R2,R1
-SUB  R1,R1
-ADDI R1,R1,15
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R2,R1
-SUB  R1,R1
-ADDI R1,R1,15
-SLL  R1,R1
-SLL  R1,R1
-ADDI R1,03
-OR   R2,R1
-AND  R0,R2
-OUT  R0
-
-// Delay for 1ms //
-SUB  R1,R1,R1
-ADDI R1,R1,18
-SW   R7,R1
-JAL  XDelay 
-SUB  R1,R1,R1
-ADDI R1,R1,18
-LW   R7,R1
-
-
+ // RS=RW=0 --->  R0 AND 0b1110011111111111 //
+  // Creating the bitmask 0b1110011111111111 //
+   SUB  R1,R1,R1 
+   ADDI R1,R1,7
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   OR   R2,R2,R1
+   SUB  R1,R1,R1
+   ADDI R1,R1,7
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   OR   R2,R2,R1
+   SUB  R1,R1,R1
+   ADDI R1,R1,15
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   ADDI R1,R1,15
+   OR   R2,R2,R1
+   AND  R0,R0,R2
+   OUT  R0
+ // Delay for 1ms //
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  SW   R7,R1
+  JAL  XDelay 
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  LW   R7,R1
+ // E=1 --->  R0 OR 0b0000010000000000 //
+  SUB  R1,R1,R1
+  ADDI R1,R1,1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  OR   R0,R1
+  OUT  R0
+ // Delay for 1ms //
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  SW   R7,R1
+  JAL  XDelay 
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  LW   R7,R1
+ // Command = 01H ---> R0 OR 0b0000000000000100 //
+  SUB  R1,R1,R1
+  ADDI R1,R1,01
+  SLL  R1,R1
+  SLL  R1,R1
+  OR   R0,R1
+  OUT  R0
+ // Delay for 1ms //
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  SW   R7,R1
+  JAL  XDelay 
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  LW   R7,R1
+ // E=0 --->  R0 AND 0b1111101111111111 //
+  SUB  R1,R1,R1
+  SUB  R2,R2,R2
+  ADDI R1,R1,15
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  OR   R2,R1
+  SUB  R1,R1
+  ADDI R1,R1,01
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  OR   R2,R1
+  SUB  R1,R1
+  ADDI R1,R1,15
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  OR   R2,R1
+  SUB  R1,R1
+  ADDI R1,R1,15
+  SLL  R1,R1
+  SLL  R1,R1
+  ADDI R1,03
+  OR   R2,R1
+  AND  R0,R2
+  OUT  R0
+ // Delay for 1ms //
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  SW   R7,R1
+  JAL  XDelay 
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  LW   R7,R1
 // Sending Command 06H, Entery mode, auto increment with no shift // 
-// RS=RW=0 --->  R0 AND 0b1110011111111111 //
-// Creating the bitmask 0b1110011111111111 //
-SUB  R1,R1,R1 
-ADDI R1,R1,7
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R2,R2,R1
-SUB  R1,R1,R1
-ADDI R1,R1,7
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R2,R2,R1
-SUB  R1,R1,R1
-ADDI R1,R1,15
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-ADDI R1,R1,15
-OR   R2,R2,R1
-AND  R0,R0,R2
-OUT  R0
-
-// Delay for 1ms //
-SUB  R1,R1,R1
-ADDI R1,R1,18
-SW   R7,R1
-JAL  XDelay 
-SUB  R1,R1,R1
-ADDI R1,R1,18
-LW   R7,R1
-
-// E=1 --->  R0 OR 0b0000010000000000 //
-SUB  R1,R1,R1
-ADDI R1,R1,1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R0,R1
-OUT  R0
-
-// Delay for 1ms //
-SUB  R1,R1,R1
-ADDI R1,R1,18
-SW   R7,R1
-JAL  XDelay 
-SUB  R1,R1,R1
-ADDI R1,R1,18
-LW   R7,R1
-
-// Command = 06H ---> R0 OR 0b0000000000011000 //
-SUB  R1,R1,R1
-ADDI R1,R1,3
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R0,R1
-OUT  R0
-
-// Delay for 1ms //
-SUB  R1,R1,R1
-ADDI R1,R1,18
-SW   R7,R1
-JAL  XDelay 
-SUB  R1,R1,R1
-ADDI R1,R1,18
-LW   R7,R1
-
-// E=0 --->  R0 AND 0b1111101111111111 //
-SUB  R1,R1,R1
-SUB  R2,R2,R2
-ADDI R1,R1,15
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R2,R1
-SUB  R1,R1
-ADDI R1,R1,010
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R2,R1
-SUB  R1,R1
-ADDI R1,R1,15
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-SLL  R1,R1
-OR   R2,R1
-SUB  R1,R1
-ADDI R1,R1,15
-SLL  R1,R1
-SLL  R1,R1
-ADDI R1,03
-OR   R2,R1
-AND  R0,R2
-OUT  R0
-
-// Delay for 1ms //
-SUB  R1,R1,R1
-ADDI R1,R1,18
-SW   R7,R1
-JAL  XDelay 
-SUB  R1,R1,R1
-ADDI R1,R1,18
-LW   R7,R1
-
+ // RS=RW=0 --->  R0 AND 0b1110011111111111 //
+  // Creating the bitmask 0b1110011111111111 //
+   SUB  R1,R1,R1 
+   ADDI R1,R1,7
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   OR   R2,R2,R1
+   SUB  R1,R1,R1
+   ADDI R1,R1,7
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   OR   R2,R2,R1
+   SUB  R1,R1,R1
+   ADDI R1,R1,15
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   SLL  R1,R1
+   ADDI R1,R1,15
+   OR   R2,R2,R1
+   AND  R0,R0,R2
+   OUT  R0
+ // Delay for 1ms //
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  SW   R7,R1
+  JAL  XDelay 
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  LW   R7,R1
+ // E=1 --->  R0 OR 0b0000010000000000 //
+  SUB  R1,R1,R1
+  ADDI R1,R1,1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  OR   R0,R1
+  OUT  R0
+ // Delay for 1ms //
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  SW   R7,R1
+  JAL  XDelay 
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  LW   R7,R1
+ // Command = 06H ---> R0 OR 0b0000000000011000 //
+  SUB  R1,R1,R1
+  ADDI R1,R1,3
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  OR   R0,R1
+  OUT  R0
+ // Delay for 1ms //
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  SW   R7,R1
+  JAL  XDelay 
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  LW   R7,R1
+ // E=0 --->  R0 AND 0b1111101111111111 //
+  SUB  R1,R1,R1
+  SUB  R2,R2,R2
+  ADDI R1,R1,15
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  OR   R2,R1
+  SUB  R1,R1
+  ADDI R1,R1,01
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  OR   R2,R1
+  SUB  R1,R1
+  ADDI R1,R1,15
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  SLL  R1,R1
+  OR   R2,R1
+  SUB  R1,R1
+  ADDI R1,R1,15
+  SLL  R1,R1
+  SLL  R1,R1
+  ADDI R1,03
+  OR   R2,R1
+  AND  R0,R2
+  OUT  R0
+ // Delay for 1ms //
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  SW   R7,R1
+  JAL  XDelay 
+  SUB  R1,R1,R1
+  ADDI R1,R1,18
+  LW   R7,R1
 // Clearing The Registers used in the function (R0,R1,R2,R3) //
-SUB  R0,R0,R0
-SUB  R1,R1,R1
-SUB  R2,R2,R2
+ SUB  R0,R0,R0
+ SUB  R1,R1,R1
+ SUB  R2,R2,R2
 JR   R7 
- 
- 
- 
- 
- 
- 
