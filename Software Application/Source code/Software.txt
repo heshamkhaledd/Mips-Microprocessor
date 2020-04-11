@@ -113,33 +113,43 @@ xLCD_displayCharacter:
     SRL R1,R1
     // R1 = 0010 0000 0000 0000//
     SRL R1,R1
-    // R1 = 0001 0000 0000 0000//
-    SRL R1,R1
-    // R1 = 0000 1000 0000 0000//
-    SRL R1,R1
-    // R1 = 0000 0100 0000 0000//
+    // R1 = 0001 0000 0000 0000//      
     IN R4
-    //R4 = Getting the first 5 bits for masking//
-    OR R1,R1,R4 
-    // R1 = 5-bits concatenated with 100 0000 0000//
-    OUT R1         
+    //R4 = Getting the other 5 bits for masking//
+    SRL R2,R2
+    //R2 = 0011 1111 1111 1111 //
+    SRL R2,R2
+    //R2 = 0001 1111 1111 1111 //
+    NOR R2,R2,R2
+    //R2 = 1110 0000 0000 0000//
+    ADDI R2,R2,03
+    //R2 = 1110 0000 0000 0011//    
+    AND R4,R4,R2
+    //Masking operation //
+    //R4 = nnn0 0000 0000 00nn//
+    // "n" represents a bit that we don't use in the LCD//
+    OR R4,R1,R4 
+    //R4 now = nnn1 0000 0000 00nn//
+    OUT R4         
     // makes RS bit = 1 "Data mode"//
     // and RW bit =0 "Write data" // 
     SUB R0,R0,R0
     OR R0,R0,R7
     JAL xDelay
     // we must wait for the LCD to get it//
-    SRL R2,R1     
-    //R2 = 0000 0010 0000 0000//
-    SRL R2,R1       
-    //R2 = 0000 0001 0000 0000//
-    OR R1,R1,R2    
-    // R1 = 0000 0101 0000 0000//
+    SRL R4,R1
+    SRL R4,R1 
+    //R4 = 0000 0100 0000 0000//
+    OR R1,R1,R4
+    //R1 = 0001 0100 0000 0000//  
     IN R4
     //R4 = Getting the first 5 bits for masking/
-    OR R1,R1,R4 
-    // R1 = 5-bits concatenated with 101 0000 0000//
-    OUT R1          
+    AND R4,R4,R2
+    //R4 = nnn0 0000 0000 00nn//
+    // "n" represents a bit that we don't use in the LCD//
+    OR R4,R1,R4 
+    // R4 = nnn1 0100 0000 00nn//
+    OUT R4          
     // makes E bit = 1//
     JAL xDelay
     SUB R3,R3,R3
@@ -148,38 +158,54 @@ xLCD_displayCharacter:
     // The data is stored in a fixed address = 10// 
     // R3 now has the address for my data//
     LW R3,R3
-    // R3 now = my data //
+    // R3 now = 8-bit data //
+    SLL R3,R3
+    SLL R3,R3
+    // R3 = 0000 00da tada ta00//
     OR R3,R1,R3
-    // bit manipulation//
-    // R1 = 0000 0101 0000 0000//
-    // R3 = 0000 0000 data data//
-    // OR op. -> R3 = 0000 0101 data data//
+    // R1 = 0001 0100 0000 0000//
+    // R3 = 0000 00da tada ta00//
+    // OR op. -> R3 = 0001 01da tada ta00//
     IN R4
     //R4 = Getting the first 5 bits for masking//
+    AND R4,R4,R2
+    // R4 = nnn0 0000 0000 00nn//
     OR R3,R3,R4 
-    // R3 = 5-bits concatenated with 101 data data//
+    // R3 = nnn1 01da tada tann// 
     OUT R3
     // showing the data on LCD //
     JAL xDelay
-    SLL R2,R2
-    // Check line 42 - R2 =  0000 0010 0000 0000//
-    SLL R2,R2
-    // R2 = 0000 0100 0000 0000//
+    //R2 = 1110 0000 0000 0011//
+    //R1 = 0001 0100 0000 0000//
+    SLL R1,R1
+    SLL R1,R1
+    AND R1,R1,R2
+    // R1 = 0001 0000 0000 0000//
     IN R4
     //R4 = Getting the first 5 bits for masking//
-    OR R2,R2,R4 
-    // R1 = 5-bits concatenated with 100 0000 0000//
-    OUT R2        
-    // R2 value clears E //
+    AND R4,R4,R2
+    //R4 = nnn0 0000 0000 00nn//
+    OR R4,R1,R4 
+    // R4 = nnn1 0000 0000 00nn//
+    OUT R4        
+    // R4 value clears E //
     JAL xDelay
     SUB R7,R7,R7
+    //clearing the address in R7//
     OR R7,R7,R0
+    //getting the address of the main to return to it//
+    SUB R0,R0,R0
+    SUB R1,R1,R1
+    SUB R2,R2,R2
+    SUB R3,R3,R3
+    SUB R4,R4,R4
+    //all registers used here = 0 after we return from this function//
 JR R7
 
 // assumption of how the LCD is connected to the o/p port//
 // if there is any change contact me//
 //  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 //  
-//  0  0  0  0  0  RS RW E  0  1  2  3  4  5  6  7  //
+//  0  0  0  RS RW E  0  1  2  3  4  5  6  7  0  0  //
 
 
 //Discription: this code creates 250000 and stores it in address 30//
