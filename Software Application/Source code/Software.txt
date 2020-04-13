@@ -1324,7 +1324,7 @@ xCHECK_H:NOP
  BEQ	R1,R2,02
  J		xCHECK_J
  
-        // 'H' DRAWING LINES OF CODE THAT PRINT 'H' IN BRAILLE
+        // 'I' DRAWING LINES OF CODE THAT PRINT 'I' IN BRAILLE
           "  ."
           ".  "//
  
