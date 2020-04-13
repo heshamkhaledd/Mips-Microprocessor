@@ -7,185 +7,80 @@
  * Inputs:        Decimal Values for Row and Column
  * Outputs:       void
  *
- *******************************************************************************//
-
- // ************************************************************************************************//
+ // *****************************************************************************//
 xLCD_goToRowColumn: NOP
- // Putting R0=0, Storing in R1 the Memory address of the Row to go //
+ // Putting R0=0, Storing in R0 the Memory address of the Row to go
     SUB  R0,R0,R0
     ADDI R0,R0,11
- // Putting R1=0, Storing in R1 the Memory address of the Column to go //
+ // Putting R1=0, Storing in R1 the Memory address of the Column to go
     SUB  R1,R1,R1
     ADDI R1,R1,12
- // Storing the value of the Row in R0, Value of Column in R1 //
- // Making R2=0 as initial value and the index, Making R3 the Bitmask Register //
+ // Storing the value of the Row in R0, Value of Column in R1
+ // Making R2=0 as initial value and the index
     LW   R0,R0
     LW   R1,R1
     SUB  R2,R2,R2
-    SUB  R3,R3,R3
- // Checking if it is Row (0), If yes, Jump, if no, add the index+1 //
-    BEQ  R0,R2,10
+ // Checking if it is Row (0), If yes, Jump, if no, add the index+1
+    BEQ  R0,R2,09
     ADDI R2,R2,01
- // Checking if it is Row (1), If yes, Jump, if no, add the index+1 //
-    BEQ  R0,R2,10
+ // Checking if it is Row (1), If yes, Jump, if no, add the index+1
+    BEQ  R0,R2,08
     ADD  R2,R2,R2
- // Checking if it is Row (2), If yes, Jump, if no, it must be Row (3) //
-    BEQ  R0,R2,15
- // Position Address @ Row(3) = Column + 0x50 (80 Decimal) //
-    ADDI R3,R3,20
-    ADD  R3,R3,R3
-    ADD  R3,R3,R3
-    ADD  R3,R3,R3
-    ADD  R1,R1,R3
+ // Checking if it is Row (2), If yes, Jump, if no, it must be Row (3)
+    BEQ  R0,R2,11
+ // Position Address @ Row(3) = Column + 0x50 (80 Decimal)
+    ADDI R1,R1,20
+    ADD  R1,R1,20
+    ADD  R1,R1,20
+    ADD  R1,R1,20
     J    xEND
  // Position Address @ Row(0) = Column //
-    ADDI R1,R1,00
     J    xEND
- // Position Address @ Row(1) = Column+0x40 (64 Decimal) //
-    SUB  R3,R3,R3
-    ADDI R3,R3,20
-    ADD  R3,R3,R3
-    ADD  R3,R3,R3
-    ADDI R3,R3,04
-    ADD  R1,R1,R3
+ // Position Address @ Row(1) = Column+0x40 (64 Decimal)
+    ADDI R1,R1,20
+    ADDI R1,R1,20
+    ADDI R1,R1,20
+    ADDI R1,R1,04
     J    xEND
- // Position Address @ Row(2) = Column+0x10 //
+ // Position Address @ Row(2) = Column+0x10 (16 Decimal)
     ADDI R1,R1,16
- // After the above code, R1 = The Address of the required position //
+
+ // R1= Address of the required position to go to.
+   1. In this label, I am setting the command to be sent
+    as, Command = Address OR 0b0000000010000000
+   2. and calling the command function
 
 xEND: NOP
-    // Command = Address OR 0b0000000010000000 //
-    SUB  R3,R3,R3
-    // Creating the bitmask 0b0000000010000000 for the Register //
-    ADDI R3,R3,01
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    OR   R1,R1,R3
-    // Clearing the index Register R2 //
+ // 1.First step (Command = Address OR 0b0000000010000000)
+    SUB  R0,R0,R0
+    ADDI R0,R0,01
+    SLL  R0,R0
+    SLL  R0,R0
+    SLL  R0,R0
+    SLL  R0,R0
+    SLL  R0,R0
+    SLL  R0,R0
+    SLL  R0,R0
+    OR   R1,R1,R0
+ // 2.   Second step (Calling Command Function)
+ // 2.A: Storing Command in M[10]
+ // 2.B: Storing Main Procedure return address (R7) in M[19] 
+ // 2.C: Re-Storing Main Procedure return M[19] in (R7)
+    SUB  R0,R0,R0
+    ADDI R0,R0,10
+    SW   R1,R0
+    ADDI R0,R0,09
+    SW   R7,R0
+    JAL  xLCD_sendCommand
+    SUB  R0,R0,R0
+    ADDI R0,R0,19
+    LW   R7,R0
+ // Clearing used Registers (R0,R1,R2)
+    SUB  R0,R0,R0
+    SUB  R1,R1,R1
     SUB  R2,R2,R2
- // RS=RW=0 --->  R2 AND 0b1110011111111111 //
-    SUB  R3,R3,R3
- // Creating the bitmask 0b1110011111111111 for the Register //
-    ADDI R3,R3,07
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    ADDI R3,R3,15
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    ADDI R3,R3,15
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    ADDI R3,R3,07
-    AND R2,R2,R3‬
-    OUT R2
-    NOP
- // E=1    --->   R2 OR  0b0000010000000000 //
-    SUB  R3,R3,R3
- // Creating the bitmask 0b0000010000000000 for the Register //
-    ADDI R3,R3,01
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    OR   R2,R2,R3
-    OUT R2
-    NOP
- // Command<<2 = D0~D7 //
-    SLL R1,R1
-    SLL R1,R1
- // Sending command without changing any other bits in R1 ---> R1 OR 0b0000001111111100 //
-    SUB R3,R3,R3
- // Creating the bitmask 0b0000001111111100 for the Register //
-    ADDI R3,R3,15
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    ADDI R3,R3,15
-    SLL  R3,R3
-    SLL  R3,R3
-    OR R1,R1,R3
-    OUT R1
- // E=0   ---> R2 AND 0b1111101111111111 //
-    SUB  R3,R3,R3
- // Creating the bitmask 0b1111101111111111 for the Register //
-    ADDI R3,R3,15
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    ADDI R3,R3,01
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    ADDI R3,R3,15
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    SLL  R3,R3
-    ADDI R3,R3,15
-    SLL  R3,R3
-    SLL  R3,R3
-    ADDI R3,R3,03
-    AND R2,R2,R3
-    OUT R2
-    NOP
-    // Clearing The Registers used in the function (R0,R1,R2,R3) //
-    ANDI R0,R0,00
-    ANDI R1,R1,00
-    ANDI R2,R2,00
-    ANDI R3,R3,00
     JR R7
-
-
+    
 //******************************************************************************
  * Engineer:      Youssef Galal
  * Create date:   22:01:17 04/04/2020
@@ -218,33 +113,43 @@ xLCD_displayCharacter:
     SRL R1,R1
     // R1 = 0010 0000 0000 0000//
     SRL R1,R1
-    // R1 = 0001 0000 0000 0000//
-    SRL R1,R1
-    // R1 = 0000 1000 0000 0000//
-    SRL R1,R1
-    // R1 = 0000 0100 0000 0000//
+    // R1 = 0001 0000 0000 0000//      
     IN R4
-    //R4 = Getting the first 5 bits for masking//
-    OR R1,R1,R4 
-    // R1 = 5-bits concatenated with 100 0000 0000//
-    OUT R1         
+    //R4 = Getting the other 5 bits for masking//
+    SRL R2,R2
+    //R2 = 0011 1111 1111 1111 //
+    SRL R2,R2
+    //R2 = 0001 1111 1111 1111 //
+    NOR R2,R2,R2
+    //R2 = 1110 0000 0000 0000//
+    ADDI R2,R2,03
+    //R2 = 1110 0000 0000 0011//    
+    AND R4,R4,R2
+    //Masking operation //
+    //R4 = nnn0 0000 0000 00nn//
+    // "n" represents a bit that we don't use in the LCD//
+    OR R4,R1,R4 
+    //R4 now = nnn1 0000 0000 00nn//
+    OUT R4         
     // makes RS bit = 1 "Data mode"//
     // and RW bit =0 "Write data" // 
     SUB R0,R0,R0
     OR R0,R0,R7
     JAL xDelay
     // we must wait for the LCD to get it//
-    SRL R2,R1     
-    //R2 = 0000 0010 0000 0000//
-    SRL R2,R1       
-    //R2 = 0000 0001 0000 0000//
-    OR R1,R1,R2    
-    // R1 = 0000 0101 0000 0000//
+    SRL R4,R1
+    SRL R4,R1 
+    //R4 = 0000 0100 0000 0000//
+    OR R1,R1,R4
+    //R1 = 0001 0100 0000 0000//  
     IN R4
     //R4 = Getting the first 5 bits for masking/
-    OR R1,R1,R4 
-    // R1 = 5-bits concatenated with 101 0000 0000//
-    OUT R1          
+    AND R4,R4,R2
+    //R4 = nnn0 0000 0000 00nn//
+    // "n" represents a bit that we don't use in the LCD//
+    OR R4,R1,R4 
+    // R4 = nnn1 0100 0000 00nn//
+    OUT R4          
     // makes E bit = 1//
     JAL xDelay
     SUB R3,R3,R3
@@ -253,38 +158,54 @@ xLCD_displayCharacter:
     // The data is stored in a fixed address = 10// 
     // R3 now has the address for my data//
     LW R3,R3
-    // R3 now = my data //
+    // R3 now = 8-bit data //
+    SLL R3,R3
+    SLL R3,R3
+    // R3 = 0000 00da tada ta00//
     OR R3,R1,R3
-    // bit manipulation//
-    // R1 = 0000 0101 0000 0000//
-    // R3 = 0000 0000 data data//
-    // OR op. -> R3 = 0000 0101 data data//
+    // R1 = 0001 0100 0000 0000//
+    // R3 = 0000 00da tada ta00//
+    // OR op. -> R3 = 0001 01da tada ta00//
     IN R4
     //R4 = Getting the first 5 bits for masking//
+    AND R4,R4,R2
+    // R4 = nnn0 0000 0000 00nn//
     OR R3,R3,R4 
-    // R3 = 5-bits concatenated with 101 data data//
+    // R3 = nnn1 01da tada tann// 
     OUT R3
     // showing the data on LCD //
     JAL xDelay
-    SLL R2,R2
-    // Check line 42 - R2 =  0000 0010 0000 0000//
-    SLL R2,R2
-    // R2 = 0000 0100 0000 0000//
+    //R2 = 1110 0000 0000 0011//
+    //R1 = 0001 0100 0000 0000//
+    SLL R1,R1
+    SLL R1,R1
+    AND R1,R1,R2
+    // R1 = 0001 0000 0000 0000//
     IN R4
     //R4 = Getting the first 5 bits for masking//
-    OR R2,R2,R4 
-    // R1 = 5-bits concatenated with 100 0000 0000//
-    OUT R2        
-    // R2 value clears E //
+    AND R4,R4,R2
+    //R4 = nnn0 0000 0000 00nn//
+    OR R4,R1,R4 
+    // R4 = nnn1 0000 0000 00nn//
+    OUT R4        
+    // R4 value clears E //
     JAL xDelay
     SUB R7,R7,R7
+    //clearing the address in R7//
     OR R7,R7,R0
+    //getting the address of the main to return to it//
+    SUB R0,R0,R0
+    SUB R1,R1,R1
+    SUB R2,R2,R2
+    SUB R3,R3,R3
+    SUB R4,R4,R4
+    //all registers used here = 0 after we return from this function//
 JR R7
 
 // assumption of how the LCD is connected to the o/p port//
 // if there is any change contact me//
 //  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 //  
-//  0  0  0  0  0  RS RW E  0  1  2  3  4  5  6  7  //
+//  0  0  0  RS RW E  0  1  2  3  4  5  6  7  0  0  //
 
 
 //Discription: this code creates 250000 and stores it in address 30//
@@ -358,22 +279,19 @@ xDelay:
 
 // end of Galal's part//
 
-//-------------------------------------------------------------------------------------------//
+//******************************************************************************/
  * Engineer:      Asmaa Sameh
  * Create date:     07/04/2020
- *Function Name: LCD_SENDCMD
+ *Function Name: LCD_sendCommand
  *Description: Sends a certain command to the LCD through the LCD’s control pins
  *Inputs: Decimal value for command number
  *Return: void
-******************************************************************************//
- //******************************************************************************//
-
-
+ *
+ *****************************************************************************//
 //  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 //  
 //  0  0  0  RS RW E  0  1  2  3  4  5  6  7  0 0 //
 
-xLCD_SENDCMD: NOP
-
+xLCD_sendCommand: NOP
 SUB R1,R1,R1
 // RS=0   RW=0//
 ORI R1,R1,03h
@@ -599,7 +517,7 @@ SW   R1,R4
 J    xSet_initial_value
 //-------------------------------------------------------------------------------------------------//
 //******************************************************************************
-
+ *Engineer:        Youssef Taha
  * Create date:   20:24:22 05/04/2020
  * Function Name: Set_Initial_Value
  * Description:   A function that's responsible for setting initial value
@@ -726,6 +644,7 @@ J    xSet_initial_value
   //JUMP TO Counter_Of_Pressed_Keys FUNCTION//
   
   //******************************************************************************//
+ *Engineer:       Youssef Taha 
  * Create date:   23:08:22 04/07/2020
  * MACROS Name:   ADJUST_CURSOR & PRINT_DOT & LOAD_R1
  * Description:   ADJUST_CURSOR : MOVING THE CURSOR TO THE R1,R2 coordinates
@@ -1065,7 +984,7 @@ J xSend_"YOU ENTERD"_Message
  ADDI	R2,R2,01
  
  //IF THE CHARACTER IS 'A' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
-   TO THE A DRAWING LINES OF CODE IF IT ISN'T 'A' WE JUMP TO NEXT LINE OF BEQ 
+   TO THE 'A' DRAWING LINES OF CODE IF IT ISN'T 'A' WE JUMP TO NEXT LINE OF BEQ 
    WHICH IS CHECK_B//
    
  BEQ	R1,R2,02
@@ -1212,7 +1131,7 @@ J xSend_"YOU ENTERD"_Message
    TO THE 'F' DRAWING LINES OF CODE IF IT ISN'T 'F' WE JUMP TO NEXT LINE OF BEQ 
    WHICH IS CHECK_G//
    
- BEQ	R1,R2,xCHARACTER F CONDITION//2
+ BEQ	R1,R2,02
  J		xCHECK_G
  
       // 'F' DRAWING LINES OF CODE THAT PRINT 'F' IN BRAILLE
@@ -1244,7 +1163,7 @@ J xSend_"YOU ENTERD"_Message
  ADDI	R2,R2,07
  
     //IF THE CHARACTER IS 'G' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
-      TO THE 'F' DRAWING LINES OF CODE IF IT ISN'T 'G' WE JUMP TO NEXT LINE OF BEQ 
+      TO THE 'G' DRAWING LINES OF CODE IF IT ISN'T 'G' WE JUMP TO NEXT LINE OF BEQ 
       WHICH IS CHECK_H//
    
  BEQ	R1,R2,02
@@ -1288,7 +1207,7 @@ xCHECK_H:NOP
       TO THE 'H' DRAWING LINES OF CODE IF IT ISN'T 'H' WE JUMP TO NEXT LINE OF BEQ 
       WHICH IS CHECK_I//
 	  
- BEQ	R1,R2,xCHARACTER H CONDITION//2
+ BEQ	R1,R2,02
  J		xCHECK_I
  
        // 'H' DRAWING LINES OF CODE THAT PRINT 'H' IN BRAILLE
@@ -1313,6 +1232,7 @@ xCHECK_H:NOP
  ADDI	R2,R2,01
  JAL	xADJUST_CURSOR
  JAL	xPRINT_DOT
+
  xCHECK_I:NOP
   JAL	xLOAD_R1
  SUB	R2,R,R2
@@ -1342,6 +1262,354 @@ xCHECK_H:NOP
  JAL	xPRINT_DOT
  
  xCHECK_J:NOP
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,010
+ 
+    //IF THE CHARACTER IS 'J' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+      TO THE 'J' DRAWING LINES OF CODE IF IT ISN'T 'J' WE JUMP TO NEXT LINE OF BEQ 
+      WHICH IS CHECK_K//
+   
+ BEQ	R1,R2,02
+ J		xCHECK_K
+ 
+       // 'J' DRAWING LINES OF CODE THAT PRINT 'J' IN BRAILLE
+          "  ."
+          ". ."//
+		  
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,02
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,02
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ 
+ xCHECK_K:NOP
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,011
+ 
+    //IF THE CHARACTER IS 'K' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+      TO THE 'K' DRAWING LINES OF CODE IF IT ISN'T 'K' WE JUMP TO NEXT LINE OF BEQ 
+      WHICH IS CHECK_L//
+   
+ BEQ	R1,R2,02
+ J		xCHECK_L
+ 
+       // 'K' DRAWING LINES OF CODE THAT PRINT 'K' IN BRAILLE
+          ".  "
+          "   "
+          ".  "//
+		  
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,04
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ 
+ xCHECK_L:NOP
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,012
+ 
+    //IF THE CHARACTER IS 'L' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+      TO THE 'L' DRAWING LINES OF CODE IF IT ISN'T 'L' WE JUMP TO NEXT LINE OF BEQ 
+      WHICH IS CHECK_M//
+   
+ BEQ	R1,R2,02
+ J		xCHECK_M
+ 
+       // 'L' DRAWING LINES OF CODE THAT PRINT 'L' IN BRAILLE
+          ".  "
+          ".  "
+          ".  "//
+		  
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,04
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ 
+ xCHECK_M:NOP
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,013
+ 
+    //IF THE CHARACTER IS 'M' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+      TO THE 'M' DRAWING LINES OF CODE IF IT ISN'T 'M' WE JUMP TO NEXT LINE OF BEQ 
+      WHICH IS CHECK_N//
+   
+ BEQ	R1,R2,02
+ J		xCHECK_N
+ 
+       // 'M' DRAWING LINES OF CODE THAT PRINT 'M' IN BRAILLE
+          ". ."
+          "   "
+          ".  "//
+		  
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,02
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,04
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ 
+ xCHECK_N:NOP
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,014
+ 
+    //IF THE CHARACTER IS 'N' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+      TO THE 'N' DRAWING LINES OF CODE IF IT ISN'T 'N' WE JUMP TO NEXT LINE OF BEQ 
+      WHICH IS CHECK_O//
+   
+ BEQ	R1,R2,02
+ J		xCHECK_O
+ 
+       // 'N' DRAWING LINES OF CODE THAT PRINT 'N' IN BRAILLE
+          ". ."
+          "  ."
+          ".  "//
+		  
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,02
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,02
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,04
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ 
+ xCHECK_O:NOP
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,015
+ 
+    //IF THE CHARACTER IS 'O' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+      TO THE 'O' DRAWING LINES OF CODE IF IT ISN'T 'O' WE JUMP TO NEXT LINE OF BEQ 
+      WHICH IS CHECK_P//
+   
+ BEQ	R1,R2,02
+ J		xCHECK_P
+ 
+       // 'O' DRAWING LINES OF CODE THAT PRINT 'O' IN BRAILLE
+          ".  "
+          "  ."
+          ".  "//
+		  
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,02
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,04
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ 
+ xCHECK_P:NOP
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,016
+ 
+    //IF THE CHARACTER IS 'P' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+      TO THE 'P' DRAWING LINES OF CODE IF IT ISN'T 'P' WE JUMP TO NEXT LINE OF BEQ 
+      WHICH IS CHECK_Q//
+   
+ BEQ	R1,R2,02
+ J		xCHECK_Q
+ 
+       // 'P' DRAWING LINES OF CODE THAT PRINT 'P' IN BRAILLE
+          ". ."
+          ".  "
+          ".  "//
+		  
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,02
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,04
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ 
+  xCHECK_Q:NOP
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,017
+ 
+    //IF THE CHARACTER IS 'Q' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+      TO THE 'Q' DRAWING LINES OF CODE IF IT ISN'T 'Q' WE JUMP TO NEXT LINE OF BEQ 
+      WHICH IS CHECK_R//
+   
+ BEQ	R1,R2,02
+ J		xCHECK_R
+ 
+       // 'Q' DRAWING LINES OF CODE THAT PRINT 'Q' IN BRAILLE
+          ". ."
+          ". ."
+          ".  "//
+		  
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,02
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,02
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,04
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ 
+ xCHECK_R:NOP
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,018
+ 
+    //IF THE CHARACTER IS 'R' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+      TO THE 'R' DRAWING LINES OF CODE IF IT ISN'T 'R' WE JUMP TO NEXT LINE OF BEQ 
+      WHICH IS CHECK_S//
+   
+ BEQ	R1,R2,02
+ J		xCHECK_S
+ 
+       // 'R' DRAWING LINES OF CODE THAT PRINT 'R' IN BRAILLE
+          ".  "
+          ". ."
+          ".  "//
+		  
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,02
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,04
+ ADDI	R2,R2,01
+ JAL	xADJUST_CURSOR
+ JAL	xPRINT_DOT
+ 
+ xCHECK_S:NOP
+ 
  
  //****************************************************************************//
  
