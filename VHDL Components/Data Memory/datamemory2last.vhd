@@ -15,27 +15,27 @@ use ieee.numeric_std.ALL;
  
 entity Data_Memory is
     Port ( 
-			  MAR : in  STD_LOGIC_vector (15 downto 0);      --MAR:      	The Address of The Memory Location to Read or Write
-           MDR : in  STD_LOGIC_vector (15 downto 0);      --MDR:      	The Data to be Written in Memory
-           MWE : in std_logic;                            --WE:      	Write Enable Signal to Write in Memory
-           clk : in std_logic;                            --clk:     	Clock signal to only work when clock is high            
-           Readdata : out  STD_LOGIC_vector (15 downto 0) --Readdata: 	The data read from memory
+			  MAR : 		 in  std_logic_vector (11 downto 0);       --MAR:      	The Address of The Memory Location to Read or Write
+           MDR : 		 in  std_logic_vector (15 downto 0);       --MDR:      	The Data to be Written in Memory
+           MWE : 		 in  std_logic;                            --WE:      	Write Enable Signal to Write in Memory
+           clk : 		 in  std_logic;                            --clk:     	Clock signal to only work when clock is high            
+           Readdata : out std_logic_vector (15 downto 0)        --Readdata: 	The data read from memory
 			  ); 
 			  
 end Data_Memory;
 architecture Behavioral of Data_Memory is
 
-		type dataMemory is array (0 to 65535) of std_logic_vector(15 downto 0);
+		type dataMemory is array (0 to 4095) of std_logic_vector(15 downto 0);
 		
 		signal DM : dataMemory:=((others=> (others=>'0')));      --Initializing the Data Memory Data with zeros
 		
-	begin
+begin
 	
 --To Write the Data given in MDR at the Memory Address on MAR bus, Only at clk Rising Edge and WE=1
 
 process (clk,MWE)
 begin 
-	if (rising_edge(clk)and MWE='1') then                      --If clk is at Rising Edge and the WE signal is active, data is written in memory
+	if (rising_edge(clk)and MWE='1') then					--If clk is at Rising Edge and the WE signal is active, data is written in memory
 	DM(to_integer(unsigned(MAR)))<=MDR;
 	end if;
 
