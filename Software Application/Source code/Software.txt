@@ -444,7 +444,7 @@ JR7
 *Description: clear LCD screen entirely and moves the cursor to the initial position.
 *Inputs: void
 *Outputs: void
-*************************************************************
+//***********************************************************************************//
 xLCD_clearScreen:
 //make R1=0 , R2=0 , R3=0//
 SUB R1,R1,R1
@@ -607,7 +607,7 @@ SUB R2,R2,R2
 SUB R3,R3,R3
 // return to main//
 JR R7
-
+//--------------------------------------------------------------------------------------------------------//
 //***********************************************
 *Engineer        : Mena Emiel
 *Create date     : 7/4/2020 
