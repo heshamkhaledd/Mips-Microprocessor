@@ -438,13 +438,14 @@ JAL xIni_LCD
 JR7
 // compare value of CMD by 02 (inti fun)//
 //-------------------------------------------------------------------------------------------//
+//*********************************************************************************
 *Engineer: Toka Zakaria
 * Create date:    14/04/2020
 *Function name: LCD_clearScreen
 *Description: clear LCD screen entirely and moves the cursor to the initial position.
 *Inputs: void
 *Outputs: void
-//***********************************************************************************//
+***********************************************************************************//
 xLCD_clearScreen:
 //make R1=0 , R2=0 , R3=0//
 SUB R1,R1,R1
