@@ -2724,3 +2724,336 @@ xLCD_init:
  SUB  R1,R1,R1
  SUB  R2,R2,R2
 JR   R7 
+//****************************************************************************** //
+* Engineer: May Sherif-Aya Ahmed-Aya Mohamed
+ * Create date: 21:04:22 15/04/2020
+ * Function Name:Keypad_GetPressedKey
+ * Description: A function that's responsible for detecting the key pressed in the keypad 
+* Inputs: void
+* Outputs:value of pressed key
+// *****************************************************************************//
+Keypad_GetPressedKey
+       SUB R1,R1,R1
+//to make R1equal zero.
+       SUB R0,R0,R0 
+//to make R0equal zero.
+       OUT R0
+//out zeros to all rows(ensure that all   keys are open).
+K1:     IN R0 
+//read columns make R0equal zero..
+       ANDI R0,R0,0007H
+//mask the last 3 bits.
+       ADDI R1,R1,0007H 
+//move 07h to R1.      
+       BNQ R0,R1,0001H
+// making sure that all keys are    released.
+       J K1//go to check again on columns.
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+// calling the delay_0 function 8 times to delay 20 ms as each delays 2.6 ms
+K2: SUB R0,R0,R0
+//to make R0equal zero.
+       IN R0
+//read columns.
+        ANDI R0,R0,0007H 
+//mask the last 3 bits.
+        ANDI R1,R1,0000H
+ //to make R0equal zero.
+        ADDI R1,R1,0007H 
+//move 07h to R1.      
+       BNQ R0,R1,0001H
+//see if any key is pressed?
+        J K2
+//keep checking again till akey is pressed.
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+// calling the delay_0 function 8 times to delay 20 ms as each delays 2.6 ms
+SUB R0,R0,R0
+ //to make R0equal zero.
+IN R0
+//read columns
+ANDI R0,R0,0007H
+ //mask the last 3 bits.
+ANDI R1,R1,0000H
+ //to make R1equal zero.
+ADDI R1,R1,0007H 
+//move 07h to R1.      
+BNQ R0,R1,0001H
+//check if key was still pressed after debounce time (20ms).
+J K2
+//return check if a key is pressed.
+ANDI R0,R0,0000H
+ //to make R0 equal zero.
+ADDI R0,R0,FFFEH
+//ground row 0.
+OUT R0
+//out R0 on the rows.
+SUB R0,R0,R0 
+//to make R0equal zero.
+IN R0
+//read columns.
+ANDI R0,R0,0007H
+//masking the last 3 bits .
+ANDI R1,R1,0000H
+//tomake R1 equals zero.
+ADDI R1,R1,0007H
+ //move 07h to R1.      
+BEQ R0,R1,0003H
+//compare to find if any column gives a zero or not ?
+ANDI R1,R1,000H 
+//to make R1 equals zero.
+ADDI R1,R1,FFFEH
+//if so store value of row 1 in R1.
+J FIND-IT
+//call find it to get the value of the pressed key .
+RO-1:    ANDI R0,R0,0000H 
+//to make R1 equals zero.
+ADDI R0,R0,FFFDH
+//ground row 1.
+OUT R0
+//out R0 value on all rows.
+SUB R0,R0,R0
+//to make R0equal zero.
+IN R0
+//read columns.
+ANDI R0,R0,0007H
+//masking the last 3 bits .
+ANDI R1,R1,0000H 
+//tomake R0 equals zero.
+ADDI R1,R1,0007H
+ //move 07h to R1.      
+BEQ R0,R1,0003H
+//compare to find if any column gives a zero or not ?
+ANDI R1,R1,0000H 
+//tomake R1 equals zero.
+ADDI R1,R1,FFFDH
+ //if so store value of row 1in R1.
+J FIND-IT 
+//call find it to get the value of the pressed key .
+RO-2: ANDI R0,R0,0000H
+ //tomake R0 equals zero.
+ADDI R0,R0,FFFCH
+//ground row2.
+OUT R0
+ //out R0 value on all rows.
+SUB R0,R0,R0 
+//to make R0equal zero.
+IN R0
+ //read columns.
+ANDI R0,R0,0007H
+//masking the last 3 bits .
+ANDI R1,R1,0000H
+ //to make R1equal zero.
+ADDI R1,R1,0007H 
+//move 07h to R1.      
+BEQ R1,R0,0003H
+//compare to find if any column gives a zero or not ?
+
+ANDI R1,R1,0000H
+ //to make R1equal zero.
+ADDI R1,R1,FFFCH
+ //if so store value of row 2 in R1.
+J FIND-IT
+//call find it to get the value of the pressed key .
+RO-3: ANDI R0,R0,0000H
+ //to make R0equal zero.
+ADDI R0,R0,FFFBH
+//ground row3.
+OUT R0
+//out R0 value on all rows.
+SUB R0,R0,R0
+//to make R0equal zero.
+IN R0
+ //read columns.
+ANDI R0,R0,0007H 
+//masking the last 3 bits .
+ANDI R1,R1,0000H
+ //to make R1equal zero.
+ADDI R1,R1,0007H //move value of 07 to R1.
+BNQ R1,R0, 0001H 
+//compare to find if any column gives a zero or not ?
+J K2
+//retry checking the keys again.
+ANDI R1,R1,0000H 
+//to make R1equal zero.
+ADDI R1,R1,FFFBH 
+//if so store value of row 3in R1.
+J FIND-IT
+//call find it to get the value of the pressed key .
+
+// a function to find the value of the pressed key 
+
+FIND-IT:
+  // row 0 keys
+ANDI R3,R3,0000H 
+//to make R3 equal zero.
+ADDI R3,R3,FFFEH
+//put value of row 0 in R3.
+BNQ R1,R3,000CH
+//detect wether we are in row 0 or not??
+ANDI R4,R4,0000H
+ //to make R4 equal zero.
+ADDI R4,R4,0006H 
+BNQ R4,R0,0003H
+ //detect wether 1st col is  inverted or not??
+ANDI R2,R2,0000H 
+//to make R2 equal zero.
+ADDI R2,R2,0003H
+//key ‘3’is pressed
+J STORE
+// go to store value of key ‘3’.
+ANDI R4,R4,0000H 
+//to make R4 equal zero.
+ADDI R4,R4,0005H 
+BNQ R4,R0,0003h 
+//detect wether 2nd  col is  inverted or not??
+ANDI R2,R2,0000H
+ //to make R2 equal zero.
+ADDI R2,R2,0002H
+ //key ‘2’is pressed
+J STORE
+// go to store value of key ‘2’.
+
+// row 1 keys
+ANDI R3,R3,0000H
+ //to make R3 equal zero.
+ADDI R3,R3,FFFDH 
+//put value of row 1 in R3.
+BNQ R1,R3,0011H
+//detect wether we are in row 0 or not??
+ANDI R4,R4,0000H 
+//to make R4 equal zero.
+ADDI R4,R4,0006H 
+BNQ R4,R0,0003H
+ //detect wether 1st col is  inverted or not??
+ANDI R2,R2,0000H
+ //to make R2 equal zero.
+ADDI R2,R2,0006H 
+//key ‘6’is pressed.
+J STORE
+// go to store value of key ‘6’.
+ANDI R4,R4,0000H 
+//to make R4 equal zero.
+ADDI R4,R4,0005H
+BNQ R4,R0,0003H 
+ //detect wether 2ND col is  inverted or not??
+ANDI R2,R2,0000H 
+//to make R2 equal zero.
+ADDI R2,R2,0005H//KEY'5' is pressed.
+J STORE
+//go to store the value of key ‘5’.
+ANDI R4,R4,0000H
+ //to make R4 equal zero.
+ADDI R4,R4,0004H 
+BNQ R4,R0,0003H 
+//detect wether 3rd  col is  inverted or not??
+ANDI R2,R2,0000H
+ //to make R2 equal zero.
+ADDI R2,R2,0004H
+//key’4’is pressed.
+J STORE
+//go to store the value of key ‘4’.
+
+// row 2 keys
+ANDI R3,R3,0000H 
+//to make R3 equal zero.
+ADDI R3,R3,FFFCH
+BNQ R1,R3,0011H
+//detect wether we are in row 2 or not??
+ANDI R4,R4,0000H
+ //to make R4 equal zero.
+ADDI R4,R4,0006H
+BNQ R4,R0,0003H 
+//detect wether 1st col is  inverted or not??
+ANDI R2,R2,0000H
+//to make R2 equal zero.
+ADDI R2,R2,0009H 
+//key’9’is pressed.
+J STORE
+//go to store the value of key ‘9’.
+ANDI R4,R4,0000H
+ //to make R4 equal zero.
+ADDI R4,R4,0005H 
+BNQ R4,R0,0003H
+ //detect wether 2nd  col is  inverted or not??
+ADDI R2,R2,0000H 
+//to make R2 equal zero.
+ANDI R2,R2,0008H
+ //key’8’is pressed.
+J STORE
+//go to store the value of key ‘8’.
+AND R4,R4,00000H
+ //to make R4 equal zero.
+ADDI R4,R4,0004H
+BNQ R4,R0,0003H
+//detect wether 3rd  col is  inverted or not??
+ANDI R2,R2,0000H 
+//to make R2equal zero.
+ADDI R2,R2,0007H
+ //key’7’is pressed.
+J STORE
+//go to store the value of key ‘7’.
+
+//row 3 keys
+ANDI R4,R4,0000H
+ //to make R4 equal zero.
+ADDI R4,R4,0006H 
+BNQ R4,R0,0003H
+ //detect wether 1st col is  inverted or not??
+ANDI R2,R2,0000H
+ADDI R2,0001H
+//key’#’is pressed.
+J STORE
+//go to store the value of key ‘#’.
+ANDI R2,R2,0000H 
+//key’*’is pressed.
+J STORE
+//go to store the value of key ‘*’.
+
+// a function to store the value of pressed key
+
+STORE: ADDI R0,R0,0000H 
+//adds in Ro 0 
+             SW R2,R0
+             SUB R0,R0,R0
+             SUB R1,R1,R1
+             SUB R2,R2,R2
+             SUB R3,R3,R3
+             SUB R4,R4,R4
+//stores value in R2 in Memory address in R0
+
+//Delay_0 function
+//Function Discription: Delays for 2.6 ms
+//Name:Youssef Galal
+ //assuming that the clock used is 25MHz,1 cycle takes 40ns
+ //counter = 2.6ms/40ns = 65000 counts
+
+ Delay_0 :
+ SUB R5,R5,R5
+ SUB R6,R6,R6
+ //R6=0,R5=0
+ADDI R6,R6,FDE8h
+ //storing the value 65000 in R6
+ xLoop_0:        ADDI R5,R5,01
+ //R5 accumulates untill it reaches 65000
+  NOP
+ BEQ R5,R6,01 
+//if R5 reaches R6 "65000" we will skip the jump line
+ J xLoop_0
+//if R5 doesn't reach R6 "65000" we will go to xLoop again
+SUB R5,R5,R5 
+SUB R6,R6,R6
+ //clearing the registers used
+
