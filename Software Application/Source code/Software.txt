@@ -438,7 +438,175 @@ JAL xIni_LCD
 JR7
 // compare value of CMD by 02 (inti fun)//
 //-------------------------------------------------------------------------------------------//
-
+*Engineer: Toka Zakaria
+* Create date:    14/04/2020
+*Function name: LCD_clearScreen
+*Description: clear LCD screen entirely and moves the cursor to the initial position.
+*Inputs: void
+*Outputs: void
+*************************************************************
+xLCD_clearScreen:
+//make R1=0 , R2=0 , R3=0//
+SUB R1,R1,R1
+SUB R2,R2,R2
+SUB R3,R3,R3
+// (1) make Rs=0 & Rw=0 to make the LCD waits for certain command//
+//to make that, sending the value of R1 after editing it as follow R1 AND 0b1110011111111111 to keep other pins as they are//
+//1st create 0b1110011111111111//
+ADDI R2,R2,07
+SLL R2,R2 
+SLL R2,R2 
+SLL R2,R2 
+SLL R2,R2 
+SLL R2,R2 
+SLL R2,R2 
+SLL R2,R2 
+SLL R2,R2 
+SLL R2,R2 
+SLL R2,R2 
+SLL R2,R2 
+SLL R2,R2 
+SLL R2,R2 
+OR R3,R3,R2
+SUB R2,R2,R2
+ADDI R2,R2,07
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+OR R3,R3,R2
+SUB R2,R2,R2
+ADDI R2,R2,15
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,15
+//R3=1110011111111111//
+OR R3,R3,R2
+AND R1,R1,R3
+//Rs=0//
+OUT R1
+//wait for one MS using Delay function//
+//storing the data in R7 in R2 at first//
+SUB R2,R2,R2
+//storing memory location in R2 ‘selecting address [16]’//
+ADDI R2,R2,16
+SW R7,R2
+JAL xDelay
+//return data to R7 again//
+SUB R2,R2,R2 
+ADDI R2,R2,16
+LW R7,R2
+//(2)make the Enable high ‘E=1’ //
+//to make that …. R1 OR 0b0000010000000000//
+//create 0b000001000000000//
+SUB R2,R2,R2
+ADDI R2,R2,01
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+OR R1,R2
+//E=1//
+OUT R1
+//wait for one MS using delay function//
+//storing the data in R7 in R2 at first//
+SUB R2,R2,R2
+//storing memory location in R2 ‘selecting address [16]//
+ADDI R2,R2,16
+SW R7,R1
+JAL xDelay
+//return data to R7 again//
+SUB R2,R2,R2 
+ADDI R2,R2,16
+LW R7,R2
+//Rs=0 & E=1 , now LCD ready to receive a command//
+//sending command 01H to the LCD to clear display screen//
+// R1 OR 0b0000000000000100//
+//create 0b0000000000000100//
+SUB R2,R2,R2
+ADDI R2,R2,01
+SLL R2,R2
+SLL R2,R2
+OR R1,R2
+OUT R1
+//wait for 1 MS using delay function//
+//storing the data in R7 in R2 at first//
+SUB R2,R2,R2
+//storing memory location in R2 ‘selecting address [16]//
+ADDI R2,R2,16
+SW R7,R1
+JAL xDelay
+//return data to R7 again//
+SUB R2,R2,R2 
+ADDI R2,R2,16
+LW R7,R2
+//make the Enable low again ‘E=0’//
+//to make that, R1 AND 0b1111101111111111//
+SUB R2,R2,R2
+SUB R3,R3,R3
+ADDI R2,R2,15
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+OR R3,R1
+SUB R2,R2
+ADD R2,R2,01
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,15
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+OR R3,R2
+SUB R2,R2
+ADDI R2,R2,15
+SLL R2,R2
+SLL R2,R2
+ADDI R2,03
+OR R3,R2
+// R3= 0b1111101111111111//
+AND R1,R3
+// E=0//
+OUT R1
+//clearing the Rsgs that are used in the function//
+SUB R1,R1,R1
+SUB R2,R2,R2
+SUB R3,R3,R3
+// return to main//
+JR R7
 
 //***********************************************
 *Engineer        : Mena Emiel
