@@ -16,7 +16,7 @@ use IEEE.NUMERIC_STD.ALL;
 entity Instruction_Memory is
     Port (    
 				 Read_Address : in  std_logic_vector (15 downto 0);  --Instruction Address Location
-             Instruction : out  STD_LOGIC_VECTOR (15 downto 0)   --The Current Instruction
+             Instruction :  out  STD_LOGIC_VECTOR (15 downto 0)   --The Current Instruction
 				 );
 end Instruction_Memory;
 

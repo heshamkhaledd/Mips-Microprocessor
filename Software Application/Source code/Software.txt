@@ -113,33 +113,43 @@ xLCD_displayCharacter:
     SRL R1,R1
     // R1 = 0010 0000 0000 0000//
     SRL R1,R1
-    // R1 = 0001 0000 0000 0000//
-    SRL R1,R1
-    // R1 = 0000 1000 0000 0000//
-    SRL R1,R1
-    // R1 = 0000 0100 0000 0000//
+    // R1 = 0001 0000 0000 0000//      
     IN R4
-    //R4 = Getting the first 5 bits for masking//
-    OR R1,R1,R4 
-    // R1 = 5-bits concatenated with 100 0000 0000//
-    OUT R1         
+    //R4 = Getting the other 5 bits for masking//
+    SRL R2,R2
+    //R2 = 0011 1111 1111 1111 //
+    SRL R2,R2
+    //R2 = 0001 1111 1111 1111 //
+    NOR R2,R2,R2
+    //R2 = 1110 0000 0000 0000//
+    ADDI R2,R2,03
+    //R2 = 1110 0000 0000 0011//    
+    AND R4,R4,R2
+    //Masking operation //
+    //R4 = nnn0 0000 0000 00nn//
+    // "n" represents a bit that we don't use in the LCD//
+    OR R4,R1,R4 
+    //R4 now = nnn1 0000 0000 00nn//
+    OUT R4         
     // makes RS bit = 1 "Data mode"//
     // and RW bit =0 "Write data" // 
     SUB R0,R0,R0
     OR R0,R0,R7
     JAL xDelay
     // we must wait for the LCD to get it//
-    SRL R2,R1     
-    //R2 = 0000 0010 0000 0000//
-    SRL R2,R1       
-    //R2 = 0000 0001 0000 0000//
-    OR R1,R1,R2    
-    // R1 = 0000 0101 0000 0000//
+    SRL R4,R1
+    SRL R4,R1 
+    //R4 = 0000 0100 0000 0000//
+    OR R1,R1,R4
+    //R1 = 0001 0100 0000 0000//  
     IN R4
     //R4 = Getting the first 5 bits for masking/
-    OR R1,R1,R4 
-    // R1 = 5-bits concatenated with 101 0000 0000//
-    OUT R1          
+    AND R4,R4,R2
+    //R4 = nnn0 0000 0000 00nn//
+    // "n" represents a bit that we don't use in the LCD//
+    OR R4,R1,R4 
+    // R4 = nnn1 0100 0000 00nn//
+    OUT R4          
     // makes E bit = 1//
     JAL xDelay
     SUB R3,R3,R3
@@ -148,38 +158,54 @@ xLCD_displayCharacter:
     // The data is stored in a fixed address = 10// 
     // R3 now has the address for my data//
     LW R3,R3
-    // R3 now = my data //
+    // R3 now = 8-bit data //
+    SLL R3,R3
+    SLL R3,R3
+    // R3 = 0000 00da tada ta00//
     OR R3,R1,R3
-    // bit manipulation//
-    // R1 = 0000 0101 0000 0000//
-    // R3 = 0000 0000 data data//
-    // OR op. -> R3 = 0000 0101 data data//
+    // R1 = 0001 0100 0000 0000//
+    // R3 = 0000 00da tada ta00//
+    // OR op. -> R3 = 0001 01da tada ta00//
     IN R4
     //R4 = Getting the first 5 bits for masking//
+    AND R4,R4,R2
+    // R4 = nnn0 0000 0000 00nn//
     OR R3,R3,R4 
-    // R3 = 5-bits concatenated with 101 data data//
+    // R3 = nnn1 01da tada tann// 
     OUT R3
     // showing the data on LCD //
     JAL xDelay
-    SLL R2,R2
-    // Check line 42 - R2 =  0000 0010 0000 0000//
-    SLL R2,R2
-    // R2 = 0000 0100 0000 0000//
+    //R2 = 1110 0000 0000 0011//
+    //R1 = 0001 0100 0000 0000//
+    SLL R1,R1
+    SLL R1,R1
+    AND R1,R1,R2
+    // R1 = 0001 0000 0000 0000//
     IN R4
     //R4 = Getting the first 5 bits for masking//
-    OR R2,R2,R4 
-    // R1 = 5-bits concatenated with 100 0000 0000//
-    OUT R2        
-    // R2 value clears E //
+    AND R4,R4,R2
+    //R4 = nnn0 0000 0000 00nn//
+    OR R4,R1,R4 
+    // R4 = nnn1 0000 0000 00nn//
+    OUT R4        
+    // R4 value clears E //
     JAL xDelay
     SUB R7,R7,R7
+    //clearing the address in R7//
     OR R7,R7,R0
+    //getting the address of the main to return to it//
+    SUB R0,R0,R0
+    SUB R1,R1,R1
+    SUB R2,R2,R2
+    SUB R3,R3,R3
+    SUB R4,R4,R4
+    //all registers used here = 0 after we return from this function//
 JR R7
 
 // assumption of how the LCD is connected to the o/p port//
 // if there is any change contact me//
 //  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 //  
-//  0  0  0  0  0  RS RW E  0  1  2  3  4  5  6  7  //
+//  0  0  0  RS RW E  0  1  2  3  4  5  6  7  0  0  //
 
 
 //Discription: this code creates 250000 and stores it in address 30//
@@ -412,8 +438,177 @@ JAL xIni_LCD
 JR7
 // compare value of CMD by 02 (inti fun)//
 //-------------------------------------------------------------------------------------------//
-
-
+//*********************************************************************************
+*Engineer: Toka Zakaria
+* Create date:    14/04/2020
+*Function name: LCD_clearScreen
+*Description: clear LCD screen entirely and moves the cursor to the initial position.
+*Inputs: void
+*Outputs: void
+***********************************************************************************//
+xLCD_clearScreen:
+//make R1=0 , R2=0 , R3=0//
+SUB R1,R1,R1
+SUB R2,R2,R2
+SUB R3,R3,R3
+// (1) make Rs=0 & Rw=0 to make the LCD waits for certain command//
+//to make that, sending the value of R1 after editing it as follow R1 AND 0b1110011111111111 to keep other pins as they are//
+//1st create 0b1110011111111111//
+ADDI R2,R2,07
+SLL R2,R2 
+SLL R2,R2 
+SLL R2,R2 
+SLL R2,R2 
+SLL R2,R2 
+SLL R2,R2 
+SLL R2,R2 
+SLL R2,R2 
+SLL R2,R2 
+SLL R2,R2 
+SLL R2,R2 
+SLL R2,R2 
+SLL R2,R2 
+OR R3,R3,R2
+SUB R2,R2,R2
+ADDI R2,R2,07
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+OR R3,R3,R2
+SUB R2,R2,R2
+ADDI R2,R2,15
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,15
+//R3=1110011111111111//
+OR R3,R3,R2
+AND R1,R1,R3
+//Rs=0//
+OUT R1
+//wait for one MS using Delay function//
+//storing the data in R7 in R2 at first//
+SUB R2,R2,R2
+//storing memory location in R2 ‘selecting address [16]’//
+ADDI R2,R2,16
+SW R7,R2
+JAL xDelay
+//return data to R7 again//
+SUB R2,R2,R2 
+ADDI R2,R2,16
+LW R7,R2
+//(2)make the Enable high ‘E=1’ //
+//to make that …. R1 OR 0b0000010000000000//
+//create 0b000001000000000//
+SUB R2,R2,R2
+ADDI R2,R2,01
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+OR R1,R2
+//E=1//
+OUT R1
+//wait for one MS using delay function//
+//storing the data in R7 in R2 at first//
+SUB R2,R2,R2
+//storing memory location in R2 ‘selecting address [16]//
+ADDI R2,R2,16
+SW R7,R1
+JAL xDelay
+//return data to R7 again//
+SUB R2,R2,R2 
+ADDI R2,R2,16
+LW R7,R2
+//Rs=0 & E=1 , now LCD ready to receive a command//
+//sending command 01H to the LCD to clear display screen//
+// R1 OR 0b0000000000000100//
+//create 0b0000000000000100//
+SUB R2,R2,R2
+ADDI R2,R2,01
+SLL R2,R2
+SLL R2,R2
+OR R1,R2
+OUT R1
+//wait for 1 MS using delay function//
+//storing the data in R7 in R2 at first//
+SUB R2,R2,R2
+//storing memory location in R2 ‘selecting address [16]//
+ADDI R2,R2,16
+SW R7,R1
+JAL xDelay
+//return data to R7 again//
+SUB R2,R2,R2 
+ADDI R2,R2,16
+LW R7,R2
+//make the Enable low again ‘E=0’//
+//to make that, R1 AND 0b1111101111111111//
+SUB R2,R2,R2
+SUB R3,R3,R3
+ADDI R2,R2,15
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+OR R3,R1
+SUB R2,R2
+ADD R2,R2,01
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,15
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+OR R3,R2
+SUB R2,R2
+ADDI R2,R2,15
+SLL R2,R2
+SLL R2,R2
+ADDI R2,03
+OR R3,R2
+// R3= 0b1111101111111111//
+AND R1,R3
+// E=0//
+OUT R1
+//clearing the Rsgs that are used in the function//
+SUB R1,R1,R1
+SUB R2,R2,R2
+SUB R3,R3,R3
+// return to main//
+JR R7
+//--------------------------------------------------------------------------------------------------------//
 //***********************************************
 *Engineer        : Mena Emiel
 *Create date     : 7/4/2020 
@@ -1585,10 +1780,532 @@ xCHECK_H:NOP
  ADDI	R2,R2,01
  JAL	xADJUST_CURSOR
  JAL	xPRINT_DOT
- 
+  
  xCHECK_S:NOP
+ SUB    R7,R7,R7
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,019
  
+    //IF THE CHARACTER IS 'S' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+      TO THE 'S' DRAWING LINES OF CODE IF IT ISN'T 'S' WE JUMP TO NEXT LINE OF BEQ 
+      WHICH IS CHECK_T//
+   
+ BEQ	R1,R2,02
+ J		xCHECK_T
  
+       // 'S' DRAWING LINES OF CODE THAT PRINT 'S' IN BRAILLE
+          "  ."
+          ".  "
+          ".  "//
+		  
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,02
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,01
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,04
+ ADDI	R2,R2,01
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ 
+ xCHECK_T:NOP
+ SUB    R7,R7,R7
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,020
+ 
+    //IF THE CHARACTER IS 'T' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+      TO THE 'T' DRAWING LINES OF CODE IF IT ISN'T 'T' WE JUMP TO NEXT LINE OF BEQ 
+      WHICH IS CHECK_U//
+   
+ BEQ	R1,R2,02
+ J		xCHECK_U
+ 
+       // 'T' DRAWING LINES OF CODE THAT PRINT 'T' IN BRAILLE
+          "  ."
+          ". ."
+          ".  "//
+		  
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,02
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,01
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,02
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,04
+ ADDI	R2,R2,01
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ 
+ xCHECK_U:NOP
+ SUB    R7,R7,R7
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,021
+ 
+    //IF THE CHARACTER IS 'U' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+      TO THE 'U' DRAWING LINES OF CODE IF IT ISN'T 'U' WE JUMP TO NEXT LINE OF BEQ 
+      WHICH IS CHECK_V//
+   
+ BEQ	R1,R2,02
+ J		xCHECK_V
+ 
+       // 'U' DRAWING LINES OF CODE THAT PRINT 'U' IN BRAILLE
+          ".  "
+          "   "
+          ". ."//
+		  
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,01
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,04
+ ADDI	R2,R2,01
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,04
+ ADDI	R2,R2,02
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ 
+  xCHECK_V:NOP
+ SUB    R7,R7,R7
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,022
+ 
+    //IF THE CHARACTER IS 'V' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+      TO THE 'V' DRAWING LINES OF CODE IF IT ISN'T 'V' WE JUMP TO NEXT LINE OF BEQ 
+      WHICH IS CHECK_W//
+   
+ BEQ	R1,R2,02
+ J		xCHECK_W
+ 
+       // 'V' DRAWING LINES OF CODE THAT PRINT 'V' IN BRAILLE
+          ".  "
+          ".  "
+          ". ."//
+		  
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,01
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,01
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,04
+ ADDI	R2,R2,01
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,04
+ ADDI	R2,R2,02
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ 
+ xCHECK_W:NOP
+ SUB    R7,R7,R7
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,023
+ 
+    //IF THE CHARACTER IS 'W' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+      TO THE 'W' DRAWING LINES OF CODE IF IT ISN'T 'W' WE JUMP TO NEXT LINE OF BEQ 
+      WHICH IS CHECK_X//
+   
+ BEQ	R1,R2,02
+ J		xCHECK_X
+ 
+       // 'W' DRAWING LINES OF CODE THAT PRINT 'W' IN BRAILLE
+          "  ."
+          ". ."
+          "  ."//
+		  
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,02
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,01
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,02
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,04
+ ADDI	R2,R2,02
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ 
+ xCHECK_X:NOP
+ SUB    R7,R7,R7
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,024
+ 
+    //IF THE CHARACTER IS 'X' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+      TO THE 'X' DRAWING LINES OF CODE IF IT ISN'T 'X' WE JUMP TO NEXT LINE OF BEQ 
+      WHICH IS CHECK_Y//
+   
+ BEQ	R1,R2,02
+ J		xCHECK_Y
+ 
+       // 'X' DRAWING LINES OF CODE THAT PRINT 'X' IN BRAILLE
+          ". ."
+          "   "
+          ". ."//
+		  
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,01
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,02
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,04
+ ADDI	R2,R2,01
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,04
+ ADDI	R2,R2,02
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ 
+  xCHECK_Y:NOP
+ SUB    R7,R7,R7
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,025
+ 
+    //IF THE CHARACTER IS 'Y' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+      TO THE 'Y' DRAWING LINES OF CODE IF IT ISN'T 'W' WE JUMP TO NEXT LINE OF BEQ 
+      WHICH IS CHECK_Z//
+   
+ BEQ	R1,R2,02
+ J		xCHECK_Z
+ 
+       // 'Y' DRAWING LINES OF CODE THAT PRINT 'Y' IN BRAILLE
+          ". ."
+          "  ."
+          ". ."//
+		  
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,01
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,02
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,02
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,04
+ ADDI	R2,R2,01
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,04
+ ADDI	R2,R2,02
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ 
+   xCHECK_Z:NOP
+ SUB    R7,R7,R7
+ JAL	xLOAD_R1
+ SUB	R2,R2,R2
+ ADDI	R2,R2,026
+ 
+    //IF THE CHARACTER IS 'Z' WE DRAW THE LETTER IN BRAILLE AS WE JUMP 2 LINES
+      TO THE 'Z' DRAWING LINES OF CODE IF IT ISN'T 'Z' WE JUMP TO NEXT LINE OF BEQ 
+      WHICH IS ERROR//
+   
+ BEQ	R1,R2,02
+ J		xERROR
+ 
+       // 'Z' DRAWING LINES OF CODE THAT PRINT 'Z' IN BRAILLE
+          ".  "
+          "  ."
+          ". ."//
+		  
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,02
+ ADDI	R2,R2,01
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,03
+ ADDI	R2,R2,02
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,04
+ ADDI	R2,R2,01
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ SUB	R1,R1,R1
+ SUB	R2,R2,R2
+ ADDI	R1,R1,04
+ ADDI	R2,R2,02
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ SUB    R7,R7,R7
+ JAL	xPRINT_DOT
+ 
+ // DELAY TO KEEP THE LETTER ON THE SCREEN FOR 3SEC //
+ 
+ SUB    R3,R3,R3
+ ADDI   R2,R2,01
+ ADDI   R0,R0,01
+ SLL R0
+ SLL R0
+ SLL R0
+ SLL R0
+ SLL R0
+ SLL R0
+ SLL R0
+ SLL R0
+ SLL R0
+ SLL R0
+ ADDI   R0,R0,R0
+ ADDI   R0,R0,R0
+ ADDI   R0,R0,R0
+ xLOOP:NOP
+ JAL    xDelay
+ SUB    R0,R0,R2
+ 
+ BEQ R0,R3,03
+ J xLOOP
+ SUB    R7,R7,R7
+ JAL    xLCD_clearScreen
+ J	xMAIN
+ 
+
+ // IF THE CHARACTER ISN'T ANY ONE OF THE ALPHABETIC OR ANY ERROR
+    OCCURED DURING CHECKING THE LETTER THE LCD SHOULD PRINT ERROR //
+	
+ xERROR : NOP
+ SUB    R7,R7,R7
+ JAL    xLCD_clearScreen
+ SUB    R1,R1,R1
+ SUB    R2,R2,R2
+ ADDI   R1,R1,02
+ ADDI   R2,R2,01
+ SUB    R7,R7,R7
+ JAL	xADJUST_CURSOR
+ 
+ // PRINTING E //
+ SUB   R1,R1,R1
+ SUB   R2,R2,R2
+ ADD   R1,R1,30
+ ADDI  R1,R1,30
+ ADDI  R1,R1,9
+ ADDI  R2,R2,10
+ SW    R1,R2
+ SUB   R7,R7,R7
+ JAL xLCD_displayCharacter
+  
+ // PRINTING R //
+ SUB   R1,R1,R1
+ SUB   R2,R2,R2
+ ADD   R1,R1,30
+ ADDI  R1,R1,30
+ ADDI  R1,R1,22
+ ADDI  R2,R2,10
+ SW    R1,R2
+ SUB   R7,R7,R7
+ JAL xLCD_displayCharacter
+ 
+ // PRINTING R //
+ SUB   R1,R1,R1
+ SUB   R2,R2,R2
+ ADD   R1,R1,30
+ ADDI  R1,R1,30
+ ADDI  R1,R1,22
+ ADDI  R2,R2,10
+ SW    R1,R2
+ SUB   R7,R7,R7
+ JAL xLCD_displayCharacter
+ 
+ // PRINTING O //
+ SUB   R1,R1,R1
+ SUB   R2,R2,R2
+ ADD   R1,R1,30
+ ADDI  R1,R1,30
+ ADDI  R1,R1,19
+ ADDI  R2,R2,10
+ SW    R1,R2
+ SUB   R7,R7,R7
+ JAL xLCD_displayCharacter
+ 
+ // PRINTING R //
+ SUB   R1,R1,R1
+ SUB   R2,R2,R2
+ ADD   R1,R1,30
+ ADDI  R1,R1,30
+ ADDI  R1,R1,22
+ ADDI  R2,R2,10
+ SW    R1,R2
+ SUB   R7,R7,R7
+ JAL xLCD_displayCharacter
+ 
+  // DELAY TO KEEP THE WORD "ERROR" ON THE SCREEN FOR 3SEC //
+ 
+ SUB    R3,R3,R3
+ ADDI   R2,R2,01
+ ADDI   R0,R0,01
+ SLL R0
+ SLL R0
+ SLL R0
+ SLL R0
+ SLL R0
+ SLL R0
+ SLL R0
+ SLL R0
+ SLL R0
+ SLL R0
+ ADDI   R0,R0,R0
+ ADDI   R0,R0,R0
+ ADDI   R0,R0,R0
+ xLOOP:NOP
+ JAL    xDelay
+ SUB    R0,R0,R2
+ 
+ BEQ R0,R3,03
+ J xLOOP
+ SUB    R7,R7,R7
+ JAL    xLCD_clearScreen
+ J	xMAIN 
+
  //****************************************************************************//
  
 //-------------------------------------------------------------------------------------------------------//
@@ -2180,3 +2897,336 @@ xLCD_init:
  SUB  R1,R1,R1
  SUB  R2,R2,R2
 JR   R7 
+//****************************************************************************** //
+* Engineer: May Sherif-Aya Ahmed-Aya Mohamed
+ * Create date: 21:04:22 15/04/2020
+ * Function Name:Keypad_GetPressedKey
+ * Description: A function that's responsible for detecting the key pressed in the keypad 
+* Inputs: void
+* Outputs:value of pressed key
+// *****************************************************************************//
+Keypad_GetPressedKey
+       SUB R1,R1,R1
+//to make R1equal zero.
+       SUB R0,R0,R0 
+//to make R0equal zero.
+       OUT R0
+//out zeros to all rows(ensure that all   keys are open).
+K1:     IN R0 
+//read columns make R0equal zero..
+       ANDI R0,R0,0007H
+//mask the last 3 bits.
+       ADDI R1,R1,0007H 
+//move 07h to R1.      
+       BNQ R0,R1,0001H
+// making sure that all keys are    released.
+       J K1//go to check again on columns.
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+// calling the delay_0 function 8 times to delay 20 ms as each delays 2.6 ms
+K2: SUB R0,R0,R0
+//to make R0equal zero.
+       IN R0
+//read columns.
+        ANDI R0,R0,0007H 
+//mask the last 3 bits.
+        ANDI R1,R1,0000H
+ //to make R0equal zero.
+        ADDI R1,R1,0007H 
+//move 07h to R1.      
+       BNQ R0,R1,0001H
+//see if any key is pressed?
+        J K2
+//keep checking again till akey is pressed.
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+     JAL DELAY_0
+// calling the delay_0 function 8 times to delay 20 ms as each delays 2.6 ms
+SUB R0,R0,R0
+ //to make R0equal zero.
+IN R0
+//read columns
+ANDI R0,R0,0007H
+ //mask the last 3 bits.
+ANDI R1,R1,0000H
+ //to make R1equal zero.
+ADDI R1,R1,0007H 
+//move 07h to R1.      
+BNQ R0,R1,0001H
+//check if key was still pressed after debounce time (20ms).
+J K2
+//return check if a key is pressed.
+ANDI R0,R0,0000H
+ //to make R0 equal zero.
+ADDI R0,R0,FFFEH
+//ground row 0.
+OUT R0
+//out R0 on the rows.
+SUB R0,R0,R0 
+//to make R0equal zero.
+IN R0
+//read columns.
+ANDI R0,R0,0007H
+//masking the last 3 bits .
+ANDI R1,R1,0000H
+//tomake R1 equals zero.
+ADDI R1,R1,0007H
+ //move 07h to R1.      
+BEQ R0,R1,0003H
+//compare to find if any column gives a zero or not ?
+ANDI R1,R1,000H 
+//to make R1 equals zero.
+ADDI R1,R1,FFFEH
+//if so store value of row 1 in R1.
+J FIND-IT
+//call find it to get the value of the pressed key .
+RO-1:    ANDI R0,R0,0000H 
+//to make R1 equals zero.
+ADDI R0,R0,FFFDH
+//ground row 1.
+OUT R0
+//out R0 value on all rows.
+SUB R0,R0,R0
+//to make R0equal zero.
+IN R0
+//read columns.
+ANDI R0,R0,0007H
+//masking the last 3 bits .
+ANDI R1,R1,0000H 
+//tomake R0 equals zero.
+ADDI R1,R1,0007H
+ //move 07h to R1.      
+BEQ R0,R1,0003H
+//compare to find if any column gives a zero or not ?
+ANDI R1,R1,0000H 
+//tomake R1 equals zero.
+ADDI R1,R1,FFFDH
+ //if so store value of row 1in R1.
+J FIND-IT 
+//call find it to get the value of the pressed key .
+RO-2: ANDI R0,R0,0000H
+ //tomake R0 equals zero.
+ADDI R0,R0,FFFCH
+//ground row2.
+OUT R0
+ //out R0 value on all rows.
+SUB R0,R0,R0 
+//to make R0equal zero.
+IN R0
+ //read columns.
+ANDI R0,R0,0007H
+//masking the last 3 bits .
+ANDI R1,R1,0000H
+ //to make R1equal zero.
+ADDI R1,R1,0007H 
+//move 07h to R1.      
+BEQ R1,R0,0003H
+//compare to find if any column gives a zero or not ?
+
+ANDI R1,R1,0000H
+ //to make R1equal zero.
+ADDI R1,R1,FFFCH
+ //if so store value of row 2 in R1.
+J FIND-IT
+//call find it to get the value of the pressed key .
+RO-3: ANDI R0,R0,0000H
+ //to make R0equal zero.
+ADDI R0,R0,FFFBH
+//ground row3.
+OUT R0
+//out R0 value on all rows.
+SUB R0,R0,R0
+//to make R0equal zero.
+IN R0
+ //read columns.
+ANDI R0,R0,0007H 
+//masking the last 3 bits .
+ANDI R1,R1,0000H
+ //to make R1equal zero.
+ADDI R1,R1,0007H //move value of 07 to R1.
+BNQ R1,R0, 0001H 
+//compare to find if any column gives a zero or not ?
+J K2
+//retry checking the keys again.
+ANDI R1,R1,0000H 
+//to make R1equal zero.
+ADDI R1,R1,FFFBH 
+//if so store value of row 3in R1.
+J FIND-IT
+//call find it to get the value of the pressed key .
+
+// a function to find the value of the pressed key 
+
+FIND-IT:
+  // row 0 keys
+ANDI R3,R3,0000H 
+//to make R3 equal zero.
+ADDI R3,R3,FFFEH
+//put value of row 0 in R3.
+BNQ R1,R3,000CH
+//detect wether we are in row 0 or not??
+ANDI R4,R4,0000H
+ //to make R4 equal zero.
+ADDI R4,R4,0006H 
+BNQ R4,R0,0003H
+ //detect wether 1st col is  inverted or not??
+ANDI R2,R2,0000H 
+//to make R2 equal zero.
+ADDI R2,R2,0003H
+//key ‘3’is pressed
+J STORE
+// go to store value of key ‘3’.
+ANDI R4,R4,0000H 
+//to make R4 equal zero.
+ADDI R4,R4,0005H 
+BNQ R4,R0,0003h 
+//detect wether 2nd  col is  inverted or not??
+ANDI R2,R2,0000H
+ //to make R2 equal zero.
+ADDI R2,R2,0002H
+ //key ‘2’is pressed
+J STORE
+// go to store value of key ‘2’.
+
+// row 1 keys
+ANDI R3,R3,0000H
+ //to make R3 equal zero.
+ADDI R3,R3,FFFDH 
+//put value of row 1 in R3.
+BNQ R1,R3,0011H
+//detect wether we are in row 0 or not??
+ANDI R4,R4,0000H 
+//to make R4 equal zero.
+ADDI R4,R4,0006H 
+BNQ R4,R0,0003H
+ //detect wether 1st col is  inverted or not??
+ANDI R2,R2,0000H
+ //to make R2 equal zero.
+ADDI R2,R2,0006H 
+//key ‘6’is pressed.
+J STORE
+// go to store value of key ‘6’.
+ANDI R4,R4,0000H 
+//to make R4 equal zero.
+ADDI R4,R4,0005H
+BNQ R4,R0,0003H 
+ //detect wether 2ND col is  inverted or not??
+ANDI R2,R2,0000H 
+//to make R2 equal zero.
+ADDI R2,R2,0005H//KEY'5' is pressed.
+J STORE
+//go to store the value of key ‘5’.
+ANDI R4,R4,0000H
+ //to make R4 equal zero.
+ADDI R4,R4,0004H 
+BNQ R4,R0,0003H 
+//detect wether 3rd  col is  inverted or not??
+ANDI R2,R2,0000H
+ //to make R2 equal zero.
+ADDI R2,R2,0004H
+//key’4’is pressed.
+J STORE
+//go to store the value of key ‘4’.
+
+// row 2 keys
+ANDI R3,R3,0000H 
+//to make R3 equal zero.
+ADDI R3,R3,FFFCH
+BNQ R1,R3,0011H
+//detect wether we are in row 2 or not??
+ANDI R4,R4,0000H
+ //to make R4 equal zero.
+ADDI R4,R4,0006H
+BNQ R4,R0,0003H 
+//detect wether 1st col is  inverted or not??
+ANDI R2,R2,0000H
+//to make R2 equal zero.
+ADDI R2,R2,0009H 
+//key’9’is pressed.
+J STORE
+//go to store the value of key ‘9’.
+ANDI R4,R4,0000H
+ //to make R4 equal zero.
+ADDI R4,R4,0005H 
+BNQ R4,R0,0003H
+ //detect wether 2nd  col is  inverted or not??
+ADDI R2,R2,0000H 
+//to make R2 equal zero.
+ANDI R2,R2,0008H
+ //key’8’is pressed.
+J STORE
+//go to store the value of key ‘8’.
+AND R4,R4,00000H
+ //to make R4 equal zero.
+ADDI R4,R4,0004H
+BNQ R4,R0,0003H
+//detect wether 3rd  col is  inverted or not??
+ANDI R2,R2,0000H 
+//to make R2equal zero.
+ADDI R2,R2,0007H
+ //key’7’is pressed.
+J STORE
+//go to store the value of key ‘7’.
+
+//row 3 keys
+ANDI R4,R4,0000H
+ //to make R4 equal zero.
+ADDI R4,R4,0006H 
+BNQ R4,R0,0003H
+ //detect wether 1st col is  inverted or not??
+ANDI R2,R2,0000H
+ADDI R2,0001H
+//key’#’is pressed.
+J STORE
+//go to store the value of key ‘#’.
+ANDI R2,R2,0000H 
+//key’*’is pressed.
+J STORE
+//go to store the value of key ‘*’.
+
+// a function to store the value of pressed key
+
+STORE: ADDI R0,R0,0000H 
+//adds in Ro 0 
+             SW R2,R0
+             SUB R0,R0,R0
+             SUB R1,R1,R1
+             SUB R2,R2,R2
+             SUB R3,R3,R3
+             SUB R4,R4,R4
+//stores value in R2 in Memory address in R0
+
+//Delay_0 function
+//Function Discription: Delays for 2.6 ms
+//Name:Youssef Galal
+ //assuming that the clock used is 25MHz,1 cycle takes 40ns
+ //counter = 2.6ms/40ns = 65000 counts
+
+ Delay_0 :
+ SUB R5,R5,R5
+ SUB R6,R6,R6
+ //R6=0,R5=0
+ADDI R6,R6,FDE8h
+ //storing the value 65000 in R6
+ xLoop_0:        ADDI R5,R5,01
+ //R5 accumulates untill it reaches 65000
+  NOP
+ BEQ R5,R6,01 
+//if R5 reaches R6 "65000" we will skip the jump line
+ J xLoop_0
+//if R5 doesn't reach R6 "65000" we will go to xLoop again
+SUB R5,R5,R5 
+SUB R6,R6,R6
+ //clearing the registers used
+

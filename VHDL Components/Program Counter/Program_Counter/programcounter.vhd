@@ -14,8 +14,8 @@ use IEEE.std_logic_unsigned.all;
 
 entity Program_Counter is
     Port ( 
-			  Program_Counter_IN:  in   std_logic_vector (15 downto 0);
-           Program_Counter_OUT: out  std_logic_vector (15 downto 0);
+			  Program_Counter_IN:   in   std_logic_vector (15 downto 0);
+           Program_Counter_OUT:  out  std_logic_vector (15 downto 0);
            clk: 						in   std_logic;
            Reset: 					in   std_logic
 			  );

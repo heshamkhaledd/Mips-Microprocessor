@@ -16,7 +16,7 @@
 entity PC_ADDER1 is
 port (
        PC_current : in std_logic_vector (15 downto 0);
-       PC_Plus1 : out std_logic_vector (15 downto 0)
+       PC_Plus1 :   out std_logic_vector (15 downto 0)
 		 );
 end PC_ADDER1;
  
@@ -24,7 +24,7 @@ architecture Behavioral of PC_ADDER1 is
 begin
  
 Process (PC_current)
- 
+
 begin
  
 			PC_Plus1 <= PC_current + 1;

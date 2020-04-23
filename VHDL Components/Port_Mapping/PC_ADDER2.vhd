@@ -16,7 +16,7 @@ library ieee;
 entity PC_ADDER2 is
 port (
        PC_plus_1,offset : in std_logic_vector (15 downto 0);
-       PC_plus_offset : out std_logic_vector (15 downto 0)
+       PC_plus_offset :   out std_logic_vector (15 downto 0)
 		 );
 end PC_ADDER2;
  
@@ -28,7 +28,7 @@ Process (PC_plus_1,offset)
 begin
  
 					PC_plus_offset <= PC_plus_1+offset;
- 
+					
 end Process;
 
 end Behavioral;
