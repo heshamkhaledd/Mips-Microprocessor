@@ -706,7 +706,8 @@ SRL R3,R3
 //Jump to the display procedure after reading the input successfully and keeping the value of the counter unchanged//
 ANDI R3,R3,015
 SUB R4,R4,R4
-BEQ R3,R4,#OFFSET
+BNE R3,R4,02
+J xSend_"YOU ENTERD"_Message
 
 //The key is pressed again so the value of the counter will be incremented//
 ADDI R2,R2,01
@@ -727,7 +728,9 @@ SRL R3,R3
 SRL R3,R3
 ANDI R3,R3,015
 SUB R4,R4,R4
-BEQ R3,R4,#OFFSET
+BEQ R3,R4,02
+J xSend_"YOU ENTERD"_Message
+
 ADDI R2,R2,01
 SUB R3,R3,R3
 ADDI R4,R4,021
@@ -748,7 +751,8 @@ SRL R3,R3
 SRL R3,R3
 ANDI R3,R3,015
 SUB R4,R4,R4
-BEQ R3,R4,#OFFSET
+BEQ R3,R4,02
+J xSend_"YOU ENTERD"_Message
 ADDI R2,R2,01
 SUB R3,R3,R3
 ADDI R4,R4,021
