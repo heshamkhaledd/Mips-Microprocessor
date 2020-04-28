@@ -21,7 +21,7 @@
 #include <malloc.h>
 #define alloca _alloca
 #endif
-static const char *ng0 = "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/XOR_S9.vhd";
+static const char *ng0 = "D:/College Projects/Microprocessors/Mips-Microprocessor/VHDL Components/Port_Mapping/XOR_S9.vhd";
 extern char *IEEE_P_2592010699;
 
 unsigned char ieee_p_2592010699_sub_2507238156_503743352(char *, unsigned char , unsigned char );

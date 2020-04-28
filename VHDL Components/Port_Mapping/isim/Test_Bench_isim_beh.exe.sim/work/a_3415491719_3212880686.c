@@ -21,7 +21,7 @@
 #include <malloc.h>
 #define alloca _alloca
 #endif
-static const char *ng0 = "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/Port_Mapping.vhd";
+static const char *ng0 = "D:/College Projects/Microprocessors/Mips-Microprocessor/VHDL Components/Port_Mapping/Port_Mapping.vhd";
 extern char *IEEE_P_2592010699;
 
 unsigned char ieee_p_2592010699_sub_1744673427_503743352(char *, char *, unsigned int , unsigned int );
@@ -42,7 +42,7 @@ static void work_a_3415491719_3212880686_p_0(char *t0)
     char *t11;
     char *t12;
 
-LAB0:    xsi_set_current_line(280, ng0);
+LAB0:    xsi_set_current_line(279, ng0);
     t2 = (t0 + 568U);
     t3 = ieee_p_2592010699_sub_1744673427_503743352(IEEE_P_2592010699, t2, 0U, 0U);
     if (t3 == 1)
@@ -63,7 +63,7 @@ LAB3:    t2 = (t0 + 4760);
     *((int *)t2) = 1;
 
 LAB1:    return;
-LAB2:    xsi_set_current_line(281, ng0);
+LAB2:    xsi_set_current_line(280, ng0);
     t4 = (t0 + 2340U);
     t8 = *((char **)t4);
     t4 = (t0 + 4804);
@@ -82,7 +82,7 @@ LAB5:    t4 = (t0 + 1144U);
     t1 = t7;
     goto LAB7;
 
-LAB8:    xsi_set_current_line(283, ng0);
+LAB8:    xsi_set_current_line(282, ng0);
     t4 = (t0 + 776U);
     t5 = *((char **)t4);
     t4 = (t0 + 4840);

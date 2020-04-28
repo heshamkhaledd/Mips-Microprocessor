@@ -21,7 +21,7 @@
 #include <malloc.h>
 #define alloca _alloca
 #endif
-static const char *ng0 = "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/PC_MUX4to1.vhd";
+static const char *ng0 = "D:/College Projects/Microprocessors/Mips-Microprocessor/VHDL Components/Port_Mapping/PC_MUX4to1.vhd";
 
 
 
@@ -57,7 +57,7 @@ LAB7:    if (t1 != 0)
 LAB4:    t2 = (t0 + 592U);
     t3 = *((char **)t2);
     t4 = *((unsigned char *)t3);
-    t5 = (t4 == (unsigned char)2);
+    t5 = (t4 == (unsigned char)3);
     if (t5 == 1)
         goto LAB10;
 
@@ -69,7 +69,7 @@ LAB12:    if (t1 != 0)
 LAB9:    t2 = (t0 + 592U);
     t3 = *((char **)t2);
     t4 = *((unsigned char *)t3);
-    t5 = (t4 == (unsigned char)3);
+    t5 = (t4 == (unsigned char)2);
     if (t5 == 1)
         goto LAB15;
 
@@ -139,7 +139,7 @@ LAB8:    xsi_set_current_line(39, ng0);
 LAB10:    t2 = (t0 + 684U);
     t6 = *((char **)t2);
     t7 = *((unsigned char *)t6);
-    t8 = (t7 == (unsigned char)3);
+    t8 = (t7 == (unsigned char)2);
     t1 = t8;
     goto LAB12;
 
@@ -158,7 +158,7 @@ LAB13:    xsi_set_current_line(42, ng0);
 LAB15:    t2 = (t0 + 684U);
     t6 = *((char **)t2);
     t7 = *((unsigned char *)t6);
-    t8 = (t7 == (unsigned char)2);
+    t8 = (t7 == (unsigned char)3);
     t1 = t8;
     goto LAB17;
 

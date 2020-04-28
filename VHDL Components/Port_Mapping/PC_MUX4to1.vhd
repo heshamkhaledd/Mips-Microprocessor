@@ -35,10 +35,10 @@ begin
 		if 	(Sel_1 = '0' AND Sel_2 = '0') then
 					MUX_R <= MUX_0;
 				
-		elsif (Sel_1 = '0' AND Sel_2 = '1') then
+		elsif (Sel_1 = '1' AND Sel_2 = '0') then
 					MUX_R <= MUX_1;
 					
-		elsif (Sel_1 = '1' AND Sel_2 = '0') then
+		elsif (Sel_1 = '0' AND Sel_2 = '1') then
 					MUX_R <= MUX_2;
 					
 		elsif (Sel_1 = '1' AND Sel_2 = '1') then

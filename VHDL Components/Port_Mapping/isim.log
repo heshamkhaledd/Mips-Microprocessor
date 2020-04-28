@@ -1,5 +1,5 @@
 ISim log file
-Running: E:\MP\Mips-Microprocessor\VHDL Components\Port_Mapping\Test_Bench_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/Test_Bench_isim_beh.wdb 
+Running: D:\College Projects\Microprocessors\Mips-Microprocessor\VHDL Components\Port_Mapping\Test_Bench_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb D:/College Projects/Microprocessors/Mips-Microprocessor/VHDL Components/Port_Mapping/Test_Bench_isim_beh.wdb 
 ISim P.20131013 (signature 0x8ef4fb42)
 This is a Full version of ISim.
 Time resolution is 1 ps
@@ -14,56 +14,3 @@ at 0 ps, Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metaval
 at 0 ps, Instance /test_bench/uut/X5/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
 Finished circuit initialization process.
 at 0 ps, Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 5 ns(7), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 75 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 85 ns(7), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 135 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 225 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 235 ns(7), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 285 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 375 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 385 ns(7), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 435 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 525 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 535 ns(7), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 585 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 675 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 685 ns(7), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 735 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 825 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 835 ns(7), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 885 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 975 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 985 ns(7), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-ISim P.20131013 (signature 0x8ef4fb42)
-This is a Full version of ISim.
-# run 1000 ns
-Simulator is doing circuit initialization process.
-at 0 ps, Instance /test_bench/uut/X1/ : Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-at 0 ps, Instance /test_bench/uut/X3/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 0 ps, Instance /test_bench/uut/X3/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 0 ps, Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 0 ps, Instance /test_bench/uut/X5/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-Finished circuit initialization process.
-at 0 ps, Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 5 ns(7), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 75 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 85 ns(7), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 135 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 225 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 235 ns(7), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 285 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 375 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 385 ns(7), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 435 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 525 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 535 ns(7), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 585 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 675 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 685 ns(7), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 735 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 825 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 835 ns(7), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 885 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 975 ns(8), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-at 985 ns(7), Instance /test_bench/uut/X4/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0

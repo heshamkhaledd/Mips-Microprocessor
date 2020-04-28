@@ -21,7 +21,7 @@
 #include <malloc.h>
 #define alloca _alloca
 #endif
-static const char *ng0 = "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/Test_Bench.vhd";
+static const char *ng0 = "D:/College Projects/Microprocessors/Mips-Microprocessor/VHDL Components/Port_Mapping/Test_Bench.vhd";
 
 
 
@@ -43,7 +43,7 @@ LAB0:    t1 = (t0 + 1596U);
 
 LAB3:    goto *t2;
 
-LAB2:    xsi_set_current_line(76, ng0);
+LAB2:    xsi_set_current_line(55, ng0);
     t2 = (t0 + 1972);
     t3 = (t2 + 32U);
     t4 = *((char **)t3);
@@ -51,7 +51,7 @@ LAB2:    xsi_set_current_line(76, ng0);
     t6 = *((char **)t5);
     *((unsigned char *)t6) = (unsigned char)2;
     xsi_driver_first_trans_fast(t2);
-    xsi_set_current_line(77, ng0);
+    xsi_set_current_line(56, ng0);
     t2 = (t0 + 1040U);
     t3 = *((char **)t2);
     t7 = *((int64 *)t3);
@@ -62,7 +62,7 @@ LAB2:    xsi_set_current_line(76, ng0);
 LAB6:    *((char **)t1) = &&LAB7;
 
 LAB1:    return;
-LAB4:    xsi_set_current_line(78, ng0);
+LAB4:    xsi_set_current_line(57, ng0);
     t2 = (t0 + 1972);
     t3 = (t2 + 32U);
     t4 = *((char **)t3);
@@ -70,7 +70,7 @@ LAB4:    xsi_set_current_line(78, ng0);
     t6 = *((char **)t5);
     *((unsigned char *)t6) = (unsigned char)3;
     xsi_driver_first_trans_fast(t2);
-    xsi_set_current_line(79, ng0);
+    xsi_set_current_line(58, ng0);
     t2 = (t0 + 1040U);
     t3 = *((char **)t2);
     t7 = *((int64 *)t3);
@@ -108,7 +108,7 @@ LAB0:    t1 = (t0 + 1740U);
 
 LAB3:    goto *t2;
 
-LAB2:    xsi_set_current_line(87, ng0);
+LAB2:    xsi_set_current_line(66, ng0);
     t3 = (100 * 1000LL);
     t2 = (t0 + 1640);
     xsi_process_wait(t2, t3);
@@ -116,7 +116,7 @@ LAB2:    xsi_set_current_line(87, ng0);
 LAB6:    *((char **)t1) = &&LAB7;
 
 LAB1:    return;
-LAB4:    xsi_set_current_line(89, ng0);
+LAB4:    xsi_set_current_line(68, ng0);
     t2 = (t0 + 1040U);
     t4 = *((char **)t2);
     t3 = *((int64 *)t4);
@@ -131,7 +131,7 @@ LAB5:    goto LAB4;
 
 LAB7:    goto LAB5;
 
-LAB8:    xsi_set_current_line(92, ng0);
+LAB8:    xsi_set_current_line(71, ng0);
 
 LAB14:    *((char **)t1) = &&LAB15;
     goto LAB1;

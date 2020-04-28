@@ -21,7 +21,7 @@
 #include <malloc.h>
 #define alloca _alloca
 #endif
-static const char *ng0 = "E:/MP/Mips-Microprocessor/VHDL Components/Data Memory/datamemory2last.vhd";
+static const char *ng0 = "D:/College Projects/Microprocessors/Mips-Microprocessor/VHDL Components/Data Memory/datamemory2last.vhd";
 extern char *IEEE_P_2592010699;
 extern char *IEEE_P_1242562249;
 
@@ -72,7 +72,7 @@ LAB2:    xsi_set_current_line(39, ng0);
     t8 = *((char **)t4);
     t4 = (t0 + 592U);
     t9 = *((char **)t4);
-    t4 = (t0 + 3952U);
+    t4 = (t0 + 4252U);
     t10 = ieee_p_1242562249_sub_1657552908_1035706684(IEEE_P_1242562249, t9, t4);
     t11 = (t10 - 0);
     t12 = (t11 * 1);
@@ -120,11 +120,11 @@ LAB3:    t1 = (t0 + 1052U);
     t2 = *((char **)t1);
     t1 = (t0 + 592U);
     t3 = *((char **)t1);
-    t1 = (t0 + 3952U);
+    t1 = (t0 + 4252U);
     t4 = ieee_p_1242562249_sub_1657552908_1035706684(IEEE_P_1242562249, t3, t1);
     t5 = (t4 - 0);
     t6 = (t5 * 1);
-    xsi_vhdl_check_range_of_index(0, 65535, 1, t4);
+    xsi_vhdl_check_range_of_index(0, 4095, 1, t4);
     t7 = (16U * t6);
     t8 = (0 + t7);
     t9 = (t2 + t8);

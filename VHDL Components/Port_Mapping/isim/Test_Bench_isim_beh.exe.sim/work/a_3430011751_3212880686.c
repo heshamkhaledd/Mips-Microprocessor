@@ -21,7 +21,7 @@
 #include <malloc.h>
 #define alloca _alloca
 #endif
-static const char *ng0 = "E:/MP/Mips-Microprocessor/VHDL Components/Program Counter/Program_Counter/programcounter.vhd";
+static const char *ng0 = "D:/College Projects/Microprocessors/Mips-Microprocessor/VHDL Components/Program Counter/Program_Counter/programcounter.vhd";
 extern char *IEEE_P_2592010699;
 
 unsigned char ieee_p_2592010699_sub_1744673427_503743352(char *, char *, unsigned int , unsigned int );
@@ -89,7 +89,7 @@ LAB3:    t1 = (t0 + 1968);
 
 LAB1:    return;
 LAB2:    xsi_set_current_line(34, ng0);
-    t1 = (t0 + 3882);
+    t1 = (t0 + 4154);
     t6 = (t0 + 2048);
     t7 = (t6 + 32U);
     t8 = *((char **)t7);

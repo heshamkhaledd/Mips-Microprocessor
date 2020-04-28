@@ -28,7 +28,7 @@ end Register_File;
 architecture Behavioral of Register_File is
 
 type Reg_arr is array(0 to 7) of std_logic_vector (15 downto 0); --8*16 Register file
-signal RF : Reg_arr;                                             --Register file contents signal
+signal RF : Reg_arr:=(others => "0000000000000000");                                             --Register file contents signal
 
 begin
 

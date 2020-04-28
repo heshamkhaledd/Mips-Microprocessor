@@ -1,1 +1,1 @@
--intstyle "ise" -incremental -lib "secureip" -o "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/Test_Bench_isim_beh.exe" -prj "E:/MP/Mips-Microprocessor/VHDL Components/Port_Mapping/Test_Bench_beh.prj" "work.Test_Bench" 
+-intstyle "ise" -incremental -lib "secureip" -o "D:/College Projects/Microprocessors/Mips-Microprocessor/VHDL Components/Port_Mapping/Test_Bench_isim_beh.exe" -prj "D:/College Projects/Microprocessors/Mips-Microprocessor/VHDL Components/Port_Mapping/Test_Bench_beh.prj" "work.Test_Bench" 
