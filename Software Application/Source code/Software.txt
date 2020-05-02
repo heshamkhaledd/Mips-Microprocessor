@@ -2839,7 +2839,7 @@ ANDI R1,R1,0
  //to make R1equal zero.
 ADDI R1,R1,07
 //move 07h to R1.      
-BNQ R0,R1,07
+BNQ R0,R1,01
 //check if key was still pressed after debounce time (20ms).
 J K2
 //return check if a key is pressed.
@@ -3331,4 +3331,3 @@ ADDI R6,R6,FDE8h
 SUB R5,R5,R5 
 SUB R6,R6,R6
  //clearing the registers used
-
