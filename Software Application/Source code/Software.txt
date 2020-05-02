@@ -2790,11 +2790,11 @@ Keypad_GetPressedKey
 //out zeros to all rows(ensure that all   keys are open).
 K1:     IN R0 
 //read columns make R0equal zero..
-       ANDI R0,R0,0007H
+       ANDI R0,R0,07
 //mask the last 3 bits.
-       ADDI R1,R1,0007H 
+       ADDI R1,R1,07
 //move 07h to R1.      
-       BNQ R0,R1,0001H
+       BNQ R0,R1,01
 // making sure that all keys are    released.
        J K1//go to check again on columns.
      JAL DELAY_0
@@ -2810,13 +2810,13 @@ K2: SUB R0,R0,R0
 //to make R0equal zero.
        IN R0
 //read columns.
-        ANDI R0,R0,0007H 
+        ANDI R0,R0,07
 //mask the last 3 bits.
-        ANDI R1,R1,0000H
+        ANDI R1,R1,00
  //to make R0equal zero.
-        ADDI R1,R1,0007H 
+        ADDI R1,R1,07
 //move 07h to R1.      
-       BNQ R0,R1,0001H
+       BNQ R0,R1,01
 //see if any key is pressed?
         J K2
 //keep checking again till akey is pressed.
@@ -2833,19 +2833,41 @@ SUB R0,R0,R0
  //to make R0equal zero.
 IN R0
 //read columns
-ANDI R0,R0,0007H
+ANDI R0,R0,07
  //mask the last 3 bits.
-ANDI R1,R1,0000H
+ANDI R1,R1,0
  //to make R1equal zero.
-ADDI R1,R1,0007H 
+ADDI R1,R1,07
 //move 07h to R1.      
-BNQ R0,R1,0001H
+BNQ R0,R1,07
 //check if key was still pressed after debounce time (20ms).
 J K2
 //return check if a key is pressed.
-ANDI R0,R0,0000H
+ANDI R0,R0,00
  //to make R0 equal zero.
-ADDI R0,R0,FFFEH
+SUB R2,R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,030
+ADD R0,R0,R2
 //ground row 0.
 OUT R0
 //out R0 on the rows.
@@ -2853,23 +2875,64 @@ SUB R0,R0,R0
 //to make R0equal zero.
 IN R0
 //read columns.
-ANDI R0,R0,0007H
+ANDI R0,R0,07
 //masking the last 3 bits .
-ANDI R1,R1,0000H
+ANDI R1,R1,00
 //tomake R1 equals zero.
-ADDI R1,R1,0007H
+ADDI R1,R1,07
  //move 07h to R1.      
-BEQ R0,R1,0003H
+BEQ R0,R1,03
 //compare to find if any column gives a zero or not ?
-ANDI R1,R1,000H 
+ANDI R1,R1,00
 //to make R1 equals zero.
-ADDI R1,R1,FFFEH
+SUB R2,R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,030
+ADD R1,R1,R2
 //if so store value of row 1 in R1.
 J FIND-IT
 //call find it to get the value of the pressed key .
-RO-1:    ANDI R0,R0,0000H 
+RO-1:    ANDI R0,R0,00
 //to make R1 equals zero.
-ADDI R0,R0,FFFDH
+SUB R2,R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+ADDI R2,R2,01
+ADD R0,R0,R2
 //ground row 1.
 OUT R0
 //out R0 value on all rows.
@@ -2877,23 +2940,70 @@ SUB R0,R0,R0
 //to make R0equal zero.
 IN R0
 //read columns.
-ANDI R0,R0,0007H
+ANDI R0,R0,07
 //masking the last 3 bits .
-ANDI R1,R1,0000H 
+ANDI R1,R1,00
 //tomake R0 equals zero.
-ADDI R1,R1,0007H
+ADDI R1,R1,07
  //move 07h to R1.      
-BEQ R0,R1,0003H
+BEQ R0,R1,03
 //compare to find if any column gives a zero or not ?
-ANDI R1,R1,0000H 
+ANDI R1,R1,00
 //tomake R1 equals zero.
-ADDI R1,R1,FFFDH
+SUB R2,R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+ADDI R2,R2,01
+ADD R1,R1,R2
  //if so store value of row 1in R1.
 J FIND-IT 
 //call find it to get the value of the pressed key .
-RO-2: ANDI R0,R0,0000H
+RO-2: ANDI R0,R0,00
  //tomake R0 equals zero.
-ADDI R0,R0,FFFCH
+SUB R2,R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+ADD R0,R0,R2
 //ground row2.
 OUT R0
  //out R0 value on all rows.
@@ -2901,24 +3011,71 @@ SUB R0,R0,R0
 //to make R0equal zero.
 IN R0
  //read columns.
-ANDI R0,R0,0007H
+ANDI R0,R0,07
 //masking the last 3 bits .
-ANDI R1,R1,0000H
+ANDI R1,R1,00
  //to make R1equal zero.
-ADDI R1,R1,0007H 
+ADDI R1,R1,07
 //move 07h to R1.      
-BEQ R1,R0,0003H
+BEQ R1,R0,03
 //compare to find if any column gives a zero or not ?
 
-ANDI R1,R1,0000H
+ANDI R1,R1,00
  //to make R1equal zero.
-ADDI R1,R1,FFFCH
+SUB R2,R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+ADD R1,R1,R2
  //if so store value of row 2 in R1.
 J FIND-IT
 //call find it to get the value of the pressed key .
-RO-3: ANDI R0,R0,0000H
+RO-3: ANDI R0,R0,00
  //to make R0equal zero.
-ADDI R0,R0,FFFBH
+SUB R2,R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+ADDI R2,R2,02
+ADD R0,R0,R2
 //ground row3.
 OUT R0
 //out R0 value on all rows.
@@ -2926,18 +3083,42 @@ SUB R0,R0,R0
 //to make R0equal zero.
 IN R0
  //read columns.
-ANDI R0,R0,0007H 
+ANDI R0,R0,07
 //masking the last 3 bits .
-ANDI R1,R1,0000H
+ANDI R1,R1,00
  //to make R1equal zero.
-ADDI R1,R1,0007H //move value of 07 to R1.
-BNQ R1,R0, 0001H 
+ADDI R1,R1,07 //move value of 07 to R1.
+BNQ R1,R0, 01H 
 //compare to find if any column gives a zero or not ?
 J K2
 //retry checking the keys again.
-ANDI R1,R1,0000H 
+ANDI R1,R1,00
 //to make R1equal zero.
-ADDI R1,R1,FFFBH 
+SUB R2,R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+ADDI R2,R2,02
+ADD R1,R1,R2
 //if so store value of row 3in R1.
 J FIND-IT
 //call find it to get the value of the pressed key .
@@ -2946,127 +3127,172 @@ J FIND-IT
 
 FIND-IT:
   // row 0 keys
-ANDI R3,R3,0000H 
+ANDI R3,R3,00
 //to make R3 equal zero.
-ADDI R3,R3,FFFEH
+SUB R2,R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,030
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+SLL R2,R2
+ADDI R2,R2,030
+ADD R3,R3,R2
 //put value of row 0 in R3.
-BNQ R1,R3,000CH
+BNQ R1,R3,012
 //detect wether we are in row 0 or not??
-ANDI R4,R4,0000H
+ANDI R4,R4,00
  //to make R4 equal zero.
-ADDI R4,R4,0006H 
-BNQ R4,R0,0003H
+ADDI R4,R4,06
+BNQ R4,R0,03
  //detect wether 1st col is  inverted or not??
-ANDI R2,R2,0000H 
+ANDI R2,R2,00
 //to make R2 equal zero.
-ADDI R2,R2,0003H
+ADDI R2,R2,03
 //key ‘3’is pressed
 J STORE
 // go to store value of key ‘3’.
-ANDI R4,R4,0000H 
+ANDI R4,R4,00
 //to make R4 equal zero.
-ADDI R4,R4,0005H 
-BNQ R4,R0,0003h 
+ADDI R4,R4,05
+BNQ R4,R0,03
 //detect wether 2nd  col is  inverted or not??
-ANDI R2,R2,0000H
+ANDI R2,R2,00
  //to make R2 equal zero.
-ADDI R2,R2,0002H
+ADDI R2,R2,02
  //key ‘2’is pressed
 J STORE
 // go to store value of key ‘2’.
 
 // row 1 keys
-ANDI R3,R3,0000H
+ANDI R3,R3,00
  //to make R3 equal zero.
-ADDI R3,R3,FFFDH 
+ 
 //put value of row 1 in R3.
-BNQ R1,R3,0011H
+BNQ R1,R3,011
 //detect wether we are in row 0 or not??
-ANDI R4,R4,0000H 
+ANDI R4,R4,00
 //to make R4 equal zero.
-ADDI R4,R4,0006H 
-BNQ R4,R0,0003H
+ADDI R4,R4,06
+BNQ R4,R0,03
  //detect wether 1st col is  inverted or not??
-ANDI R2,R2,0000H
+ANDI R2,R2,00
  //to make R2 equal zero.
-ADDI R2,R2,0006H 
+ADDI R2,R2,06 
 //key ‘6’is pressed.
 J STORE
 // go to store value of key ‘6’.
-ANDI R4,R4,0000H 
+ANDI R4,R4,00 
 //to make R4 equal zero.
-ADDI R4,R4,0005H
-BNQ R4,R0,0003H 
+ADDI R4,R4,05
+BNQ R4,R0,03 
  //detect wether 2ND col is  inverted or not??
-ANDI R2,R2,0000H 
+ANDI R2,R2,00 
 //to make R2 equal zero.
-ADDI R2,R2,0005H//KEY'5' is pressed.
+ADDI R2,R2,05//KEY'5' is pressed.
 J STORE
 //go to store the value of key ‘5’.
-ANDI R4,R4,0000H
+ANDI R4,R4,00
  //to make R4 equal zero.
-ADDI R4,R4,0004H 
-BNQ R4,R0,0003H 
+ADDI R4,R4,04 
+BNQ R4,R0,03
 //detect wether 3rd  col is  inverted or not??
-ANDI R2,R2,0000H
+ANDI R2,R2,00
  //to make R2 equal zero.
-ADDI R2,R2,0004H
+ADDI R2,R2,04
 //key’4’is pressed.
 J STORE
 //go to store the value of key ‘4’.
 
 // row 2 keys
-ANDI R3,R3,0000H 
+ANDI R3,R3,00 
 //to make R3 equal zero.
-ADDI R3,R3,FFFCH
-BNQ R1,R3,0011H
+SUB R5,R5,R5
+ADDI R5,R5,030
+SLL R5,R5
+SLL R5,R5
+SLL R5,R5
+SLL R5,R5
+ADDI R5,R5,030
+SLL R5,R5
+SLL R5,R5
+SLL R5,R5
+SLL R5,R5
+ADDI R5,R5,R5
+SLL R5,R5
+SLL R5,R5
+SLL R5,R5
+SLL R5,R5
+ADDI R5,R5,R5
+SLL R5,R5
+SLL R5,R5
+SLL R5,R5
+SLL R5,R5
+ADDI R5,R5,030
+SLL R5,R5
+ADD R3,R3,R5
+BNQ R1,R3,011
 //detect wether we are in row 2 or not??
-ANDI R4,R4,0000H
+ANDI R4,R4,00
  //to make R4 equal zero.
-ADDI R4,R4,0006H
-BNQ R4,R0,0003H 
+ADDI R4,R4,06
+BNQ R4,R0,03
 //detect wether 1st col is  inverted or not??
-ANDI R2,R2,0000H
+ANDI R2,R2,00
 //to make R2 equal zero.
-ADDI R2,R2,0009H 
+ADDI R2,R2,09
 //key’9’is pressed.
 J STORE
 //go to store the value of key ‘9’.
-ANDI R4,R4,0000H
+ANDI R4,R4,00
  //to make R4 equal zero.
-ADDI R4,R4,0005H 
-BNQ R4,R0,0003H
+ADDI R4,R4,05
+BNQ R4,R0,03
  //detect wether 2nd  col is  inverted or not??
-ADDI R2,R2,0000H 
+ADDI R2,R2,00 
 //to make R2 equal zero.
-ANDI R2,R2,0008H
+ANDI R2,R2,08
  //key’8’is pressed.
 J STORE
 //go to store the value of key ‘8’.
-AND R4,R4,00000H
+AND R4,R4,00
  //to make R4 equal zero.
-ADDI R4,R4,0004H
-BNQ R4,R0,0003H
+ADDI R4,R4,04
+BNQ R4,R0,03
 //detect wether 3rd  col is  inverted or not??
-ANDI R2,R2,0000H 
+ANDI R2,R2,00 
 //to make R2equal zero.
-ADDI R2,R2,0007H
+ADDI R2,R2,07
  //key’7’is pressed.
 J STORE
 //go to store the value of key ‘7’.
 
 //row 3 keys
-ANDI R4,R4,0000H
+ANDI R4,R4,00
  //to make R4 equal zero.
-ADDI R4,R4,0006H 
-BNQ R4,R0,0003H
+ADDI R4,R4,06 
+BNQ R4,R0,03
  //detect wether 1st col is  inverted or not??
-ANDI R2,R2,0000H
-ADDI R2,0001H
+ANDI R2,R2,00
+ADDI R2,01
 //key’#’is pressed.
 J STORE
 //go to store the value of key ‘#’.
-ANDI R2,R2,0000H 
+ANDI R2,R2,00
 //key’*’is pressed.
 J STORE
 //go to store the value of key ‘*’.
