@@ -1,1 +1,0 @@
--intstyle "ise" -incremental -lib "secureip" -o "E:/MP/Mips-Microprocessor/VHDL Components/Program Counter/Program_Counter/PC_TB_isim_beh.exe" -prj "E:/MP/Mips-Microprocessor/VHDL Components/Program Counter/Program_Counter/PC_TB_beh.prj" "work.PC_TB" 

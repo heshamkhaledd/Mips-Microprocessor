@@ -1,1 +1,0 @@
--intstyle "ise" -incremental -lib "secureip" -o "D:/Micro-Pj/Project/VHDL Components/Control Unit/Control_Unit/Control_Unit_tb_isim_beh.exe" -prj "D:/Micro-Pj/Project/VHDL Components/Control Unit/Control_Unit/Control_Unit_tb_beh.prj" "work.Control_Unit_tb" 
